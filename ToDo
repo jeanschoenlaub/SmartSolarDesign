@@ -1,0 +1,102 @@
+
+
+
+
+
+In progress:
+
+- Upgrade the inverter selection bar:
+  -> Make a 1P - 3P button (stays blue when pressed) that helps shortens the inverter list
+  -> Make a show specs button that allows to quickly see the inverter's specs
+
+Bug fix:
+
+Easy/Medium:
+
+    -Improve the show limits function + !!! Voc & Vmp options
+
+    -Vrise upgrade:
+        -> Add conductor choice option
+
+    - Upgrade the menuBar
+
+    - Voc to be adjusted for temperature (Idea include table 4.1 of 5033)
+
+    - Overcurrent protection devices sizing
+
+    - Center the layout pages
+
+    - Tickbox for Logo
+
+
+Hard:
+
+    -Page Redo:
+      -Separate page 1-2 and page 3 so that each excel template as his own layout page (i.e template specific folder)
+        -> I think Voltage rise needs to come last
+        -> down the road they will be the downloadable extension
+        -> Maybe the gateway should go into each Template
+        -> Same for the excel print function it should be included in the template specific folder
+
+      - Have an first menu (after the login):
+        -> Option 1 calculate a Vrise
+        -> Option 2 make an sld
+        -> Option 3 calculate the output
+
+    -Change the way the Job dict works to add sections depending on job_Type
+
+    -Mixing different Panels
+
+    -Problem when saving an error (For example solar edge mppt b1 a2)
+
+    -Option to add on to existing inverters
+
+    -Battery option -> make a battery_dict
+
+    - Current carrying capacity to be improved for all wire type/temp ....
+
+
+WOW dure:
+- Change the way the templates work by separating borders and drawing
+-> give the opportuinity to modify just the drawing if neccesarry
+
+
+- possibilité de storer les saves online ENCRYPTER
+-> includes a smart search
+-> tool that measures how much space the saves take
+-> possibility to also store just the template
+-> possibility to share the templates between solar companies
+-> Automatically add the system size to the project save name
+-> Option to delete saved project
+
+Down the line:
+
+    - Make it so that all the text on the templates are linked to the first sheet
+
+    - Import all CEC panels and Inv
+    -> Option to mark favorites
+
+    - Link with simpro for everyone
+
+    - Other solar tools :
+      -> shadow calculator
+      -> Optimisation tool (maybe cable size)
+
+
+Maybe will do:
+  - Make a layout for a full screen view (or not)?
+    -> If i want to do that it is going to be with window size X and Y
+
+  - NMI, Phone number, email ?
+  - Wind regions ??
+
+
+List of new addition that have not been applied to all templates (on purpose):
+
+  - Block Diagram
+  - Voltage rise preferences
+
+Potential improvement (not necessary):
+    FILE : "PAGES.PY"
+      -> line 54 and 55 -> inv_dict is going to get bigger so I would rather not have it as a self
+      -> line 215 and 220 -> could just be set to 0 or 1 instead of "" or 1 -> need to change the VBA
