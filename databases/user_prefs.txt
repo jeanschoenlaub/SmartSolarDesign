@@ -1,0 +1,17 @@
+{
+    "Vrise_pref": {
+        "col1_name": "Service main",
+        "col2_name": "Consumer Main",
+        "col3_name": "MSB to Inverter"
+    },
+    "blockDiagram": {
+        "block1": "MSB",
+        "line1up": "16 mm^2",
+        "line1down": "12 m",
+        "block2": "House DB",
+        "line2up": "4 mm^2",
+        "line2down": "10m ",
+        "block3": "MSB",
+        "note": ""
+    }
+}
