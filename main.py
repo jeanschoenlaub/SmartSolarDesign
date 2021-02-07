@@ -66,68 +66,71 @@ class MainView(tk.Frame):
 
 
         #Initialising page 1
-        self.page_info.show_entries(job_dict,panel_dict,inv_dict,batt_dict) #function that setup the user friendly entry form (empty) on page 1
+        self.job_dict = job_dict
+        self.page_info.show_entries(self.job_dict,panel_dict,inv_dict,batt_dict) #function that setup the user friendly entry form (empty) on page 1
         self.page_info.lift() #puts page 1 on top of the stack
 
         self.user_pref = load_user_pref()#loads the stored user preferences from user_prefs.txt
+
 
     def next_page(self,*args):
         #if args == 2:
             #self.current_page = args
         if self.current_page == 3:
             t = "good"
-            if job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
-                self.page_layout_sonnen.submit_inv_setup(job_dict)
-                print_hybrid_inverter(job_dict,panel_dict,inv_dict)
-            elif job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
-                self.page_layout_solaredge.submit_inv_setup(job_dict,inv_dict)
-                if job_dict["jobExtra"]["gateway"]==1:
-                    print_gateway(job_dict,panel_dict,inv_dict)
+            if self.job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
+                self.page_layout_sonnen.submit_inv_setup(self.job_dict)
+                print_hybrid_inverter(self.job_dict,panel_dict,inv_dict)
+            elif self.job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
+                self.page_layout_solaredge.submit_inv_setup(self.job_dict,inv_dict)
+                if self.job_dict["jobExtra"]["gateway"]==1:
+                    print_gateway(self.job_dict,panel_dict,inv_dict)
                 else:
-                    print_string_inverter(job_dict,panel_dict,inv_dict)
-            elif job_dict["jobComponents"]["invManufacturer"] == "Enphase":
-                self.page_layout_enphase.submit_inv_setup(job_dict)
-                if job_dict["jobExtra"]["gateway"]==0:
-                    print_enphase_inverter(job_dict,panel_dict,inv_dict)
-                elif job_dict["jobExtra"]["gateway"]==1:
-                    print_gateway(job_dict,panel_dict,inv_dict)
+                    print_string_inverter(self.job_dict,panel_dict,inv_dict)
+            elif self.job_dict["jobComponents"]["invManufacturer"] == "Enphase":
+                self.page_layout_enphase.submit_inv_setup(self.job_dict)
+                if self.job_dict["jobExtra"]["gateway"]==0:
+                    print_enphase_inverter(self.job_dict,panel_dict,inv_dict)
+                elif self.job_dict["jobExtra"]["gateway"]==1:
+                    print_gateway(self.job_dict,panel_dict,inv_dict)
             else:
-                t=self.page_layout_string.submit_inv_setup(job_dict)
+                t=self.page_layout_string.submit_inv_setup(self.job_dict)
                 if t=="rollback":
                     self.current_page = 2
                     self.next_page()
-                elif job_dict["jobExtra"]["gateway"]==0:
-                    print_string_inverter(job_dict,panel_dict,inv_dict)
-                elif job_dict["jobExtra"]["gateway"]==1:
-                    print_gateway(job_dict,panel_dict,inv_dict)
-            save_job(job_dict)
+                elif self.job_dict["jobExtra"]["gateway"]==0:
+                    print_string_inverter(self.job_dict,panel_dict,inv_dict)
+                elif self.job_dict["jobExtra"]["gateway"]==1:
+                    print_gateway(self.job_dict,panel_dict,inv_dict)
+            save_job(self.job_dict)
             if t != "rollback":
                 root.destroy()#Closes tkinter window
 
         if self.current_page == 2:
 
             self.current_page = 3
-            self.page_v_rise.submit_Vrise(job_dict)
+            self.page_v_rise.submit_Vrise(self.job_dict)
 
-            if job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
+            if self.job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
                 self.page_layout_sonnen.lift()
-                self.page_layout_sonnen.show_limits(inv_dict,job_dict,panel_dict)
-            elif job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
+                self.page_layout_sonnen.show_limits(inv_dict,self.job_dict,panel_dict)
+            elif self.job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
                 self.page_layout_solaredge.lift()
-                self.page_layout_solaredge.show_limits(job_dict,inv_dict,panel_dict)
-            elif job_dict["jobComponents"]["invManufacturer"] == "Enphase":
+                self.page_layout_solaredge.show_limits(self.job_dict,inv_dict,panel_dict)
+            elif self.job_dict["jobComponents"]["invManufacturer"] == "Enphase":
                 self.page_layout_enphase.lift()
-                self.page_layout_enphase.show_layout(job_dict)
+                self.page_layout_enphase.show_layout(self.job_dict)
             else:
                 self.page_layout_string.lift()
-                self.page_layout_string.show_limits(inv_dict,job_dict,panel_dict)
+                self.page_layout_string.show_limits(inv_dict,self.job_dict,panel_dict)
 
         if self.current_page == 1:
+
             self.current_page = 2
-            self.page_info.submit_job_info(job_dict)
+            self.job_dict = self.page_info.submit_job_info()
             self.page_v_rise.lift()
             self.page_v_rise.show_entries()
-            self.page_v_rise.fill_Vrise(job_dict,inv_dict,self.user_pref)
+            self.page_v_rise.fill_Vrise(self.job_dict,inv_dict,self.user_pref)
 
 
 
@@ -144,11 +147,11 @@ class MainView(tk.Frame):
             self.current_page = 2
 
     def new_job(self,*args):
-        job_dict=empty_job_dict
+        self.job_dict=empty_job_dict
         self.current_page = 1
         self.page_info.delete_entries()
         self.page_info.show_entries(panel_dict,inv_dict,batt_dict) #function that setup the user friendly entry form (empty) on page 1
-        self.page_info.insert_values(job_dict) #function that inputs information retrieved from the textffile
+        self.page_info.insert_values(self.job_dict) #function that inputs information retrieved from the textffile
         self.page_info.lift()
 
     def fast_print(self,*args):
@@ -193,23 +196,23 @@ class MainView(tk.Frame):
 
     def save_job_plus_current_page(self,*args):
         if self.current_page == 1:
-            self.page_info.submit_job_info(job_dict)
+            self.job_dict=self.page_info.submit_job_info()
         elif self.current_page == 2:
-            self.page_v_rise.submit_Vrise(job_dict)
+            self.page_v_rise.submit_Vrise(self.job_dict)
         elif self.current_page == 3:
-            if job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
-                self.page_layout_sonnen.submit_inv_setup(job_dict)
-            elif job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
-                self.page_layout_solaredge.submit_inv_setup(job_dict,inv_dict)
-            elif job_dict["jobComponents"]["invManufacturer"] == "Enphase":
-                self.page_layout_enphase.submit_inv_setup(job_dict)
+            if self.job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
+                self.page_layout_sonnen.submit_inv_setup(self.job_dict)
+            elif self.job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
+                self.page_layout_solaredge.submit_inv_setup(self.job_dict,inv_dict)
+            elif self.job_dict["jobComponents"]["invManufacturer"] == "Enphase":
+                self.page_layout_enphase.submit_inv_setup(self.job_dict)
             else:
-                t=self.page_layout_string.submit_inv_setup(job_dict)
-        save_job(job_dict)
+                t=self.page_layout_string.submit_inv_setup(self.job_dict)
+        save_job(self.job_dict)
 
     def call_config_block_diag(self,*args): #Rest of the code in pop-up pages
         bd = ConfigBlockDiag(root)
-        bd.show_layout(job_dict,self.user_pref)
+        bd.show_layout(self.job_dict,self.user_pref)
 
     def call_config_Vrise(self,*args): #Rest of the code in pop-up pages
         vr = ConfigVrise(root)
@@ -236,9 +239,9 @@ if __name__ == "__main__":
     root = tk.Tk(className=constants.APP_NAME)
     root.configure(bg=constants.set_baground_for_theme())
 
-    root.option_add('*TCombobox*Listbox.selectBackground', 'yellow') # change highlight color
-    root.option_add('*TCombobox*Listbox.selectForeground', 'black') # change text color
-    root.option_add('*TCombobox*Listbox.fieldbackground', 'blue')
+    #root.option_add('*TCombobox*Listbox.selectBackground', 'yellow') # change highlight color
+    #root.option_add('*TCombobox*Listbox.selectForeground', 'black') # change text color
+    #root.option_add('*TCombobox*Listbox.fieldbackground', 'blue')
 
     #Setting the theme
     style = ThemedStyle(root)

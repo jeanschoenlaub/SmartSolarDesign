@@ -4,6 +4,7 @@ import xlwings as xw
 import shutil
 import os
 
+import databases.constants as constants
 
 jean = 1
 luke = 2
@@ -18,9 +19,9 @@ if os.path.isdir("/Users/hcbsolar-operations/"):
 if os.path.isdir("/Users/jean/"):
     computer=jean
     print("On Jean's Computer")
-    template_dir = "/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/{}.xlsm"
-    vrise_print_loc = "/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design VRC.pdf"
-    sld_print_loc = "/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design SLD.pdf"
+    template_dir = constants.EXCEL_LOC+"/{}.xlsm"
+    vrise_print_loc = constants.EXCEL_LOC+"/Design VRC.pdf"
+    sld_print_loc = constants.EXCEL_LOC+"/Design SLD.pdf"
 
 template_string_inverter = template_dir.format("string_inverter")
 template_sonnen = template_dir.format("sonnen_batt")
@@ -33,7 +34,7 @@ duplicate_name = template_dir.format("DesignTemplate")
 def print_string_inverter(job_dict,panel_dict,inv_dict):
     shutil.copy(template_string_inverter, duplicate_name)
 
-    xl_app = xw.App()
+    xl_app = xw.App(visible=False,add_book=False)
     wbSld = xl_app.books.open(duplicate_name)
     wsParam = wbSld.sheets["Param"]
     #Client Information
@@ -105,23 +106,23 @@ def print_string_inverter(job_dict,panel_dict,inv_dict):
 
     run_macro_print(vrise_print_loc,sld_print_loc)
 
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/DesignTemplate.xlsm'
-    target = r'/Users/jean/Desktop/DesignTemplate.xlsm'
-    shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design VRC.pdf'
-    target = r'/Users/jean/Desktop/Design\ VRC.pdf'
-    shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design SLD.pdf'
-    target = r'/Users/jean/Desktop/Design\ SLD.pdf'
-    shutil.move(original,target)
-
     wbSld.save()
     wbSld.close()
+
+    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
+    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design VRC.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design SLD.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
+    shutil.move(original,target)
+
     xl_app.kill()
 
 def print_hybrid_inverter(job_dict,panel_dict,inv_dict):
     shutil.copy(template_sonnen, duplicate_name)
-    open -gjn -a "/Applications/Microsoft\ Excel.app"
     xl_app = xw.App(add_book=False,visible=False)
     wbSld = xl_app.books.open(duplicate_name)
     run_macro_hide = wbSld.app.macro('Hide.Hide')
@@ -177,14 +178,14 @@ def print_hybrid_inverter(job_dict,panel_dict,inv_dict):
     run_macro_print = wbSld.app.macro('printer.Printer')
     run_macro_print(vrise_print_loc,sld_print_loc)
 
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/DesignTemplate.xlsm'
-    target = r'/Users/jean/Desktop/DesignTemplate.xlsm'
+    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
+    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
     shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design VRC.pdf'
-    target = r'/Users/jean/Desktop/Design\ VRC.pdf'
+    original = constants.EXCEL_LOC+"/Design VRC.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
     shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design SLD.pdf'
-    target = r'/Users/jean/Desktop/Design\ SLD.pdf'
+    original = constants.EXCEL_LOC+"/Design SLD.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
     shutil.move(original,target)
 
     wbSld.save()
@@ -248,14 +249,14 @@ def print_enphase_inverter(job_dict,panel_dict,inv_dict):
     except:
         error=tk.messagebox.showerror(title="Unexpected Error",message="Sorry, an unexpected error occured",icon="error")
 
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/DesignTemplate.xlsm'
-    target = r'/Users/jean/Desktop/DesignTemplate.xlsm'
+    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
+    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
     shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design VRC.pdf'
-    target = r'/Users/jean/Desktop/Design\ VRC.pdf'
+    original = constants.EXCEL_LOC+"/Design VRC.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
     shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design SLD.pdf'
-    target = r'/Users/jean/Desktop/Design\ SLD.pdf'
+    original = constants.EXCEL_LOC+"/Design SLD.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
     shutil.move(original,target)
 
     wbSld.save()
@@ -337,14 +338,14 @@ def print_gateway(job_dict,panel_dict,inv_dict):
         run_macro_print = wbSld.app.macro('printer.Printer_2Mppt')
     run_macro_print(vrise_print_loc,sld_print_loc)
 
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/DesignTemplate.xlsm'
-    target = r'/Users/jean/Desktop/DesignTemplate.xlsm'
+    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
+    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
     shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design VRC.pdf'
-    target = r'/Users/jean/Desktop/Design\ VRC.pdf'
+    original = constants.EXCEL_LOC+"/Design VRC.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
     shutil.move(original,target)
-    original = r'/Users/jean/Documents/Dev/AutoSld/excel/ExcelTemplates/Design SLD.pdf'
-    target = r'/Users/jean/Desktop/Design\ SLD.pdf'
+    original = constants.EXCEL_LOC+"/Design SLD.pdf"
+    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
     shutil.move(original,target)
 
     wbSld.save()

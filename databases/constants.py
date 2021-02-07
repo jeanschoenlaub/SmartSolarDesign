@@ -1,10 +1,12 @@
 #Location constants
-DATABASE_LOC = "/Users/jean/Documents/Dev/AutoSld/databases/"
+DATABASE_LOC = "/Users/jean/Documents/Dev/SmartSolarDesign/databases/"
 GDRIVE = "/Volumes/GoogleDrive/.shortcut-targets-by-id/0B48f_ri5yfeAcVBIT3M3bTZBTW8/Shared Docs/PROJECTS/Customers - Domestic Jobs"
+EXCEL_LOC = "/Users/jean/Documents/Dev/SmartSolarDesign/excel/ExcelTemplates"
+DESKTOP_LOC = "/Users/jean/Desktop"
 
 #Constants for main.py:
 APP_NAME = "Lets go"
-WINDOW_SIZE_X = 730
+WINDOW_SIZE_X = 750
 WINDOW_SIZE_Y = 620
 
 #SELECTING THE THEME
@@ -12,7 +14,7 @@ WINDOW_SIZE_Y = 620
 #APP_THEME = "aquativo"
 APP_THEME = "aqua"
 
-STC_AC_DC_LIMIT = 1.33
+STC_AC_DC_LIMIT = 0.75
 
 ###############################################################################
                         #PAGE INFO TECHNICAL POSITION#
@@ -81,9 +83,12 @@ ROW_NOTES_ENT_PGVRISE=13
                         #PAGE LAYOUT TECHNICAL POSITION#
 ###############################################################################
 Y_POS_CANV_TITLE_PGLAYOUT = 30
+
 LAYOUT_STRING_WIDTH_PGLAYOUT = 530
 LAYOUT_STRING_HEIGHT_PGLAYOUT = 450
 
+
+LAYOUT_SE_WIDTH_PGLAYOUT=750
 
 
 ###############################################################################
