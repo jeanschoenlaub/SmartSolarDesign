@@ -235,43 +235,45 @@ class PageInfo(Page):
             self.ent_notes.insert(0,self.job_dict["jobExtra"]["notes"])
 
 
-   def submit_job_info(self,job_dict): #Called when leaving the page or on Save click - Updates the job_dictionary associated with the job number
-       job_dict["jobInfo"]["clientName"] = self.ent_client_name.get()
-       job_dict["jobInfo"]["jobNumber"] = self.ent_job_number.get()
-       job_dict["jobComponents"]["panelNumber"] = self.ent_panel_number.get()
-       job_dict["jobComponents"]["invType"] =self.combobox_inv_type.get()
-       job_dict["jobComponents"]["panelManufacturer"] = self.combobox_panel_manufacturer.get()
-       job_dict["jobComponents"]["panelModel"] = self.combobox_panel_model.get()
-       job_dict["jobInfo"]["siteName"] = self.ent_site.get()
-       job_dict["jobComponents"]["invModel"] = self.combobox_inv_model.get()
-       job_dict["jobComponents"]["invManufacturer"]= self.combobox_inv_manufacturer.get()
-       job_dict["jobInfo"]["numMsbPhases"] = self.ent_num_msb_phases.get()
-       job_dict["jobSetup"]["backup"] = self.var_backup.get()
-       job_dict["setupEnphase"]["qrelay"] = self.var_relay.get()
-       job_dict["jobExtra"]["battery"] = self.combobox_battery.get()
-       job_dict["jobExtra"]["batteryNumber"] = self.ent_num_battery.get()
-       job_dict["jobExtra"]["blockDiagram"] = self.var_block_diagram.get()
-       job_dict["jobExtra"]["gateway"] = self.var_gateway.get()
-       job_dict["jobExtra"]["notes"] = self.ent_notes.get()
+   def submit_job_info(self): #Called when leaving the page or on Save click - Updates the job_dictionary associated with the job number
+       self.job_dict["jobInfo"]["clientName"] = self.ent_client_name.get()
+       self.job_dict["jobInfo"]["jobNumber"] = self.ent_job_number.get()
+       self.job_dict["jobComponents"]["panelNumber"] = self.ent_panel_number.get()
+       self.job_dict["jobComponents"]["invType"] =self.combobox_inv_type.get()
+       self.job_dict["jobComponents"]["panelManufacturer"] = self.combobox_panel_manufacturer.get()
+       self.job_dict["jobComponents"]["panelModel"] = self.combobox_panel_model.get()
+       self.job_dict["jobInfo"]["siteName"] = self.ent_site.get()
+       self.job_dict["jobComponents"]["invModel"] = self.combobox_inv_model.get()
+       self.job_dict["jobComponents"]["invManufacturer"]= self.combobox_inv_manufacturer.get()
+       self.job_dict["jobInfo"]["numMsbPhases"] = self.ent_num_msb_phases.get()
+       self.job_dict["jobSetup"]["backup"] = self.var_backup.get()
+       self.job_dict["setupEnphase"]["qrelay"] = self.var_relay.get()
+       self.job_dict["jobExtra"]["battery"] = self.combobox_battery.get()
+       self.job_dict["jobExtra"]["batteryNumber"] = self.ent_num_battery.get()
+       self.job_dict["jobExtra"]["blockDiagram"] = self.var_block_diagram.get()
+       self.job_dict["jobExtra"]["gateway"] = self.var_gateway.get()
+       self.job_dict["jobExtra"]["notes"] = self.ent_notes.get()
 
        if self.var_relay.get() == 1:
-           job_dict["setupEnphase"]["micro_phases"]=1
+           self.job_dict["setupEnphase"]["micro_phases"]=1
        else:
-           job_dict["setupEnphase"]["micro_phases"] = job_dict["jobInfo"]["numMsbPhases"]
+           self.job_dict["setupEnphase"]["micro_phases"] = self.job_dict["jobInfo"]["numMsbPhases"]
 
        if self.var_existing_array.get() ==1 and self.ent_existing_array.get() != "":
-           job_dict["jobExtra"]["existingArray"] = self.ent_existing_array.get()
+           self.job_dict["jobExtra"]["existingArray"] = self.ent_existing_array.get()
        elif self.var_existing_array.get() ==1:
-           job_dict["jobExtra"]["existingArray"] = "On"
+           self.job_dict["jobExtra"]["existingArray"] = "On"
        else:
-           job_dict["jobExtra"]["existingArray"] = ""
+           self.job_dict["jobExtra"]["existingArray"] = ""
 
        if self.var_monitoring.get() ==1 and self.ent_monitoring.get() != "":
-           job_dict["jobSetup"]["monitoring"] = self.ent_monitoring.get()
+           self.job_dict["jobSetup"]["monitoring"] = self.ent_monitoring.get()
        elif self.var_monitoring.get() ==1:
-           job_dict["jobSetup"]["monitoring"] = "On"
+           self.job_dict["jobSetup"]["monitoring"] = "On"
        else:
-           job_dict["jobSetup"]["monitoring"] = ""
+           self.job_dict["jobSetup"]["monitoring"] = ""
+
+       return self.job_dict
 
    def delete_entries(self,*args):
         self.ent_client_name.delete(0, 'end')
@@ -319,5 +321,4 @@ class PageInfo(Page):
                print("Using Gdrive Values")
        except:
            tk.messagebox.showinfo(title="Error - Job not found",message = "The job number specified was not found", icon="warning")
-       job_number= self.job_dict["jobInfo"]["jobNumber"]
        self.insert_values()

@@ -15,7 +15,7 @@ class Page(tk.Frame):
 class PageString(Page):
    def __init__(self, *args, **kwargs,):
        Page.__init__(self, *args, **kwargs)
-       self.inv= tk.Canvas(self, width=600, height=600, highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
+       self.inv= tk.Canvas(self, width=750, height=600, highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
        #Starts by setting canvas in middle
        if (constants.WINDOW_SIZE_X-constants.LAYOUT_STRING_WIDTH_PGLAYOUT) > 0:#530 is the measured size of drawing
            centered_canvas_x = (constants.WINDOW_SIZE_X-constants.LAYOUT_STRING_WIDTH_PGLAYOUT)/2
@@ -89,7 +89,7 @@ class PageString(Page):
         self.max_panels_string = math.floor(float(inv_dict[inv_type][inv_manufacturer][inv_model]["Vmax"])/(float(panel_dict[panel_manu][panel_name]["Voc"])*1.1))
         self.min_panels_string = round(float(inv_dict[inv_type][inv_manufacturer][inv_model]["Vmin"])/float(panel_dict[panel_manu][panel_name]["Voc"]))
         self.max_total_panels = str(math.floor(int(inv_dict[inv_type][inv_manufacturer][inv_model]["Pdcmax"])/int(panel_dict[panel_manu][panel_name]["P"])))
-        self.max_panels_stc = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model]["P"])*1000*constants.STC_AC_DC_LIMIT)/float(panel_dict[panel_manu][panel_name]["P"])))
+        self.max_panels_cec = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model]["P"])*1000)/(float(panel_dict[panel_manu][panel_name]["P"])*constants.STC_AC_DC_LIMIT)))
 
         #Places the result on the Canvas
         lbl_min_string1 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
@@ -106,8 +106,8 @@ class PageString(Page):
         self.inv.create_window(130,120,window=lbl_mppt_a)
         lbl_mppt_b = ttk.Label(self.inv, text="Input: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_b_input"] + " - Imax: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_b_i_max"])
         self.inv.create_window(130,221,window=lbl_mppt_b)
-        lbl_max_stc = ttk.Label(self.inv, text="Total max number of panels for stc (" + str(constants.STC_AC_DC_LIMIT)+ " rule) = " + self.max_panels_stc)
-        self.inv.create_window(constants.LAYOUT_STRING_WIDTH_PGLAYOUT/2,320,window=lbl_max_stc)
+        lbl_max_cec = ttk.Label(self.inv, text="Total max number of panels (" + str(constants.STC_AC_DC_LIMIT*100)+ "% AC inverter capacity of array DC max power - CEC design guidelines 9.4) = " + self.max_panels_cec)
+        self.inv.create_window(constants.LAYOUT_STRING_WIDTH_PGLAYOUT/2,320,window=lbl_max_cec)
         lbl_max_tot = ttk.Label(self.inv, text="Total max number of panels (Maximum Input DC Power) = " + self.max_total_panels )
         self.inv.create_window(constants.LAYOUT_STRING_WIDTH_PGLAYOUT/2,340,window=lbl_max_tot)
 
@@ -125,7 +125,7 @@ class PageString(Page):
 class PageSolarEdge(Page):
    def __init__(self, *args, **kwargs,):
        Page.__init__(self, *args, **kwargs)
-       self.inv= tk.Canvas(self, width=600, height=600,highlightthickness=0, bg='#ececec')#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
+       self.inv= tk.Canvas(self, width=constants.LAYOUT_SE_WIDTH_PGLAYOUT, height=600,highlightthickness=0, bg='#ececec')#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
        self.inv.grid(row=0,columnspan=4,sticky="nsew")
 
        #Manually drawing the inverter and string schematics
@@ -172,17 +172,17 @@ class PageSolarEdge(Page):
         #Calulates the min and max panels (note diff round and floor)
         self.max_panels_string = math.floor(float(inv_dict[inv_type][inv_manufacturer][inv_model]["PmaxString"])/(float(panel_dict[panel_manu][panel_name]["P"])))
         self.max_total_panels = str(math.floor(int(inv_dict[inv_type][inv_manufacturer][inv_model]["Pdcmax"])/int(panel_dict[panel_manu][panel_name]["P"])))
-        self.max_panels_stc = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model]["P"])*1000*constants.STC_AC_DC_LIMIT)/float(panel_dict[panel_manu][panel_name]["P"])))
+        self.max_panels_cec = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model]["P"])*1000)/(float(panel_dict[panel_manu][panel_name]["P"])*constants.STC_AC_DC_LIMIT)))
 
         #Places the labels on screen
         lbl_min_string1 = ttk.Label(self.inv, text="Max per string = "+str(self.max_panels_string))
         self.inv.create_window(420,100,window=lbl_min_string1)
         lbl_min_string2 = ttk.Label(self.inv, text="Max per string = "+str(self.max_panels_string))
         self.inv.create_window(420,160,window=lbl_min_string2)
-        lbl_max_stc = ttk.Label(self.inv, text="Total max number of panels for stc (" + str(constants.STC_AC_DC_LIMIT)+ " rule) = " + self.max_panels_stc)
-        self.inv.create_window(300,320,window=lbl_max_stc)
+        lbl_max_cec = ttk.Label(self.inv, text="Total max number of panels (" + str(constants.STC_AC_DC_LIMIT*100)+ "% AC inverter capacity of array DC max power - CEC design guidelines 9.4) = " + self.max_panels_cec)
+        self.inv.create_window(constants.LAYOUT_SE_WIDTH_PGLAYOUT/2,320,window=lbl_max_cec)
         lbl_max_tot = ttk.Label(self.inv, text="Total max number of panels (Maximum Input DC Power) = " + self.max_total_panels )
-        self.inv.create_window(300,340,window=lbl_max_tot)
+        self.inv.create_window(constants.LAYOUT_SE_WIDTH_PGLAYOUT/2,340,window=lbl_max_tot)
 
         #And finaly loads details from save file ( "" if new job)
         self.ent_string_1.delete(0, 'end')

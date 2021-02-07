@@ -833,15 +833,15 @@
                 "numMsbPhases": ""
             },
             "jobComponents": {
-                "invType": "Hybrid",
-                "invManufacturer": "Sonnen",
-                "invModel": "H9.53/5.0",
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "SB4.0",
                 "panelManufacturer": "LG Electronics",
                 "panelModel": "LG330NB",
                 "panelNumber": ""
             },
             "jobSetup": {
-                "mpptA1": "1",
+                "mpptA1": "",
                 "mpptA2": "",
                 "mpptB1": "",
                 "mpptB2": "",
@@ -874,8 +874,64 @@
                 "lenMsb": "0",
                 "lenService": "0",
                 "lenConsumer": "0",
-                "maxCurrent": "20",
+                "maxCurrent": "22",
                 "cableSize": "4",
+                "notes": ""
+            }
+        }
+    },
+    {
+        "26452": {
+            "jobInfo": {
+                "clientName": "Donegan, Megan\n",
+                "jobNumber": "26452",
+                "siteName": "12 Rosettes St Fletcher",
+                "numMsbPhases": "1"
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "SE10000H",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "36"
+            },
+            "jobSetup": {
+                "mpptA1": "12",
+                "mpptA2": "12",
+                "mpptB1": "",
+                "mpptB2": "",
+                "monitoring": "",
+                "backup": 0,
+                "phases": "1"
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "notes": ""
+            },
+            "jobVrise": {
+                "col1Name": "Service main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter",
+                "lenMsb": "10",
+                "lenService": "16",
+                "lenConsumer": "0",
+                "maxCurrent": "45.5",
+                "cableSize": "10",
                 "notes": ""
             }
         }

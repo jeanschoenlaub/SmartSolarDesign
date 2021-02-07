@@ -1,3 +1,5 @@
 venv
 *.pyc
-Django-test
+build
+dist
+main.spec

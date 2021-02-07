@@ -49,5 +49,4 @@ def load_job(job_number):
         for info in job:
             if job_number == info: # existing job so we return the saved dict
                 job_dict = job[info]
-                print(job_dict)
     return job_dict
