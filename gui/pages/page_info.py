@@ -90,7 +90,9 @@ class PageInfo(Page):
        # Create the Label and Entry widgets for "Job number"
        lbl_job_number = ttk.Label(self, text="Job number:").grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=0, sticky="e")
        self.ent_job_number.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=1, sticky="w")
+       self.ent_job_number.bind('<Return>', self.find_job)
        self.butt_find_job.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=2, sticky="w")
+
 
        # Create the Label and Entry widgets for "MSB Phases""
        lbl_msb_phases = ttk.Label(self, text="MSB phases:").grid(row=constants.ROW_MSB_PHASES_PGINFO, column=0, sticky="e")
@@ -222,13 +224,13 @@ class PageInfo(Page):
             self.var_existing_array.set(1)
             self.existing_array_param()
             self.ent_existing_array.insert(0,self.job_dict["jobExtra"]["existingArray"])
-        if self.job_dict["jobSetup"]["monitoring"] == "On":
+        if self.job_dict["jobExtra"]["monitoring"] == "On":
             self.var_monitoring.set(1)
             self.monitoring_param()
-        elif self.job_dict["jobSetup"]["monitoring"] != "":
+        elif self.job_dict["jobExtra"]["monitoring"] != "":
             self.var_monitoring.set(1)
             self.monitoring_param()
-            self.ent_monitoring.insert(0,self.job_dict["jobSetup"]["monitoring"])
+            self.ent_monitoring.insert(0,self.job_dict["jobExtra"]["monitoring"])
         if self.job_dict["jobExtra"]["gateway"] == 1:
             self.var_gateway.set(1)
         if self.job_dict["jobExtra"]["notes"] != "":
@@ -246,7 +248,7 @@ class PageInfo(Page):
        self.job_dict["jobComponents"]["invModel"] = self.combobox_inv_model.get()
        self.job_dict["jobComponents"]["invManufacturer"]= self.combobox_inv_manufacturer.get()
        self.job_dict["jobInfo"]["numMsbPhases"] = self.ent_num_msb_phases.get()
-       self.job_dict["jobSetup"]["backup"] = self.var_backup.get()
+       self.job_dict["jobExtra"]["backup"] = self.var_backup.get()
        self.job_dict["setupEnphase"]["qrelay"] = self.var_relay.get()
        self.job_dict["jobExtra"]["battery"] = self.combobox_battery.get()
        self.job_dict["jobExtra"]["batteryNumber"] = self.ent_num_battery.get()
@@ -267,11 +269,11 @@ class PageInfo(Page):
            self.job_dict["jobExtra"]["existingArray"] = ""
 
        if self.var_monitoring.get() ==1 and self.ent_monitoring.get() != "":
-           self.job_dict["jobSetup"]["monitoring"] = self.ent_monitoring.get()
+           self.job_dict["jobExtra"]["monitoring"] = self.ent_monitoring.get()
        elif self.var_monitoring.get() ==1:
-           self.job_dict["jobSetup"]["monitoring"] = "On"
+           self.job_dict["jobExtra"]["monitoring"] = "On"
        else:
-           self.job_dict["jobSetup"]["monitoring"] = ""
+           self.job_dict["jobExtra"]["monitoring"] = ""
 
        return self.job_dict
 

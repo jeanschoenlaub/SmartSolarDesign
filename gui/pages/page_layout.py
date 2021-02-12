@@ -15,54 +15,166 @@ class Page(tk.Frame):
 class PageString(Page):
    def __init__(self, *args, **kwargs,):
        Page.__init__(self, *args, **kwargs)
-       self.inv= tk.Canvas(self, width=750, height=600, highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
-       #Starts by setting canvas in middle
-       if (constants.WINDOW_SIZE_X-constants.LAYOUT_STRING_WIDTH_PGLAYOUT) > 0:#530 is the measured size of drawing
-           centered_canvas_x = (constants.WINDOW_SIZE_X-constants.LAYOUT_STRING_WIDTH_PGLAYOUT)/2
+       self.inv= tk.Canvas(self, width=constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT, height=600, highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
+
+
+
+       #This section centers the canvas
+       if (constants.WINDOW_SIZE_X-constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT) > 0:
+           centered_canvas_x = (constants.WINDOW_SIZE_X-constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT)/2
+           self.delta_x=(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT-600)/2#600 is the measured size of drawing
        else:
-           centered_canvas_x = (constants.WINDOW_SIZE_X-constants.LAYOUT_STRING_WIDTH_PGLAYOUT)/2
-       if (constants.WINDOW_SIZE_Y-constants.LAYOUT_STRING_HEIGHT_PGLAYOUT) > 0:#530 is the measured size of drawing
-           centered_canvas_y = (constants.WINDOW_SIZE_Y-constants.LAYOUT_STRING_HEIGHT_PGLAYOUT)/2
+           centered_canvas_x = 0
+           self.delta_x=0
+       if (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_STRING_PGLAYOUT) > 0:
+           centered_canvas_y = (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_STRING_PGLAYOUT)/2
        else:
-           centered_canvas_y = (constants.WINDOW_SIZE_Y-constants.LAYOUT_STRING_HEIGHT_PGLAYOUT)/2
+           centered_canvas_y = 0
        self.inv.grid(row=0,columnspan=4,sticky="nsew", padx=centered_canvas_x,pady=centered_canvas_y)
+
+       self.number_string_mpptA = 1
+       self.number_string_mpptB = 1
 
        #Manually drawing the inverter and string schematics
        #Inverter
-       self.inv.create_line(10, 100 ,60, 100)
-       self.inv.create_line(10, 100 ,10, 250)
-       self.inv.create_line(60, 100,60, 250)
-       self.inv.create_line(10, 250,60, 250)
-       self.inv.create_line(10, 100,60, 250)
+       self.inv.create_line(self.delta_x+10, 100 ,self.delta_x+60, 100)
+       self.inv.create_line(self.delta_x+10, 100 ,self.delta_x+10, 250)
+       self.inv.create_line(self.delta_x+60, 100,+self.delta_x+60, 250)
+       self.inv.create_line(self.delta_x+10, 250,self.delta_x+60, 250)
+       self.inv.create_line(self.delta_x+10, 100,self.delta_x+60, 250)
+       #mpptA3
+       self.ent_mppt_a_3 = ttk.Entry(self.inv,width =4,style="my.TEntry")
        #mpptA2
-       self.inv.create_line(200, 80,200, 130)
-       self.inv.create_line(200, 80,300, 80)
-       self.ent_mppt_a_2 = ttk.Entry(self.inv,width =4,style="my.TEntry")
-       self.inv.create_window(300,80,window=self.ent_mppt_a_2)
+       self.ent_mppt_a_2 = ttk.Entry(self.inv,width =4,style="my.TEntry") #defined here but only appears if + clicked(for tab functionality)
        #mpptA1
-       self.inv.create_line(60, 130,300, 130)
+       self.inv.create_line(self.delta_x+60, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT)
        self.ent_mppt_a_1 = ttk.Entry(self.inv,width =4,style="my.TEntry")
-       self.inv.create_window(300,130,window=self.ent_mppt_a_1)
+       self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT,window=self.ent_mppt_a_1)
        #mpptB1
-       self.inv.create_line(60, 210,300, 210)
+       self.inv.create_line(self.delta_x+60, 210,self.delta_x+300, 210)
        self.ent_mppt_b_1 = ttk.Entry(self.inv,width =4,style="my.TEntry")
-       self.inv.create_window(300,210,window=self.ent_mppt_b_1)
+       self.inv.create_window(self.delta_x+300,210,window=self.ent_mppt_b_1)
        #mpptB2
-       self.inv.create_line(200, 210 ,200, 260)
-       self.inv.create_line(200, 260,300, 260)
        self.ent_mppt_b_2 = ttk.Entry(self.inv,width =4,style="my.TEntry")
-       self.inv.create_window(300,260,window=self.ent_mppt_b_2)
+       #mpptB3
+       self.ent_mppt_b_3 = ttk.Entry(self.inv,width =4,style="my.TEntry")
 
        #Adding the title
        lbl_title = ttk.Label(self.inv, text="Layout",font='Helvetica 16 bold',)
-       self.inv.create_window(constants.LAYOUT_STRING_WIDTH_PGLAYOUT/2,constants.Y_POS_CANV_TITLE_PGLAYOUT,window=lbl_title)
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2,constants.Y_POS_CANV_TITLE_PGLAYOUT,window=lbl_title)
+
+       #Functions that dinamically add and remove strings
+       self.butt_add_string_mpptA = ttk.Button(self, text="+", command=self.add_string_mpptA,style='my.TButton',width=1)
+       self.inv.create_window(self.delta_x+550, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT,window=self.butt_add_string_mpptA)
+       self.butt_add_string_mpptB = ttk.Button(self, text="+", command=self.add_string_mpptB,style='my.TButton',width=1)
+       self.inv.create_window(self.delta_x+550, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT,window=self.butt_add_string_mpptB)
+       self.butt_remove_string_mpptA = ttk.Button(self, text="-", command=self.remove_string_mpptA,style='my.TButton',width=1)
+       self.butt_remove_string_mpptB = ttk.Button(self, text="-", command=self.remove_string_mpptB,style='my.TButton',width=1)
+
+
+
+       #Functions that link the datasheets
+       self.butt_datasheet_inv = ttk.Button(self, text="Inverter Datasheet Link", command=self.datasheet_inv,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 -150,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+50,window=self.butt_datasheet_inv)
+       self.butt_datasheet_panel = ttk.Button(self, text="Panel Datasheet Link", command=self.datasheet_panel,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 +150,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+50,window=self.butt_datasheet_panel)
+
+   def add_string_mpptA(self,*args):
+        if self.number_string_mpptA == 1:
+            self.number_string_mpptA = 2
+            self.mpptA2_p1=self.inv.create_line(self.delta_x+220, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+220, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT)
+            self.mpptA2_p2=self.inv.create_line(self.delta_x+220, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT)
+            self.mpptA2_p3=self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,window=self.ent_mppt_a_2)
+            lbl_min_stringA2 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
+            self.mpptA2_p4=self.inv.create_window(self.delta_x+420,constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,window=lbl_min_stringA2)
+            self.butt_minus_mpptA = self.inv.create_window(self.delta_x+600, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT,window=self.butt_remove_string_mpptA)
+        elif self.number_string_mpptA == 2:
+            self.number_string_mpptA = 3
+            self.mpptA3_p1=self.inv.create_line(self.delta_x+200, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+200, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT)
+            self.mpptA3_p2=self.inv.create_line(self.delta_x+200, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT)
+            self.mpptA3_p3=self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,window=self.ent_mppt_a_3)
+            lbl_min_stringA3 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
+            self.mpptA3_p4=self.inv.create_window(self.delta_x+420,constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,window=lbl_min_stringA3)
+        elif self.number_string_mpptA == 3:
+            tk.messagebox.showinfo(parent=self,title="Warning",message = "Sorry, at the moment 4 parrallel strings are not supported yet", icon="warning")
+            #tk.messagebox.showwarning(parent=self"Warning","Sorry, at the moment 4 parrallel strings are not supported on SSD")
+
+   def remove_string_mpptA(self,*args):
+        if self.number_string_mpptA == 2:
+            self.number_string_mpptA = 1
+            self.inv.delete(self.mpptA2_p1)
+            self.inv.delete(self.mpptA2_p2)
+            self.inv.delete(self.mpptA2_p3)
+            self.inv.delete(self.mpptA2_p4)
+            self.inv.delete(self.butt_minus_mpptA)
+            self.ent_mppt_a_2.delete(0,"end")
+        elif self.number_string_mpptA == 3:
+            self.number_string_mpptA = 2
+            self.inv.delete(self.mpptA3_p1)
+            self.inv.delete(self.mpptA3_p2)
+            self.inv.delete(self.mpptA3_p3)
+            self.inv.delete(self.mpptA3_p4)
+            self.ent_mppt_a_3.delete(0,"end")
+
+
+   def add_string_mpptB(self,*args):
+        if self.number_string_mpptB == 1:
+            self.number_string_mpptB = 2
+            self.mpptB2_p1=self.inv.create_line(self.delta_x+220, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+220, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT)
+            self.mpptB2_p2=self.inv.create_line(self.delta_x+220, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+constants.SPACING_MPPTS_STRING_PGLAYOUT)
+            self.mpptB2_p3=self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+constants.SPACING_MPPTS_STRING_PGLAYOUT,window=self.ent_mppt_b_2)
+            lbl_min_stringB2 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
+            self.mpptB2_p4=self.inv.create_window(self.delta_x+420,constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+constants.SPACING_MPPTS_STRING_PGLAYOUT,window=lbl_min_stringB2)
+            self.butt_minus_mpptB = self.inv.create_window(self.delta_x+600, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT,window=self.butt_remove_string_mpptB)
+        elif self.number_string_mpptB == 2:
+            self.number_string_mpptB = 3
+            self.mpptB3_p1=self.inv.create_line(self.delta_x+200, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+2*constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+200, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT)
+            self.mpptB3_p2=self.inv.create_line(self.delta_x+200, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+2*constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+2*constants.SPACING_MPPTS_STRING_PGLAYOUT)
+            self.mpptB3_p3=self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+2*constants.SPACING_MPPTS_STRING_PGLAYOUT,window=self.ent_mppt_b_3)
+            lbl_min_stringB3 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
+            self.mpptB3_p4=self.inv.create_window(self.delta_x+420,constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT+2*constants.SPACING_MPPTS_STRING_PGLAYOUT,window=lbl_min_stringB3)
+        elif self.number_string_mpptB == 3:
+            tk.messagebox.showinfo(parent=self,title="Warning",message = "Sorry, at the moment 4 parrallel strings are not supported yet", icon="warning")
+
+   def remove_string_mpptB(self,*args):
+        if self.number_string_mpptB == 2:
+            self.number_string_mpptB = 1
+            self.inv.delete(self.mpptB2_p1)
+            self.inv.delete(self.mpptB2_p2)
+            self.inv.delete(self.mpptB2_p3)
+            self.inv.delete(self.mpptB2_p4)
+            self.inv.delete(self.butt_minus_mpptB)
+            self.ent_mppt_b_2.delete(0,"end")
+
+        elif self.number_string_mpptB == 3:
+            self.number_string_mpptB = 2
+            self.inv.delete(self.mpptB3_p1)
+            self.inv.delete(self.mpptB3_p2)
+            self.inv.delete(self.mpptB3_p3)
+            self.inv.delete(self.mpptB3_p4)
+            self.ent_mppt_b_3.delete(0,"end")
+
+
+   def datasheet_inv(self,*args):
+        inv_type=self.job_dict["jobComponents"]["invType"]
+        inv_manufacturer=self.job_dict["jobComponents"]["invManufacturer"]
+        inv_model=self.job_dict["jobComponents"]["invModel"]
+        url = self.inv_dict[inv_type][inv_manufacturer][inv_model]["Url"]
+        webbrowser.open(url)
+
+
+   def datasheet_panel(self,*args):
+        panel_manufacturer=self.job_dict["jobComponents"]["panelManufacturer"]
+        panel_model=self.job_dict["jobComponents"]["panelModel"]
+        url = self.panel_dict[panel_manufacturer][panel_model]["Url"]
+        webbrowser.open(url)
 
    def submit_inv_setup(self,job_dict): #Called when next paged is pressed
        error_parra_string = True
        if self.ent_mppt_a_2.get() != "" and self.ent_mppt_a_1.get()=="":
-           error_parra_string=tk.messagebox.askyesno("Layout Error","You have inputed a parrallel string, but the main string is empty, are you sure you want to continue ?",icon="warning")
+           error_parra_string=tk.messagebox.askyesno(parent=self,title="Layout Error",message="You have inputed a parrallel string, but the main string is empty, are you sure you want to continue ?",icon="warning")
        elif self.ent_mppt_a_2.get() != self.ent_mppt_a_1.get() and self.ent_mppt_a_2.get() != "":
-           error_parra_string=tk.messagebox.askyesno("Layout Error","You have inputed parrallel strings of different lenghts, are you sure you want to continue ?",icon="warning")
+           error_parra_string=tk.messagebox.askyesno(parent=self,title="Layout Error",message="You have inputed parrallel strings of different lenghts, are you sure you want to continue ?",icon="warning")
 
 
        if error_parra_string == True:
@@ -84,6 +196,8 @@ class PageString(Page):
         inv_manufacturer = job_dict["jobComponents"]["invManufacturer"]
         inv_model = job_dict["jobComponents"]["invModel"]
 
+        self.job_dict = job_dict
+
 
         #Calulates the min and max panels (note diff round and floor)
         self.max_panels_string = math.floor(float(inv_dict[inv_type][inv_manufacturer][inv_model]["Vmax"])/(float(panel_dict[panel_manu][panel_name]["Voc"])*1.1))
@@ -92,64 +206,142 @@ class PageString(Page):
         self.max_panels_cec = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model]["P"])*1000)/(float(panel_dict[panel_manu][panel_name]["P"])*constants.STC_AC_DC_LIMIT)))
 
         #Places the result on the Canvas
-        lbl_min_string1 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
-        lbl_min_string2 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
-        lbl_min_string3 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
-        lbl_min_string4 = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
-        self.inv.create_window(420,80,window=lbl_min_string1)
-        self.inv.create_window(420,130,window=lbl_min_string2)
-        self.inv.create_window(420,210,window=lbl_min_string3)
-        self.inv.create_window(420,260,window=lbl_min_string4)
+        lbl_min_stringA = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
+        lbl_min_stringB = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
+        self.inv.create_window(self.delta_x+420,constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT,window=lbl_min_stringA)
+        self.inv.create_window(self.delta_x+420,constants.HEIGHT_STRING_MPPTB_STRING_PGLAYOUT,window=lbl_min_stringB)
+
 
         #Places other inverter specific limits
         lbl_mppt_a = ttk.Label(self.inv, text="Input: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_a_input"] + " - Imax: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_a_i_max"])
-        self.inv.create_window(130,120,window=lbl_mppt_a)
+        self.inv.create_window(self.delta_x+130,120,window=lbl_mppt_a)
         lbl_mppt_b = ttk.Label(self.inv, text="Input: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_b_input"] + " - Imax: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_b_i_max"])
-        self.inv.create_window(130,221,window=lbl_mppt_b)
-        lbl_max_cec = ttk.Label(self.inv, text="Total max number of panels (" + str(constants.STC_AC_DC_LIMIT*100)+ "% AC inverter capacity of array DC max power - CEC design guidelines 9.4) = " + self.max_panels_cec)
-        self.inv.create_window(constants.LAYOUT_STRING_WIDTH_PGLAYOUT/2,320,window=lbl_max_cec)
+        self.inv.create_window(self.delta_x+130,221,window=lbl_mppt_b)
+        lbl_max_cec = ttk.Label(self.inv, text="Total max number of panels (" + str(constants.STC_AC_DC_LIMIT*100)+ "% AC/DC min ratio, CEC design guidelines 9.4) = " + self.max_panels_cec)
+        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT,window=lbl_max_cec)
         lbl_max_tot = ttk.Label(self.inv, text="Total max number of panels (Maximum Input DC Power) = " + self.max_total_panels )
-        self.inv.create_window(constants.LAYOUT_STRING_WIDTH_PGLAYOUT/2,340,window=lbl_max_tot)
+        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+20,window=lbl_max_tot)
 
 
         #And finaly loads details from save file ( "" if new job)
         self.ent_mppt_a_1.delete(0,'end')
         self.ent_mppt_a_1.insert(0,job_dict["jobSetup"]["mpptA1"])
-        self.ent_mppt_a_2.delete(0,'end')
-        self.ent_mppt_a_2.insert(0,job_dict["jobSetup"]["mpptA2"])
         self.ent_mppt_b_1.delete(0,'end')
-        self.ent_mppt_b_1.insert(0,job_dict["jobSetup"]["mpptB1"])
-        self.ent_mppt_b_2.delete(0,'end')
-        self.ent_mppt_b_2.insert(0,job_dict["jobSetup"]["mpptB2"])
+        if job_dict["jobSetup"]["mpptA2"] != "":
+            self.ent_mppt_a_2.delete(0,'end')
+            self.ent_mppt_a_2.insert(0,job_dict["jobSetup"]["mpptA2"])
+            self.add_string_mpptA()
+            #if job_dict["jobSetup"]["mpptA3"] != "":
+                #self.ent_mppt_a_3.delete(0,'end')
+                #self.ent_mppt_a_3.insert(0,job_dict["jobSetup"]["mpptA2"])
+                #self.add_string_mpptA()
+        if job_dict["jobSetup"]["mpptB2"] != "":
+            self.ent_mppt_b_2.delete(0,'end')
+            self.ent_mppt_b_2.insert(0,job_dict["jobSetup"]["mpptA2"])
+            self.add_string_mpptB()
+            #if job_dict["jobSetup"]["mpptB3"] != "":
+                #self.ent_mppt_b_3.delete(0,'end')
+                #self.ent_mppt_b_3.insert(0,job_dict["jobSetup"]["mpptA2"])
+                #self.add_string_mpptB()
 
 class PageSolarEdge(Page):
    def __init__(self, *args, **kwargs,):
        Page.__init__(self, *args, **kwargs)
-       self.inv= tk.Canvas(self, width=constants.LAYOUT_SE_WIDTH_PGLAYOUT, height=600,highlightthickness=0, bg='#ececec')#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
-       self.inv.grid(row=0,columnspan=4,sticky="nsew")
+       self.inv= tk.Canvas(self, width=constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT, height=600,highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
+
+       #This section centers the canvas
+       if (constants.WINDOW_SIZE_X-constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT) > 0:
+           self.centered_canvas_x = (constants.WINDOW_SIZE_X-constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT)/2
+           self.delta_x=(constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT-450)/2#450 is the measured size of drawing
+       else:
+           slef.centered_canvas_x = 0
+           self.delta_x=0
+
+       if (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_STRING_PGLAYOUT) > 0:#530 is the measured size of drawing
+           centered_canvas_y = (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_STRING_PGLAYOUT)/2
+       else:
+           centered_canvas_y = 0
+
+       self.inv.grid(row=0,columnspan=4,sticky="nsew", padx=self.centered_canvas_x,pady=centered_canvas_y)
 
        #Manually drawing the inverter and string schematics
        #Inverter
-       self.inv.create_line(10, 100 ,60, 100)
-       self.inv.create_line(10, 100 ,10, 250)
-       self.inv.create_line(60, 100,60, 250)
-       self.inv.create_line(10, 250,60, 250)
-       self.inv.create_line(10, 100,60, 250)
-       #Common part
-       self.inv.create_line(60, 130,200, 130)
-       self.inv.create_line(200, 100,200, 160)
-       #String A
-       self.inv.create_line(200, 100,300, 100)
+       self.inv.create_line(self.delta_x+10, 100 ,self.delta_x+60, 100)
+       self.inv.create_line(self.delta_x+10, 100 ,self.delta_x+10, 250)
+       self.inv.create_line(self.delta_x+60, 100,self.delta_x+60, 250)
+       self.inv.create_line(self.delta_x+10, 250,self.delta_x+60, 250)
+       self.inv.create_line(self.delta_x+10, 100,self.delta_x+60, 250)
+       #String1
+       self.inv.create_line(self.delta_x+60, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT)
        self.ent_string_1 = ttk.Entry(self.inv,width =4,style="my.TEntry")
-       self.inv.create_window(300,100,window=self.ent_string_1)
-       #String B
-       self.inv.create_line(200, 160,300, 160)
+       self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT,window=self.ent_string_1)
        self.ent_string_2 = ttk.Entry(self.inv,width =4,style="my.TEntry")
-       self.inv.create_window(300,160,window=self.ent_string_2)
-
+       self.ent_string_3 = ttk.Entry(self.inv,width =4,style="my.TEntry")
        #Adding the title
        lbl_title = ttk.Label(self.inv, text="Layout",font='Helvetica 16 bold')
-       self.inv.create_window(constants.WINDOW_SIZE_X/2,30,window=lbl_title)
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT/2,constants.Y_POS_CANV_TITLE_PGLAYOUT,window=lbl_title)
+
+       #Section for dinamicaly adding strings
+       self.butt_add_string_mpptA = ttk.Button(self, text="+", command=self.add_string_mpptA,style='my.TButton',width=1)
+       self.inv.create_window(self.delta_x+500, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT,window=self.butt_add_string_mpptA)
+       self.butt_remove_string_mpptA = ttk.Button(self, text="-", command=self.remove_string_mpptA,style='my.TButton',width=1)
+       self.number_string_mpptA=1
+
+       self.butt_datasheet_inv = ttk.Button(self, text="Inverter Datasheet Link", command=self.datasheet_inv,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT/2 -150,400,window=self.butt_datasheet_inv)
+       self.butt_datasheet_panel = ttk.Button(self, text="Panel Datasheet Link", command=self.datasheet_panel,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT/2 +150,400,window=self.butt_datasheet_panel)
+
+
+   def add_string_mpptA(self,*args):
+        if self.number_string_mpptA == 1:
+            self.number_string_mpptA = 2
+            self.mpptA2_p1=self.inv.create_line(self.delta_x+220, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+220, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT)
+            self.mpptA2_p2=self.inv.create_line(self.delta_x+220, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT)
+            self.mpptA2_p3=self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,window=self.ent_string_2)
+            lbl_min_stringA2 = ttk.Label(self.inv, text="Max per string = "+str(self.max_panels_string))
+            self.mpptA2_p4=self.inv.create_window(self.delta_x+390,constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-constants.SPACING_MPPTS_STRING_PGLAYOUT,window=lbl_min_stringA2)
+            self.butt_minus_mpptA = self.inv.create_window(self.delta_x+550, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT,window=self.butt_remove_string_mpptA)
+        elif self.number_string_mpptA == 2:
+            self.number_string_mpptA = 3
+            self.mpptA3_p1=self.inv.create_line(self.delta_x+200, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+200, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT)
+            self.mpptA3_p2=self.inv.create_line(self.delta_x+200, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,self.delta_x+300, constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT)
+            self.mpptA3_p3=self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,window=self.ent_string_3)
+            lbl_min_stringA3 = ttk.Label(self.inv, text="Max per string = "+str(self.max_panels_string))
+            self.mpptA3_p4=self.inv.create_window(self.delta_x+390,constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT-2*constants.SPACING_MPPTS_STRING_PGLAYOUT,window=lbl_min_stringA3)
+        elif self.number_string_mpptA == 3:
+            tk.messagebox.showwarning("Warning","Sorry, at the moment 4 parrallel strings are not supported on SSD")
+
+   def remove_string_mpptA(self,*args):
+        if self.number_string_mpptA == 2:
+            self.number_string_mpptA = 1
+            self.inv.delete(self.mpptA2_p1)
+            self.inv.delete(self.mpptA2_p2)
+            self.inv.delete(self.mpptA2_p3)
+            self.inv.delete(self.mpptA2_p4)
+            self.inv.delete(self.butt_minus_mpptA)
+            self.ent_string_2.delete(0,"end")
+        elif self.number_string_mpptA == 3:
+            self.number_string_mpptA = 2
+            self.inv.delete(self.mpptA3_p1)
+            self.inv.delete(self.mpptA3_p2)
+            self.inv.delete(self.mpptA3_p3)
+            self.inv.delete(self.mpptA3_p4)
+            self.ent_string_3.delete(0,"end")
+
+
+   def datasheet_inv(self,*args):
+        inv_type=self.job_dict["jobComponents"]["invType"]
+        inv_manufacturer=self.job_dict["jobComponents"]["invManufacturer"]
+        inv_model=self.job_dict["jobComponents"]["invModel"]
+        url = self.inv_dict[inv_type][inv_manufacturer][inv_model]["Url"]
+        webbrowser.open(url)
+
+   def datasheet_panel(self,*args):
+        panel_manufacturer=self.job_dict["jobComponents"]["panelManufacturer"]
+        panel_model=self.job_dict["jobComponents"]["panelModel"]
+        url = self.panel_dict[panel_manufacturer][panel_model]["Url"]
+        webbrowser.open(url)
 
    def submit_inv_setup(self,job_dict,inv_dict):
        inv_model= job_dict["jobComponents"]["invModel"]
@@ -176,25 +368,34 @@ class PageSolarEdge(Page):
 
         #Places the labels on screen
         lbl_min_string1 = ttk.Label(self.inv, text="Max per string = "+str(self.max_panels_string))
-        self.inv.create_window(420,100,window=lbl_min_string1)
-        lbl_min_string2 = ttk.Label(self.inv, text="Max per string = "+str(self.max_panels_string))
-        self.inv.create_window(420,160,window=lbl_min_string2)
-        lbl_max_cec = ttk.Label(self.inv, text="Total max number of panels (" + str(constants.STC_AC_DC_LIMIT*100)+ "% AC inverter capacity of array DC max power - CEC design guidelines 9.4) = " + self.max_panels_cec)
-        self.inv.create_window(constants.LAYOUT_SE_WIDTH_PGLAYOUT/2,320,window=lbl_max_cec)
-        lbl_max_tot = ttk.Label(self.inv, text="Total max number of panels (Maximum Input DC Power) = " + self.max_total_panels )
-        self.inv.create_window(constants.LAYOUT_SE_WIDTH_PGLAYOUT/2,340,window=lbl_max_tot)
+        self.inv.create_window(self.delta_x+390,constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT,window=lbl_min_string1)
 
+        lbl_max_cec = ttk.Label(self.inv, text="Total max number of panels (" + str(constants.STC_AC_DC_LIMIT*100)+ "% AC/DC min ratio, CEC design guidelines 9.4) = " + self.max_panels_cec)
+        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT/2,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT,window=lbl_max_cec)
+        lbl_max_tot = ttk.Label(self.inv, text="Total max number of panels (Maximum Input DC Power) = " + self.max_total_panels )
+        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT/2,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+20,window=lbl_max_tot)
+
+        inv_model= job_dict["jobComponents"]["invModel"]
         #And finaly loads details from save file ( "" if new job)
         self.ent_string_1.delete(0, 'end')
-        self.ent_string_2.delete(0, 'end')
         self.ent_string_1.insert(0,job_dict["jobSetup"]["mpptA1"])
-        inv_model= job_dict["jobComponents"]["invModel"]
-        if inv_dict["String"]["SolarEdge"][inv_model]["Phases"] == "1":  # Condition so that 3P SE inverters use both mppt
-            self.ent_string_2.insert(0,job_dict["jobSetup"]["mpptA2"])
-            job_dict["jobSetup"]["mpptB1"] = "" #Prevents a bug, should be useless with new dict
-        else:
-            self.ent_string_2.insert(0,job_dict["jobSetup"]["mpptB1"])
-            job_dict["jobSetup"]["mpptA2"] = "" #Prevents a bug, should be useless with new dict
+        if job_dict["jobSetup"]["mpptA2"] != "":
+            self.ent_string_2.delete(0, 'end')
+            if inv_dict["String"]["SolarEdge"][inv_model]["Phases"] == "1":  # Condition so that 3P SE inverters use both mppt
+                self.ent_string_2.insert(0,job_dict["jobSetup"]["mpptA2"])
+                job_dict["jobSetup"]["mpptB1"] = "" #Prevents a bug, should be useless with new dict
+            else:
+                self.ent_string_2.insert(0,job_dict["jobSetup"]["mpptB1"])
+                job_dict["jobSetup"]["mpptA2"] = "" #Prevents a bug, should be useless with new dict
+            self.number_string_mpptA=1
+            self.add_string_mpptA()
+            if job_dict["jobSetup"]["mpptB1"] != "":
+                self.ent_string_3.delete(0, 'end')
+                self.ent_string_3.insert(0,job_dict["jobSetup"]["mpptA2"])
+                self.add_string_mpptA()
+
+
+
 
 class PageSonnen(Page):
    def __init__(self, *args, **kwargs,):
@@ -219,6 +420,25 @@ class PageSonnen(Page):
        self.ent_mppt_b_1 = ttk.Entry(self.inv,width =10,style="my.TEntry")
        self.inv.create_window(300,220,window=self.ent_mppt_b_1)
        self.inv.pack(side="top",fill="both", expand=True)
+
+       self.butt_datasheet_inv = ttk.Button(self, text="Inverter Datasheet Link", command=self.datasheet_inv,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 -150,400,window=self.butt_datasheet_inv)
+       self.butt_datasheet_panel = ttk.Button(self, text="Panel Datasheet Link", command=self.datasheet_panel,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 +150,400,window=self.butt_datasheet_panel)
+
+   def datasheet_inv(self,*args):
+        inv_type=self.job_dict["jobComponents"]["invType"]
+        inv_manufacturer=self.job_dict["jobComponents"]["invManufacturer"]
+        inv_model=self.job_dict["jobComponents"]["invModel"]
+        url = self.inv_dict[inv_type][inv_manufacturer][inv_model]["Url"]
+        webbrowser.open(url)
+
+
+   def datasheet_panel(self,*args):
+        panel_manufacturer=self.job_dict["jobComponents"]["panelManufacturer"]
+        panel_model=self.job_dict["jobComponents"]["panelModel"]
+        url = self.panel_dict[panel_manufacturer][panel_model]["Url"]
+        webbrowser.open(url)
 
    def submit_inv_setup(self,job_dict):
        job_dict["jobSetup"]["mpptA1"] = self.ent_mppt_a_1.get()
@@ -269,6 +489,25 @@ class PageEnphase(Page):
        self.ent_string2_l1 = ttk.Entry(self.inv,width =5,style="my.TEntry")
        self.ent_string2_l2 = ttk.Entry(self.inv,width =5,style="my.TEntry")
        self.ent_string2_l3 = ttk.Entry(self.inv,width =5,style="my.TEntry")
+
+       self.butt_datasheet_inv = ttk.Button(self, text="Inverter Datasheet Link", command=self.datasheet_inv,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 -150,400,window=self.butt_datasheet_inv)
+       self.butt_datasheet_panel = ttk.Button(self, text="Panel Datasheet Link", command=self.datasheet_panel,style='my.TButton')
+       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 +150,400,window=self.butt_datasheet_panel)
+
+   def datasheet_inv(self,*args):
+        inv_type=self.job_dict["jobComponents"]["invType"]
+        inv_manufacturer=self.job_dict["jobComponents"]["invManufacturer"]
+        inv_model=self.job_dict["jobComponents"]["invModel"]
+        url = self.inv_dict[inv_type][inv_manufacturer][inv_model]["Url"]
+        webbrowser.open(url)
+
+
+   def datasheet_panel(self,*args):
+        panel_manufacturer=self.job_dict["jobComponents"]["panelManufacturer"]
+        panel_model=self.job_dict["jobComponents"]["panelModel"]
+        url = self.panel_dict[panel_manufacturer][panel_model]["Url"]
+        webbrowser.open(url)
 
    def show_layout(self,job_dict):
 

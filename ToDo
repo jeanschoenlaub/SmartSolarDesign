@@ -1,17 +1,18 @@
 
 
+Urgent:
 
+- Upgrade the job dict
 
+Bugs:
+
+- Dst loc bugs on first use
 
 In progress:
 
 - Upgrade the inverter selection bar:
   -> Make a 1P - 3P button (stays blue when pressed) that helps shortens the inverter list
-  -> Make a show specs button that allows to quickly see the inverter's specs
 
-Bug fix:
-
-- Foolproof the save function )for example if in page 2 i think bug
 
 Easy/Medium:
 
@@ -29,6 +30,10 @@ Easy/Medium:
     - Center the layout pages
 
     - Tickbox for Logo
+
+    - 4th string for string inverters
+
+    - Connect the inv phases to Vrise calculations
 
 
 Hard:
@@ -55,7 +60,9 @@ Hard:
 
     -Battery option -> make a battery_dict
 
-    - Current carrying capacity to be improved for all wire type/temp ....
+    -Current carrying capacity to be improved for all wire type/temp ....
+
+    - Update the job_dict for Vrise to work separately for each phases
 
 
 WOW dure:

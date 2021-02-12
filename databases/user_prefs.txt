@@ -1,8 +1,8 @@
 {
     "Vrise_pref": {
-        "col1_name": "Service main",
+        "col1_name": "Service Main",
         "col2_name": "Consumer Main",
-        "col3_name": "MSB to Inverter"
+        "col3_name": "MSB to Inverter(s)"
     },
     "blockDiagram": {
         "block1": "MSB",
@@ -13,5 +13,8 @@
         "line2down": "10m ",
         "block3": "MSB",
         "note": ""
+    },
+    "Paths": {
+        "outputSld": "/Users/jean/Desktop"
     }
 }

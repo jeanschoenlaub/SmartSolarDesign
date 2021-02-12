@@ -11,7 +11,10 @@ AmPercent_dict = {
       "95": {"1":"4445", "3": "8927"}
    }
 
-
+cable_type_dict = {
+"Copper":"Copper",
+"Aluminium":"Aluminium"
+}
 
 ccc_1p_xlpe_cu_touching_dict={
 "1":"16",
