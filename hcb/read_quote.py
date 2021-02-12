@@ -17,9 +17,17 @@ def get_txtfile_info(job_number,job_dict):#gets information from the quote file
 
     #find the site name
     site_name=txt_string.find("Site:")#finds the position in bytes from beginning of text file
-    end_of_line = txt_string.find("\n",site_name)
+    end_of_line1 = txt_string.find("\n",site_name)
+    end_of_line2 = txt_string.find("\n",end_of_line1)
     txt_file.seek(site_name+6) #seek points the text file reader to postion,6 is the lenght of string "Site: "
-    job_dict["jobInfo"]["siteName"]=txt_file.read(end_of_line-site_name-6)
+    part1= txt_file.read(end_of_line1-site_name-6)
+    part2= txt_file.read(end_of_line2-end_of_line1)
+    if part2 != "":
+        complete_address = part1 + ", " + part2
+    else:
+        complete_address = part1
+    job_dict["jobInfo"]["siteName"]=complete_address
+
 
     #find the client name
     client_name=txt_string.find("Client:")#finds the position in bytes from beginning of text file

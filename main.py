@@ -3,8 +3,9 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import math
 from ttkthemes import ThemedStyle
+from tkinter import filedialog
 
-from gui.save_manager import save_job,load_user_pref
+from gui.save_manager import save_job,load_user_pref,save_user_pref
 from gui.pages.page_info import PageInfo
 from gui.pages.page_vrise import PageVrise
 from gui.pages.page_layout import PageString,PageSonnen,PageSolarEdge,PageEnphase
@@ -34,24 +35,22 @@ class MainView(tk.Frame):
         self.current_page = 1 # for navigating between pages
 
         #Initilising the 2 frames ( 1 for pages 1 for buttons)
-        buttonframe = tk.Frame(self,bg=constants.set_baground_for_theme())
-        container = tk.Frame(self,bg=constants.set_baground_for_theme())
-        buttonframe.pack(side="bottom", fill="x", expand=False)
-        container.pack(side="bottom", fill="both", expand=True)
+        self.buttonframe = tk.Frame(self,bg=constants.set_baground_for_theme())
+        self.container = tk.Frame(self,bg=constants.set_baground_for_theme())
+        self.buttonframe.pack(side="bottom", fill="x", expand=False)
+        self.container.pack(side="bottom", fill="both", expand=True)
 
         #All the pages we initialize - maybe could improve p3
         self.page_info = PageInfo(self)
-        self.page_v_rise = PageVrise(self)
         self.page_layout_string = PageString(self)
         self.page_layout_sonnen = PageSonnen(self)
         self.page_layout_solaredge = PageSolarEdge(self)
         self.page_layout_enphase= PageEnphase(self)
-        self.page_info.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        self.page_v_rise.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        self.page_layout_string.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        self.page_layout_sonnen.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        self.page_layout_solaredge.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        self.page_layout_enphase.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        self.page_info.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
+        self.page_layout_string.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
+        self.page_layout_sonnen.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
+        self.page_layout_solaredge.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
+        self.page_layout_enphase.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
 
         self.create_ribbon_menu()
 
@@ -59,10 +58,10 @@ class MainView(tk.Frame):
         s = ttk.Style()
         s.configure('my.TButton', font=('Arial', 14))
         style.configure("my.TEntry", background=constants.set_entries_background_for_darkmode())
-        b1 = ttk.Button(buttonframe, text="Next", command=self.next_page).pack(side="right",padx=20)
-        b2 = ttk.Button(buttonframe, text="Previous", command=self.previous_page,style='my.TButton').pack(side="left",padx=20)
-        b3 = ttk.Button(buttonframe, text="Quit", command=self.exit_app,style='my.TButton').pack(side="left", expand=True)
-        b3 = ttk.Button(buttonframe, text="Save", command=self.save_job_plus_current_page,style='my.TButton').pack(side="right", expand=True)
+        b1 = ttk.Button(self.buttonframe, text="Next", command=self.next_page).pack(side="right",padx=20)
+        b2 = ttk.Button(self.buttonframe, text="Previous", command=self.previous_page,style='my.TButton').pack(side="left",padx=20)
+        b3 = ttk.Button(self.buttonframe, text="Quit", command=self.exit_app,style='my.TButton').pack(side="left", expand=True)
+        b3 = ttk.Button(self.buttonframe, text="Save", command=self.save_job_plus_current_page,style='my.TButton').pack(side="right", expand=True)
 
 
         #Initialising page 1
@@ -77,6 +76,11 @@ class MainView(tk.Frame):
         #if args == 2:
             #self.current_page = args
         if self.current_page == 3:
+            if self.user_pref["Paths"]["outputSld"] == "":
+                output_loc= filedialog.askdirectory(title = "Select s location to output the SLD and Vrise pdfs",initialdir = "/Users")
+                self.user_pref["Paths"]["outputSld"] = output_loc
+                save_user_pref(self.user_pref)
+                self.next_page()
             t = "good"
             if self.job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
                 self.page_layout_sonnen.submit_inv_setup(self.job_dict)
@@ -109,27 +113,32 @@ class MainView(tk.Frame):
         if self.current_page == 2:
 
             self.current_page = 3
-            self.page_v_rise.submit_Vrise(self.job_dict)
+            if self.page_v_rise.submit_Vrise(self.job_dict) == True: #If no problem with the Vrise page
+                if self.job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
+                    self.page_layout_sonnen.lift()
+                    self.page_layout_sonnen.show_limits(inv_dict,self.job_dict,panel_dict)
+                elif self.job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
+                    self.page_layout_solaredge.lift()
+                    self.page_layout_solaredge.show_limits(self.job_dict,inv_dict,panel_dict)
+                elif self.job_dict["jobComponents"]["invManufacturer"] == "Enphase":
+                    self.page_layout_enphase.lift()
+                    self.page_layout_enphase.show_layout(self.job_dict)
+                else:
+                    self.page_layout_string.lift()
+                    self.page_layout_string.show_limits(inv_dict,self.job_dict,panel_dict)
+            else:  #If problem with the Vrise page
+                self.current_page=2
 
-            if self.job_dict["jobComponents"]["invManufacturer"] == "Sonnen":
-                self.page_layout_sonnen.lift()
-                self.page_layout_sonnen.show_limits(inv_dict,self.job_dict,panel_dict)
-            elif self.job_dict["jobComponents"]["invManufacturer"] == "SolarEdge":
-                self.page_layout_solaredge.lift()
-                self.page_layout_solaredge.show_limits(self.job_dict,inv_dict,panel_dict)
-            elif self.job_dict["jobComponents"]["invManufacturer"] == "Enphase":
-                self.page_layout_enphase.lift()
-                self.page_layout_enphase.show_layout(self.job_dict)
-            else:
-                self.page_layout_string.lift()
-                self.page_layout_string.show_limits(inv_dict,self.job_dict,panel_dict)
+
 
         if self.current_page == 1:
 
             self.current_page = 2
             self.job_dict = self.page_info.submit_job_info()
+            self.page_v_rise = PageVrise(self)
+            self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
             self.page_v_rise.lift()
-            self.page_v_rise.show_entries()
+            self.page_v_rise.show_entries(self.job_dict,self.user_pref,inv_dict)
             self.page_v_rise.fill_Vrise(self.job_dict,inv_dict,self.user_pref)
 
 
@@ -143,6 +152,9 @@ class MainView(tk.Frame):
             self.current_page = 1
 
         if self.current_page == 3:
+            self.page_v_rise = PageVrise(self)
+            self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
+            self.page_v_rise.show_entries(self.job_dict,self.user_pref,inv_dict)
             self.page_v_rise.lift()
             self.current_page = 2
 
@@ -155,6 +167,7 @@ class MainView(tk.Frame):
         self.page_info.lift()
 
     def fast_print(self,*args):
+        self.save_job_plus_current_page()
         self.current_page =3
         self.next_page()
 
@@ -247,7 +260,7 @@ if __name__ == "__main__":
     style = ThemedStyle(root)
     style.set_theme(constants.APP_THEME)
 
-    #Initiliasing window container
+    #Initiliasing window self.container
     main = MainView(root)
 
 

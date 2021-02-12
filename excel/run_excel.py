@@ -6,22 +6,28 @@ import os
 
 import databases.constants as constants
 
-jean = 1
-luke = 2
+from gui.save_manager import load_user_pref
+#jean = 1
+#luke = 2
 
-if os.path.isdir("/Users/hcbsolar-operations/"):
-    computer=luke
-    print("On Luke's Computer")
-    template_dir = "/Users/hcbsolar-operations/Developer/sld-project/ExcelTemplates/{}.xlsm"
-    vrise_print_loc = "/Users/hcbsolar-operations/Developer/sld-project/ExcelTemplates/Design VRC.pdf"
-    sld_print_loc = "/Users/hcbsolar-operations/Developer/sld-project/Design SLD.pdf"
+#if os.path.isdir("/Users/hcbsolar-operations/"):
+#    computer=luke
+#    print("On Luke's Computer")
+#    template_dir = "/Users/hcbsolar-operations/Developer/sld-project/ExcelTemplates/{}.xlsm"
+#    vrise_print_loc = "/Users/hcbsolar-operations/Developer/sld-project/ExcelTemplates/Design VRC.pdf"
+#    sld_print_loc = "/Users/hcbsolar-operations/Developer/sld-project/Design SLD.pdf"
 
-if os.path.isdir("/Users/jean/"):
-    computer=jean
-    print("On Jean's Computer")
-    template_dir = constants.EXCEL_LOC+"/{}.xlsm"
-    vrise_print_loc = constants.EXCEL_LOC+"/Design VRC.pdf"
-    sld_print_loc = constants.EXCEL_LOC+"/Design SLD.pdf"
+#if os.path.isdir("/Users/jean/"):
+#    computer=jean
+#    print("On Jean's Computer")
+#    template_dir = constants.EXCEL_LOC+"/{}.xlsm"
+#    vrise_print_loc = constants.EXCEL_LOC+"/Design VRC.pdf"
+#    sld_print_loc = constants.EXCEL_LOC+"/Design SLD.pdf"
+
+
+template_dir = constants.EXCEL_LOC+"/{}.xlsm"
+vrise_print_loc = constants.EXCEL_LOC+"/Design VRC.pdf"
+sld_print_loc = constants.EXCEL_LOC+"/Design SLD.pdf"
 
 template_string_inverter = template_dir.format("string_inverter")
 template_sonnen = template_dir.format("sonnen_batt")
@@ -29,6 +35,8 @@ template_enphase = template_dir.format("enphase")
 template_tesla = template_dir.format("Tesla")
 
 duplicate_name = template_dir.format("DesignTemplate")
+
+user_prefs = load_user_pref()
 
 
 def print_string_inverter(job_dict,panel_dict,inv_dict):
@@ -64,7 +72,7 @@ def print_string_inverter(job_dict,panel_dict,inv_dict):
     wsParam.range("B25").value = job_dict["jobSetup"]["mpptA2"]
     wsParam.range("B26").value = job_dict["jobSetup"]["mpptB1"]
     wsParam.range("B27").value = job_dict["jobSetup"]["mpptB2"]
-    wsParam.range("B28").value = job_dict["jobSetup"]["monitoring"]
+    wsParam.range("B28").value = job_dict["jobExtra"]["monitoring"]
     #Vrise information
     wsParam.range("B30").value = job_dict["jobVrise"]["lenService"]
     wsParam.range("B31").value = job_dict["jobVrise"]["lenConsumer"]
@@ -108,18 +116,18 @@ def print_string_inverter(job_dict,panel_dict,inv_dict):
 
     wbSld.save()
     wbSld.close()
+    xl_app.kill()
 
     original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
-    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
+    target = user_prefs["Paths"]["outputSld"]+"/DesignTemplate.xlsm"
     shutil.move(original,target)
     original = constants.EXCEL_LOC+"/Design VRC.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design VRC.pdf"
     shutil.move(original,target)
     original = constants.EXCEL_LOC+"/Design SLD.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design SLD.pdf"
     shutil.move(original,target)
 
-    xl_app.kill()
 
 def print_hybrid_inverter(job_dict,panel_dict,inv_dict):
     shutil.copy(template_sonnen, duplicate_name)
@@ -159,8 +167,8 @@ def print_hybrid_inverter(job_dict,panel_dict,inv_dict):
     wsParam.range("B27").value = inv_dict[inv_type][invmanufacturer][invmodel]["VocBatt"]
     wsParam.range("B28").value = job_dict["jobSetup"]["mpptA1"]
     wsParam.range("B29").value = job_dict["jobSetup"]["mpptB1"]
-    wsParam.range("B30").value = job_dict["jobSetup"]["monitoring"]
-    wsParam.range("B31").value = job_dict["jobSetup"]["backup"]
+    wsParam.range("B30").value = job_dict["jobExtra"]["monitoring"]
+    wsParam.range("B31").value = job_dict["jobExtra"]["backup"]
     #Vrise information
     wsParam.range("B34").value = job_dict["jobVrise"]["lenService"]
     wsParam.range("B35").value = job_dict["jobVrise"]["lenConsumer"]
@@ -178,19 +186,20 @@ def print_hybrid_inverter(job_dict,panel_dict,inv_dict):
     run_macro_print = wbSld.app.macro('printer.Printer')
     run_macro_print(vrise_print_loc,sld_print_loc)
 
-    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
-    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
-    shutil.move(original,target)
-    original = constants.EXCEL_LOC+"/Design VRC.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
-    shutil.move(original,target)
-    original = constants.EXCEL_LOC+"/Design SLD.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
-    shutil.move(original,target)
-
     wbSld.save()
     wbSld.close()
     xl_app.kill()
+
+    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
+    target = user_prefs["Paths"]["outputSld"]+"/DesignTemplate.xlsm"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design VRC.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design VRC.pdf"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design SLD.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design SLD.pdf"
+    shutil.move(original,target)
+
 
 def print_enphase_inverter(job_dict,panel_dict,inv_dict):
     shutil.copy(template_enphase, duplicate_name)
@@ -225,7 +234,7 @@ def print_enphase_inverter(job_dict,panel_dict,inv_dict):
     wsParam.range("B25").value = job_dict["setupEnphase"]["string2L1"]
     wsParam.range("B26").value = job_dict["setupEnphase"]["string2L2"]
     wsParam.range("B27").value = job_dict["setupEnphase"]["string2L3"]
-    wsParam.range("B28").value = job_dict["jobSetup"]["monitoring"]
+    wsParam.range("B28").value = job_dict["jobExtra"]["monitoring"]
     #Vrise Information
     wsParam.range("B31").value = job_dict["jobVrise"]["lenService"]
     wsParam.range("B32").value = job_dict["jobVrise"]["lenConsumer"]
@@ -249,19 +258,20 @@ def print_enphase_inverter(job_dict,panel_dict,inv_dict):
     except:
         error=tk.messagebox.showerror(title="Unexpected Error",message="Sorry, an unexpected error occured",icon="error")
 
-    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
-    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
-    shutil.move(original,target)
-    original = constants.EXCEL_LOC+"/Design VRC.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
-    shutil.move(original,target)
-    original = constants.EXCEL_LOC+"/Design SLD.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
-    shutil.move(original,target)
-
     wbSld.save()
     wbSld.close()
     xl_app.kill()
+
+    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
+    target = user_prefs["Paths"]["outputSld"]+"/DesignTemplate.xlsm"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design VRC.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design VRC.pdf"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design SLD.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design SLD.pdf"
+    shutil.move(original,target)
+
 
 def print_gateway(job_dict,panel_dict,inv_dict):
     shutil.copy(template_tesla, duplicate_name)
@@ -293,7 +303,7 @@ def print_gateway(job_dict,panel_dict,inv_dict):
     wsParam.range("B22").value = job_dict["setupEnphase"]["string1L1"]
     wsParam.range("B23").value = job_dict["setupEnphase"]["string1L2"]
     wsParam.range("B24").value = job_dict["setupEnphase"]["string1L3"]
-    wsParam.range("B25").value = job_dict["jobSetup"]["monitoring"]
+    wsParam.range("B25").value = job_dict["jobExtra"]["monitoring"]
     #Vrise Information
     wsParam.range("B28").value = job_dict["jobVrise"]["lenService"]
     wsParam.range("B29").value = job_dict["jobVrise"]["lenConsumer"]
@@ -338,16 +348,16 @@ def print_gateway(job_dict,panel_dict,inv_dict):
         run_macro_print = wbSld.app.macro('printer.Printer_2Mppt')
     run_macro_print(vrise_print_loc,sld_print_loc)
 
-    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
-    target = constants.DESKTOP_LOC+"/DesignTemplate.xlsm"
-    shutil.move(original,target)
-    original = constants.EXCEL_LOC+"/Design VRC.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ VRC.pdf"
-    shutil.move(original,target)
-    original = constants.EXCEL_LOC+"/Design SLD.pdf"
-    target = constants.DESKTOP_LOC+"/Design\ SLD.pdf"
-    shutil.move(original,target)
-
     wbSld.save()
     wbSld.close()
     xl_app.kill()
+
+    original = constants.EXCEL_LOC+"/DesignTemplate.xlsm"
+    target = user_prefs["Paths"]["outputSld"]+"/DesignTemplate.xlsm"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design VRC.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design VRC.pdf"
+    shutil.move(original,target)
+    original = constants.EXCEL_LOC+"/Design SLD.pdf"
+    target = user_prefs["Paths"]["outputSld"]+"/Design SLD.pdf"
+    shutil.move(original,target)

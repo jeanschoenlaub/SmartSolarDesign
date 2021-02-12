@@ -493,29 +493,29 @@
             "jobInfo": {
                 "clientName": "Young, Darren\n",
                 "jobNumber": "26400",
-                "siteName": "10 Wattlebird Close Aberglasslyn",
-                "numMsbPhases": "3"
+                "siteName": "10 Wattlebird Close, Aberglasslyn",
+                "numMsbPhases": "1"
             },
             "jobComponents": {
-                "invType": "Micro",
-                "invManufacturer": "Enphase",
-                "invModel": "IQ7+",
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "SE8000H",
                 "panelManufacturer": "LG Electronics",
                 "panelModel": "LG370M",
                 "panelNumber": "22"
             },
             "jobSetup": {
-                "mpptA1": "",
-                "mpptA2": "",
+                "mpptA1": "11",
+                "mpptA2": "11",
                 "mpptB1": "",
                 "mpptB2": "",
-                "monitoring": "",
+                "monitoring": "On",
                 "backup": 0,
-                "phases": "3"
+                "phases": "1"
             },
             "setupEnphase": {
                 "qrelay": 0,
-                "micro_phases": "3",
+                "micro_phases": "1",
                 "string1L1": "12",
                 "string1L2": "12",
                 "string1L3": "12",
@@ -528,19 +528,19 @@
                 "battery": "",
                 "batteryNumber": "",
                 "blockDiagram": 0,
-                "gateway": 1,
-                "notes": ""
+                "gateway": 0,
+                "notes": "Minimum string lenght with P401: 8 Panels "
             },
             "jobVrise": {
                 "col1Name": "Service main",
                 "col2Name": "Consumer Main",
                 "col3Name": "MSB to Inverter",
-                "lenMsb": "0",
-                "lenService": "0",
+                "lenMsb": "12",
+                "lenService": "15",
                 "lenConsumer": "0",
-                "maxCurrent": "16",
-                "cableSize": "4",
-                "notes": ""
+                "maxCurrent": "36.5",
+                "cableSize": "10",
+                "notes": "Underground Service + Consumer Main"
             }
         }
     },
@@ -835,19 +835,34 @@
             "jobComponents": {
                 "invType": "String",
                 "invManufacturer": "SMA",
-                "invModel": "SB4.0",
+                "invModel": "SB3.0",
                 "panelManufacturer": "LG Electronics",
                 "panelModel": "LG330NB",
                 "panelNumber": ""
             },
-            "jobSetup": {
-                "mpptA1": "",
-                "mpptA2": "",
-                "mpptB1": "",
-                "mpptB2": "",
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "16",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
                 "monitoring": "",
                 "backup": 0,
-                "phases": "1"
+                "notes": ""
             },
             "setupEnphase": {
                 "qrelay": 0,
@@ -859,24 +874,11 @@
                 "string2L2": "",
                 "string2L3": ""
             },
-            "jobExtra": {
-                "existingArray": "",
-                "battery": "",
-                "batteryNumber": "",
-                "blockDiagram": 0,
-                "gateway": 0,
-                "notes": ""
-            },
-            "jobVrise": {
-                "col1Name": "Service main",
-                "col2Name": "Consumer Main",
-                "col3Name": "MSB to Inverter",
-                "lenMsb": "0",
-                "lenService": "0",
-                "lenConsumer": "0",
-                "maxCurrent": "22",
-                "cableSize": "4",
-                "notes": ""
+            "jobSetup": {
+                "mpptA1": "",
+                "mpptA2": "1",
+                "mpptB1": "",
+                "mpptB2": ""
             }
         }
     },
@@ -897,7 +899,7 @@
                 "panelNumber": "36"
             },
             "jobSetup": {
-                "mpptA1": "12",
+                "mpptA1": "13",
                 "mpptA2": "12",
                 "mpptB1": "",
                 "mpptB2": "",
@@ -933,6 +935,400 @@
                 "maxCurrent": "45.5",
                 "cableSize": "10",
                 "notes": ""
+            }
+        }
+    },
+    {
+        "26459": {
+            "jobInfo": {
+                "clientName": "Mansfield, Mark\n",
+                "jobNumber": "26459",
+                "siteName": "10 Kariba Close Macquarie Hills",
+                "numMsbPhases": "1"
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "Fronius",
+                "invModel": "P8.2",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG365N",
+                "panelNumber": "22"
+            },
+            "jobSetup": {
+                "mpptA1": "7",
+                "mpptA2": "7",
+                "mpptB1": "8",
+                "mpptB2": "",
+                "monitoring": "",
+                "backup": 0,
+                "phases": "1"
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "notes": ""
+            },
+            "jobVrise": {
+                "col1Name": "",
+                "col2Name": "",
+                "col3Name": "",
+                "lenMsb": "8",
+                "lenService": "12",
+                "lenConsumer": "0",
+                "maxCurrent": "35.7",
+                "cableSize": "10",
+                "notes": ""
+            }
+        }
+    },
+    {
+        "26476": {
+            "jobInfo": {
+                "clientName": "Roberts, James\n",
+                "jobNumber": "26476",
+                "siteName": "83 Catherine Way Daruka",
+                "numMsbPhases": "3"
+            },
+            "jobComponents": {
+                "invType": "Hybrid",
+                "invManufacturer": "Sonnen",
+                "invModel": "H9.53/5.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "22"
+            },
+            "jobSetup": {
+                "mpptA1": "3",
+                "mpptA2": "",
+                "mpptB1": "11",
+                "mpptB2": "",
+                "monitoring": "3",
+                "backup": 0,
+                "phases": "1"
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "11",
+                "string1L3": "11",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobExtra": {
+                "existingArray": "3",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 1,
+                "notes": ""
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverterses",
+                "lenMsb": "10",
+                "lenService": "147",
+                "lenConsumer": "0",
+                "maxCurrent": "20",
+                "cableSize": "6",
+                "notes": "Service and Consumer Main are underground"
+            }
+        }
+    },
+    {
+        "26342": {
+            "jobInfo": {
+                "clientName": "Lai, Jim (Man Kit)\n",
+                "jobNumber": "26342",
+                "siteName": "58 Woodward St Merewether",
+                "numMsbPhases": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "SB6.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG365N",
+                "panelNumber": "22"
+            },
+            "jobSetup": {
+                "mpptA1": "2",
+                "mpptA2": "2",
+                "mpptB1": "2",
+                "mpptB2": "",
+                "monitoring": "On",
+                "backup": 0,
+                "phases": "1"
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "notes": ""
+            },
+            "jobVrise": {
+                "col1Name": "Service main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter",
+                "lenMsb": "0",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "maxCurrent": "26.1",
+                "cableSize": "4",
+                "notes": ""
+            }
+        }
+    },
+    {
+        "25778": {
+            "jobInfo": {
+                "clientName": " Harper, Sven",
+                "jobNumber": "25778",
+                "siteName": "40 Canterbury Dr",
+                "numMsbPhases": "3"
+            },
+            "jobComponents": {
+                "invType": "Hybrid",
+                "invManufacturer": "Sonnen",
+                "invModel": "H9.53/5.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "\n1"
+            },
+            "jobSetup": {
+                "mpptA1": "4",
+                "mpptA2": "",
+                "mpptB1": "11",
+                "mpptB2": "",
+                "monitoring": "On",
+                "backup": 0,
+                "phases": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobExtra": {
+                "existingArray": "4",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "notes": ""
+            },
+            "jobVrise": {
+                "col1Name": "",
+                "col2Name": "",
+                "col3Name": "",
+                "lenMsb": "",
+                "lenService": "",
+                "lenConsumer": "",
+                "maxCurrent": "",
+                "cableSize": "",
+                "notes": ""
+            }
+        }
+    },
+    {
+        "26463": {
+            "jobInfo": {
+                "clientName": "Martin, Clem\n",
+                "jobNumber": "26463",
+                "siteName": "4 Suncroft St Chisholm",
+                "numMsbPhases": "3"
+            },
+            "jobComponents": {
+                "invType": "Hybrid",
+                "invManufacturer": "Sonnen",
+                "invModel": "H9.53/5.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG365N",
+                "panelNumber": "18"
+            },
+            "jobSetup": {
+                "mpptA1": "9",
+                "mpptA2": "",
+                "mpptB1": "9",
+                "mpptB2": "",
+                "monitoring": "",
+                "backup": 0,
+                "phases": "1"
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "notes": ""
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter",
+                "lenMsb": "15",
+                "lenService": "12",
+                "lenConsumer": "0",
+                "maxCurrent": "20",
+                "cableSize": "6",
+                "notes": ""
+            }
+        }
+    },
+    {
+        "26442": {
+            "jobInfo": {
+                "clientName": " Talarico, Brent ",
+                "jobNumber": "26442",
+                "siteName": "34A Lakeview St, Boolaroo",
+                "numMsbPhases": "3"
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "SE6000H",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "22"
+            },
+            "jobSetup": {
+                "mpptA1": "11",
+                "mpptA2": "9",
+                "mpptB1": "",
+                "mpptB2": "",
+                "monitoring": "3",
+                "backup": 0,
+                "phases": "1"
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "notes": ""
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter",
+                "lenMsb": "10",
+                "lenService": "12",
+                "lenConsumer": "0",
+                "maxCurrent": "27.5",
+                "cableSize": "6",
+                "notes": ""
+            }
+        }
+    },
+    {
+        "26485": {
+            "jobInfo": {
+                "clientName": "Diamoy, Karmel\n",
+                "jobNumber": "26485",
+                "siteName": "32 Hillgate Drive Thornton",
+                "numMsbPhases": "1"
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "SB3.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "21"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main1",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "3",
+                "phasesMsb": "",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "16",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "monitoring": "",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "",
+                "mpptA2": "",
+                "mpptB1": "",
+                "mpptB2": ""
             }
         }
     }
