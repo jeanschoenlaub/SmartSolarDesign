@@ -1,14 +1,17 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import filedialog
 import tkinter.ttk as ttk
 import math
 import webbrowser
+import fitz  # this is pymupdf
 
 import databases.constants as constants
 
 from gui.save_manager import save_job,load_job
 
-from hcb.read_quote import get_txtfile_info
+from import_info.read_txt import get_txtfile_info
+from import_info.read_pdf import get_pdf_info
 
 class Page(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -61,6 +64,7 @@ class PageInfo(Page):
 
        #list of buttons
        self.butt_find_job = ttk.Button(self, text="Find", command=self.find_job,style='my.TButton')
+       self.butt_import_pdf = ttk.Button(self, text="PDF", command=self.read_pdf,style='my.TButton')
        self.butt_datasheet_inv = ttk.Button(self, text="Datasheet Link", command=self.datasheet_inv,style='my.TButton')
        self.butt_datasheet_panel = ttk.Button(self, text="Datasheet Link", command=self.datasheet_panel,style='my.TButton')
 
@@ -92,6 +96,7 @@ class PageInfo(Page):
        self.ent_job_number.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=1, sticky="w")
        self.ent_job_number.bind('<Return>', self.find_job)
        self.butt_find_job.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=2, sticky="w")
+       self.butt_import_pdf.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=3, sticky="w")
 
 
        # Create the Label and Entry widgets for "MSB Phases""
@@ -248,6 +253,9 @@ class PageInfo(Page):
        self.job_dict["jobComponents"]["invModel"] = self.combobox_inv_model.get()
        self.job_dict["jobComponents"]["invManufacturer"]= self.combobox_inv_manufacturer.get()
        self.job_dict["jobInfo"]["numMsbPhases"] = self.ent_num_msb_phases.get()
+       if self.ent_num_msb_phases.get() == "":
+           tk.messagebox.showinfo(parent=self,title="Error - Number of MSB phase required",message = "The number of MSB phases was not specified", icon="warning")
+           return "rollback"
        self.job_dict["jobExtra"]["backup"] = self.var_backup.get()
        self.job_dict["setupEnphase"]["qrelay"] = self.var_relay.get()
        self.job_dict["jobExtra"]["battery"] = self.combobox_battery.get()
@@ -311,6 +319,15 @@ class PageInfo(Page):
        panel_model=self.combobox_panel_model.get()
        url = self.panel_dict[panel_manufacturer][panel_model]["Url"]
        webbrowser.open(url)
+
+   def read_pdf(self,*args):
+       pdf_file = filedialog.askopenfilename(title = "Select input pdf",initialdir = "/Users/Jean/Downloads")
+       with fitz.open(pdf_file) as doc:
+           text = ""
+           for page in doc:
+               text += page.getText()
+       get_pdf_info(text,self.job_dict)
+       self.insert_values()
 
    def find_job(self,*args):
        job_number=self.ent_job_number.get()

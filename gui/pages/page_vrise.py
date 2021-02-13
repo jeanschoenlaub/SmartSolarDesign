@@ -139,9 +139,9 @@ class PageVrise(Page):
        lbl_l7_right = ttk.Label(self, text=Am3)
        lbl_l7_right.grid(row=constants.ROW_AM_ENT_PGVRISE, column=3)
 
-       Vdp1 = "{:.2f}".format(int(self.ent_serv_len.get())*float(self.ent_imax_serv.get())/int(Am1))
-       Vdp2 = "{:.2f}".format(int(self.ent_cons_len.get())*float(self.ent_imax_cons.get())/int(Am2))
-       Vdp3 = "{:.2f}".format(float(self.ent_msb_len.get())*float(self.ent_imax_msb.get())/int(Am3))
+       Vdp1 = "{:.2f}".format(int(self.ent_serv_len.get())*float(self.new_imax_phase1)/int(Am1))
+       Vdp2 = "{:.2f}".format(int(self.ent_cons_len.get())*float(self.new_imax_phase2)/int(Am2))
+       Vdp3 = "{:.2f}".format(float(self.ent_msb_len.get())*float(self.new_imax_phase3)/int(Am3))
 
        #Coloring text in red/green if over/under limits
        if float(Vdp1)<1:
@@ -279,7 +279,6 @@ class PageVrise(Page):
        inv_model = self.job_dict["jobComponents"]["invModel"]
 
        if self.var_lock_imax_phase == 0:#Only happens once on instance
-            print("A")
             self.var_lock_imax_phase=1
             if inv_type != "Micro":
                 self.new_imax_phase1 = self.inv_dict[inv_type][inv_manu][inv_model]["IOutMax"]
@@ -412,11 +411,13 @@ class PageVrise(Page):
    def link_serv_wire_ccc(self,job_dict):
        ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_serv_wire_size.get()]
        lbl_ccc2 = ttk.Label(self, text=ccc_serv).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=1,pady=2)
+       self.combobox_serv_wire_size.selection_clear()
        self.calculate_Vrise()
 
    def link_cons_wire_ccc(self,job_dict):
        ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_cons_wire_size.get()]
        lbl_ccc3 = ttk.Label(self, text=ccc_cons).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2,pady=2)
+       self.combobox_cons_wire_size.selection_clear()
        self.calculate_Vrise()
 
    def link_msb_wire_ccc(self,job_dict):

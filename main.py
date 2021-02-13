@@ -5,11 +5,14 @@ import math
 from ttkthemes import ThemedStyle
 from tkinter import filedialog
 
+
+
 from gui.save_manager import save_job,load_user_pref,save_user_pref
 from gui.pages.page_info import PageInfo
 from gui.pages.page_vrise import PageVrise
 from gui.pages.page_layout import PageString,PageSonnen,PageSolarEdge,PageEnphase
 from gui.pages.pop_up_pages import ConfigBlockDiag, ConfigVrise
+
 
 from databases.my_dictionaries import job_dict,empty_job_dict,batt_dict
 from databases.inverter_dictionaries import inv_dict
@@ -134,12 +137,15 @@ class MainView(tk.Frame):
         if self.current_page == 1:
 
             self.current_page = 2
-            self.job_dict = self.page_info.submit_job_info()
-            self.page_v_rise = PageVrise(self)
-            self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
-            self.page_v_rise.lift()
-            self.page_v_rise.show_entries(self.job_dict,self.user_pref,inv_dict)
-            self.page_v_rise.fill_Vrise(self.job_dict,inv_dict,self.user_pref)
+            if self.page_info.submit_job_info() == "rollback":
+                self.current_page = 1
+            else:
+                self.job_dict = self.page_info.submit_job_info()
+                self.page_v_rise = PageVrise(self)
+                self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
+                self.page_v_rise.lift()
+                self.page_v_rise.show_entries(self.job_dict,self.user_pref,inv_dict)
+                self.page_v_rise.fill_Vrise(self.job_dict,inv_dict,self.user_pref)
 
 
 
