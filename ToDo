@@ -35,6 +35,9 @@ Easy/Medium:
 
     - Connect the inv phases to Vrise calculations
 
+    - Need to rework the panel dict to include full model name as key
+
+    - Think about couloring in red the critical info as well as warning message to make more user friendly
 
 Hard:
 
