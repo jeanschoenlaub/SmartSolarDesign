@@ -39,9 +39,12 @@ Easy/Medium:
 
     - Think about couloring in red the critical info as well as warning message to make more user friendly
 
+    - Add the panel serial to Excel sheets and find panel serials 
+
 Hard:
 
-    -Page Redo:
+    - Add another page after layout where you choose what you want
+    - Page Redo:
       -Separate page 1-2 and page 3 so that each excel template as his own layout page (i.e template specific folder)
         -> I think Voltage rise needs to come last
         -> down the road they will be the downloadable extension
