@@ -326,7 +326,7 @@ class PageInfo(Page):
            text = ""
            for page in doc:
                text += page.getText()
-       get_pdf_info(text,self.job_dict)
+       get_pdf_info(text,self.job_dict,self.panel_dict,self.inv_dict)
        self.insert_values()
 
    def find_job(self,*args):

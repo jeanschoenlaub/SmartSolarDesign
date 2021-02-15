@@ -778,10 +778,10 @@
             },
             "jobComponents": {
                 "invType": "String",
-                "invManufacturer": "SMA",
-                "invModel": "SB3.0",
+                "invManufacturer": "SolarEdge",
+                "invModel": "SE8000H",
                 "panelManufacturer": "LG Electronics",
-                "panelModel": "LG330NB",
+                "panelModel": "LG370M",
                 "panelNumber": "36 "
             },
             "jobVrise": {
@@ -791,20 +791,20 @@
                 "phasesService": "1",
                 "phasesConsumer": "1",
                 "phasesMsb": "1",
-                "lenService": "0",
+                "lenService": "20",
                 "lenConsumer": "0",
-                "lenMsb": "0",
-                "maxCurrent": "16",
-                "cableSize": "4",
+                "lenMsb": "10",
+                "maxCurrent": "36.5",
+                "cableSize": "10",
                 "notes": ""
             },
             "jobExtra": {
-                "existingArray": "",
+                "existingArray": "5",
                 "battery": "",
                 "batteryNumber": "",
                 "blockDiagram": 0,
                 "gateway": 0,
-                "monitoring": "",
+                "monitoring": "1",
                 "backup": 0,
                 "notes": ""
             },
@@ -819,8 +819,8 @@
                 "string2L3": ""
             },
             "jobSetup": {
-                "mpptA1": "11",
-                "mpptA2": "",
+                "mpptA1": "12",
+                "mpptA2": "12",
                 "mpptB1": "",
                 "mpptB2": ""
             }
@@ -1330,6 +1330,64 @@
                 "mpptA1": "11",
                 "mpptA2": "11",
                 "mpptB1": "",
+                "mpptB2": ""
+            }
+        }
+    },
+    {
+        "24543": {
+            "jobInfo": {
+                "clientName": "David Jordan",
+                "jobNumber": "24543",
+                "siteName": "39 Billabong Parade, Chisholm, NSW 2322",
+                "numMsbPhases": "3"
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "SE10K-AUB",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "36 "
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "3",
+                "phasesConsumer": "3",
+                "phasesMsb": "3",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "8",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "monitoring": "3",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "12",
+                "mpptA2": "",
+                "mpptB1": "12",
                 "mpptB2": ""
             }
         }
