@@ -42,7 +42,7 @@ class PageInfo(Page):
        self.combobox_battery = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
        self.ent_num_battery = ttk.Entry(self, width=3,style="my.TEntry") #only called if battery checkbox (i.e dynamic)
        self.ent_monitoring = ttk.Entry(self, width=3,style="my.TEntry") #only called if monitoring checkbox  (i.e dynamic)
-       self.ent_notes =  ttk.Entry(self, width= 50,style="my.TEntry")
+       self.ent_notes =  ttk.Entry(self, width= 45,style="my.TEntry")
 
        #list of the variables used
        self.var_monitoring = tk.IntVar() # used for the monitoring tickbox
@@ -68,6 +68,11 @@ class PageInfo(Page):
        self.butt_datasheet_inv = ttk.Button(self, text="Datasheet Link", command=self.datasheet_inv,style='my.TButton')
        self.butt_datasheet_panel = ttk.Button(self, text="Datasheet Link", command=self.datasheet_panel,style='my.TButton')
 
+       #List of images
+       self.title_info = tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/Titles/InfoTitle.png")
+       self.title_components = tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/Titles/ComponentsTitle.png")
+       self.title_extras = tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/Titles/ExtrasTitle.png")
+
        #This may be improved but rn needed to link the comboboxes
        self.inv_dict = ""
        self.batt_dict = ""
@@ -83,65 +88,71 @@ class PageInfo(Page):
        self.panel_dict = panel_dict
 
        #Client information section
-       lbl_title1 = ttk.Label(self, text="                   Job Information",font='Helvetica 14 bold').grid(row = constants.ROW_TITLE_1_PGINFO,columnspan=4,pady=constants.TITLE_PADY_PGINFO)
+       #lbl_empty_space0 = ttk.Label(self, text = "").grid(row = constants.ROW_EMPTY0_PGINFO,columnspan=5)
+       lbl_title1 = ttk.Label(self, image = self.title_info)
+       lbl_title1.grid(row = constants.ROW_TITLE_1_PGINFO,columnspan=5)
        # Create the Label and Entry widgets for "Client Name"
-       lbl_client_name = ttk.Label(self, text="Client Name:").grid(row=constants.ROW_CLIENT_NAME_PGINFO, column=0, sticky="e")
-       self.ent_client_name.grid(row=constants.ROW_CLIENT_NAME_PGINFO, column=1,columnspan=3,sticky="w")#Then insert the value we got from the text file in function insert_values()
+       lbl_client_name = ttk.Label(self, text="Client Name:").grid(row=constants.ROW_CLIENT_NAME_PGINFO, column=1, sticky="e")
+       self.ent_client_name.grid(row=constants.ROW_CLIENT_NAME_PGINFO, column=2,columnspan=3,sticky="w")#Then insert the value we got from the text file in function insert_values()
        # Create the Label and Entry widgets for "Site"
        lbl_site = ttk.Label(self, text="Site:")
-       lbl_site.grid(row=constants.ROW_SITE_ADDRESS_PGINFO, column=0, sticky="e")
-       self.ent_site.grid(row=constants.ROW_SITE_ADDRESS_PGINFO, column=1,columnspan=3,sticky="w")
+       lbl_site.grid(row=constants.ROW_SITE_ADDRESS_PGINFO, column=1, sticky="e")
+       self.ent_site.grid(row=constants.ROW_SITE_ADDRESS_PGINFO, column=2,columnspan=3,sticky="w")
        # Create the Label and Entry widgets for "Job number"
-       lbl_job_number = ttk.Label(self, text="Job number:").grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=0, sticky="e")
-       self.ent_job_number.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=1, sticky="w")
+       lbl_job_number = ttk.Label(self, text="Job number:").grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=1, sticky="e")
+       self.ent_job_number.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=2, sticky="w")
        self.ent_job_number.bind('<Return>', self.find_job)
-       self.butt_find_job.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=2, sticky="w")
-       self.butt_import_pdf.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=3, sticky="w")
+       self.butt_find_job.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=3, sticky="w")
+       self.butt_import_pdf.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=4, sticky="w")
 
 
        # Create the Label and Entry widgets for "MSB Phases""
-       lbl_msb_phases = ttk.Label(self, text="MSB phases:").grid(row=constants.ROW_MSB_PHASES_PGINFO, column=0, sticky="e")
-       self.ent_num_msb_phases.grid(row=constants.ROW_MSB_PHASES_PGINFO, column=1, sticky="w")
+       lbl_msb_phases = ttk.Label(self, text="MSB phases:").grid(row=constants.ROW_MSB_PHASES_PGINFO, column=1, sticky="e")
+       self.ent_num_msb_phases.grid(row=constants.ROW_MSB_PHASES_PGINFO, column=2, sticky="w")
 
 
        #Job Components Section
-       lbl_title2 = ttk.Label(self, text="                   Job Components",font='Helvetica 14 bold').grid(row=constants.ROW_TITLE_2_PGINFO, columnspan=5,pady=constants.TITLE_PADY_PGINFO)
+       lbl_empty_space1 = ttk.Label(self, text = "").grid(row = constants.ROW_EMPTY1_PGINFO,columnspan=5,pady=constants.EMPTY_PADY_PGINFO)
+       lbl_title2 = ttk.Label(self, image = self.title_components)
+       lbl_title2.grid(row = constants.ROW_TITLE_2_PGINFO,columnspan=5)
        # Create the Label and Entry widgets for "Panels"
-       lbl_panels = ttk.Label(self, text="Panel Manufacturer:").grid(row=constants.ROW_PANEL_MANUFACTURER_PGINFO, column=0, sticky="e")
+       lbl_panels = ttk.Label(self, text="Panel Manufacturer:").grid(row=constants.ROW_PANEL_MANUFACTURER_PGINFO, column=1, sticky="e")
        self.combobox_panel_manufacturer['values']=list(panel_dict.keys())
        self.combobox_panel_manufacturer.current(0)
        self.combobox_panel_manufacturer.bind("<<ComboboxSelected>>", self.link_panel_manufacturer_to_model)
-       self.combobox_panel_manufacturer.grid(row=constants.ROW_PANEL_MANUFACTURER_PGINFO, column=1, sticky="w")
-       lbl_panel_model = ttk.Label(self, text="Panel Model:").grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=0, sticky="e")
+       self.combobox_panel_manufacturer.grid(row=constants.ROW_PANEL_MANUFACTURER_PGINFO, column=2, sticky="w")
+       lbl_panel_model = ttk.Label(self, text="Panel Model:").grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=1, sticky="e")
        self.combobox_panel_model['values']=list(panel_dict["LG Electronics"].keys())
        self.combobox_panel_model.current(0)
-       self.combobox_panel_model.grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=1, sticky="w")
-       lbl_panel_number = ttk.Label(self, text="Number:").grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=0, sticky="e")
-       self.ent_panel_number.grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=1,pady=2,sticky="w")
+       self.combobox_panel_model.grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=2, sticky="w")
+       lbl_panel_number = ttk.Label(self, text="Number:").grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=1, sticky="e")
+       self.ent_panel_number.grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=2,pady=2,sticky="w")
        #Setup of the inverter type dropdown menu
-       lbl_inv_type = ttk.Label(self, text="Inverter type:").grid(row=constants.ROW_INV_TYPE_PGINFO, column=2, sticky="e")
+       lbl_inv_type = ttk.Label(self, text="Inverter type:").grid(row=constants.ROW_INV_TYPE_PGINFO, column=3, sticky="e")
        self.combobox_inv_type['values']=list(inv_dict.keys())
        self.combobox_inv_type.current(0)
        self.combobox_inv_type.bind("<<ComboboxSelected>>", self.link_invtype_manufacturer)
-       self.combobox_inv_type.grid(row=constants.ROW_INV_TYPE_PGINFO, column=3, sticky="w")
+       self.combobox_inv_type.grid(row=constants.ROW_INV_TYPE_PGINFO, column=4, sticky="w")
        #Setup of the inverter manufacturer dropdown menu
-       lbl_inv_manu = ttk.Label(self, text="            Manufacturer:").grid(row=constants.ROW_INV_MANUFACTURER_PGINFO, column=2, sticky="e")#Extra space to have more room in between panels and  inverter selection
+       lbl_inv_manu = ttk.Label(self, text="            Manufacturer:").grid(row=constants.ROW_INV_MANUFACTURER_PGINFO, column=3, sticky="e")#Extra space to have more room in between panels and  inverter selection
        self.combobox_inv_manufacturer['values']=list(inv_dict["String"].keys())
        self.combobox_inv_manufacturer.current(0)
        self.combobox_inv_manufacturer.bind("<<ComboboxSelected>>", self.link_manufacturer_model)
-       self.combobox_inv_manufacturer.grid(row=constants.ROW_INV_MANUFACTURER_PGINFO, column=3, sticky="w")
+       self.combobox_inv_manufacturer.grid(row=constants.ROW_INV_MANUFACTURER_PGINFO, column=4, sticky="w")
        #Setup of the inverter model dropdown menu
        lbl_inv_model = ttk.Label(self, text="Model:")
-       lbl_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=2, sticky="e")
+       lbl_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=3, sticky="e")
        self.combobox_inv_model['values']=list(inv_dict["String"]["SMA"].keys())
        self.combobox_inv_model.current(0)
-       self.combobox_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=3, sticky="w")
+       self.combobox_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=4, sticky="w")
        #Setup datasheet buttons
-       self.butt_datasheet_panel.grid(row=constants.ROW_BUTT_DATASHEET_PGINFO, column=0,columnspan=2)
-       self.butt_datasheet_inv.grid(row=constants.ROW_BUTT_DATASHEET_PGINFO, column=2,columnspan=2)
+       self.butt_datasheet_panel.grid(row=constants.ROW_BUTT_DATASHEET_PGINFO, column=1,columnspan=3)
+       self.butt_datasheet_inv.grid(row=constants.ROW_BUTT_DATASHEET_PGINFO, column=4,sticky="w")
 
        # Extra option section
-       lbl_title3 = ttk.Label(self, text="                   Extra Options",font='Helvetica 14 bold').grid(row=constants.ROW_TITLE_3_PGINFO, columnspan=4,pady=constants.TITLE_PADY_PGINFO)
+       lbl_empty_space2 = ttk.Label(self, text = "").grid(row = constants.ROW_EMPTY2_PGINFO,columnspan=5,pady=constants.EMPTY_PADY_PGINFO)
+       lbl_title3 = ttk.Label(self, image = self.title_extras)
+       lbl_title3.grid(row = constants.ROW_TITLE_3_PGINFO,columnspan=5)
        #Placement of the checkboxes
        self.check_monitoring.grid(row=constants.ROW_MONITORING_PGINFO, column = constants.COL_MONITORING_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
        self.check_existing_array.grid(row=constants.ROW_EXISTING_ARRAY_PGINFO, column = constants.COL_EXISTING_ARRAY_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
@@ -149,8 +160,12 @@ class PageInfo(Page):
        self.check_block_diag.grid(row=constants.ROW_BLOCK_DIAGRAM_PGINFO, column = constants.COL_BLOCK_DIAGRAM_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
        self.check_gateway.grid(row=constants.ROW_GATEWAY_PGINFO, column = constants.COL_GATEWAY_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
        lbl_notes = ttk.Label(self, text="SLD Notes :").grid(row= constants.ROW_NOTES_PGINFO, column= constants.COL_NOTES_PGINFO, sticky="e",padx=5)
-       self.ent_notes.grid(row=constants.ROW_NOTES_PGINFO,column = constants.COL_NOTES_PGINFO+1,columnspan=3,pady=10)
+       self.ent_notes.grid(row=constants.ROW_NOTES_PGINFO,column = constants.COL_NOTES_PGINFO+1,columnspan=3,pady=10,sticky ="w")
 
+       self.grid_rowconfigure(0, weight=1)
+       self.grid_rowconfigure(constants.ROW_NOTES_PGINFO+1, weight=1)
+       self.grid_columnconfigure(0, weight=1)
+       self.grid_columnconfigure(4, weight=1)
 
    def link_panel_manufacturer_to_model(self,*args): #Function called upon choosing an inverter type from the combobox
         self.combobox_panel_model['values']=list(self.panel_dict[self.combobox_panel_manufacturer.get()].keys())
@@ -182,8 +197,8 @@ class PageInfo(Page):
 
    def existing_array_param(self,*args):
        if self.var_existing_array.get() == 1:
-           self.lbl_existing_array.grid(row=constants.ROW_EXISTING_ARRAY_PGINFO, column=1,sticky="e")
-           self.ent_existing_array.grid(row=constants.ROW_EXISTING_ARRAY_PGINFO, column=2,sticky="w")
+           self.lbl_existing_array.grid(row=constants.ROW_EXISTING_ARRAY_PGINFO, column=2,sticky="e")
+           self.ent_existing_array.grid(row=constants.ROW_EXISTING_ARRAY_PGINFO, column=3,sticky="w")
        if self.var_existing_array.get() == 0:
            self.lbl_existing_array.grid_remove()
            self.ent_existing_array.grid_remove()
@@ -191,8 +206,8 @@ class PageInfo(Page):
 
    def monitoring_param(self,*args):
        if self.var_monitoring.get() == 1:
-           self.lbl_monitoring.grid(row=constants.ROW_MONITORING_PGINFO, column=1, sticky="e")
-           self.ent_monitoring.grid(row=constants.ROW_MONITORING_PGINFO, column=2,sticky="w")
+           self.lbl_monitoring.grid(row=constants.ROW_MONITORING_PGINFO, column=2, sticky="e")
+           self.ent_monitoring.grid(row=constants.ROW_MONITORING_PGINFO, column=3,sticky="w")
        else:
            self.lbl_monitoring.grid_remove()
            self.ent_monitoring.grid_remove()
@@ -295,7 +310,8 @@ class PageInfo(Page):
         self.ent_notes.delete(0, 'end')
 
         self.combobox_inv_type.current(0)
-        self.combobox_panels.current(0)
+        self.combobox_panel_manufacturer.current(0)
+        self.combobox_panel_model.current(0)
         self.combobox_inv_model.current(0)
         self.combobox_inv_manufacturer.current(0)
 

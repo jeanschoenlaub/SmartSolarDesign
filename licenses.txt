@@ -1,1 +1,12 @@
+
+Softwares:
+
+pyInstaller : https://github.com/pyinstaller/pyinstaller/blob/develop/COPYING.txt
+pyUpdater: https://www.pyupdater.org/license/
+
+
+Images:
+
 For the lock icon: License: Linkware (Backlink to http://www.iconsmind.com required)
+For the app icon: https://iconarchive.com/show/simple-green-icons-by-simplefly/solar-energy-icon.html
+For the menu background : https://www.buildings.com/articles/27862/do-solar-panels-work-bad-weatherss

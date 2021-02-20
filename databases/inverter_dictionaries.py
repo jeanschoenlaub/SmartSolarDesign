@@ -383,6 +383,7 @@ solar_edge_5KAUB_dict= {
 "Manufacturer" :"SolarEdge",
 "ImaxInput":"14",
 "Pdcmax":"6750",
+"PmaxString":"5625",
 "MaxInputVoltage":"450",
 "Url":"https://www.solaredge.com/sites/default/files/se-three-phase-hybrid-inverter-datasheet-aus.pdf"
 }
@@ -395,6 +396,7 @@ solar_edge_7KAUB_dict= {
 "Manufacturer" :"SolarEdge",
 "ImaxInput":"19.5",
 "Pdcmax":"9450",
+"PmaxString":"5625",
 "MaxInputVoltage":"450",
 "Url":"https://www.solaredge.com/sites/default/files/se-three-phase-hybrid-inverter-datasheet-aus.pdf"
 }
@@ -402,11 +404,12 @@ solar_edge_7KAUB_dict= {
 solar_edge_825KAUB_dict= {
 "Model":"SE8.25K-AUB",
 "P":"8.25",
-"IOutMax":"22",
+"IOutMax":"13.5",
 "Phases":"3",
 "Manufacturer" :"SolarEdge",
 "ImaxInput":"22",
 "Pdcmax":"11135",
+"PmaxString":"5625",
 "MaxInputVoltage":"450",
 "Url":"https://www.solaredge.com/sites/default/files/se-three-phase-hybrid-inverter-datasheet-aus.pdf"
 }
@@ -414,11 +417,12 @@ solar_edge_825KAUB_dict= {
 solar_edge_10KAUB_dict= {
 "Model":"SE10K-AUB",
 "P":"10",
-"IOutMax":"8",
+"IOutMax":"16",
 "Phases":"3",
 "Manufacturer" :"SolarEdge",
 "ImaxInput":"28",
 "Pdcmax":"13500",
+"PmaxString":"5625",
 "MaxInputVoltage":"450",
 "Url":"https://www.solaredge.com/sites/default/files/se-three-phase-hybrid-inverter-datasheet-aus.pdf"
 }

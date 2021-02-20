@@ -66,28 +66,32 @@ def print_string_inverter(job_dict,panel_dict,inv_dict):
     wsParam.range("B19").value = inv_dict[inv_type][invmanufacturer][invmodel]["Manufacturer"]
     wsParam.range("B20").value = inv_dict[inv_type][invmanufacturer][invmodel]["Model"]#full model name
     wsParam.range("B21").value = inv_dict[inv_type][invmanufacturer][invmodel]["Phases"]
-    wsParam.range("B22").value = inv_dict[inv_type][invmanufacturer][invmodel]["IOutMax"]
+    wsParam.range("B22").value = job_dict["jobVrise"]["maxCurrent"]
     wsParam.range("B23").value = inv_dict[inv_type][invmanufacturer][invmodel]["P"]
     wsParam.range("B24").value = job_dict["jobSetup"]["mpptA1"]
     wsParam.range("B25").value = job_dict["jobSetup"]["mpptA2"]
     wsParam.range("B26").value = job_dict["jobSetup"]["mpptB1"]
     wsParam.range("B27").value = job_dict["jobSetup"]["mpptB2"]
-    wsParam.range("B28").value = job_dict["jobExtra"]["monitoring"]
+    wsParam.range("B28").value = job_dict["jobSetup"]["mpptA3"]
+    wsParam.range("B29").value = job_dict["jobSetup"]["mpptA4"]
+    wsParam.range("B30").value = job_dict["jobSetup"]["mpptB3"]
+    wsParam.range("B31").value = job_dict["jobSetup"]["mpptB4"]
+    wsParam.range("B32").value = job_dict["jobExtra"]["monitoring"]
     #Vrise information
-    wsParam.range("B30").value = job_dict["jobVrise"]["lenService"]
-    wsParam.range("B31").value = job_dict["jobVrise"]["lenConsumer"]
-    wsParam.range("B32").value = job_dict["jobVrise"]["lenMsb"]
-    wsParam.range("B33").value = job_dict["jobVrise"]["cableSize"]
-    wsParam.range("B34").value = job_dict["jobVrise"]["notes"]
-    wsParam.range("B35").value = job_dict["jobVrise"]["col1Name"]
-    wsParam.range("B36").value = job_dict["jobVrise"]["col2Name"]
-    wsParam.range("B37").value = job_dict["jobVrise"]["col3Name"]
+    wsParam.range("B34").value = job_dict["jobVrise"]["lenService"]
+    wsParam.range("B35").value = job_dict["jobVrise"]["lenConsumer"]
+    wsParam.range("B36").value = job_dict["jobVrise"]["lenMsb"]
+    wsParam.range("B37").value = job_dict["jobVrise"]["cableSize"]
+    wsParam.range("B38").value = job_dict["jobVrise"]["notes"]
+    wsParam.range("B39").value = job_dict["jobVrise"]["col1Name"]
+    wsParam.range("B40").value = job_dict["jobVrise"]["col2Name"]
+    wsParam.range("B41").value = job_dict["jobVrise"]["col3Name"]
     #Extra Information
-    wsParam.range("B39").value = job_dict["jobExtra"]["existingArray"]
-    wsParam.range("B40").value = job_dict["jobExtra"]["notes"]
+    wsParam.range("B43").value = job_dict["jobExtra"]["existingArray"]
+    wsParam.range("B44").value = job_dict["jobExtra"]["notes"]
 
     #Optional writes
-    if "blockDiagram" in job_dict:
+    if job_dict["jobExtra"]["blockDiagram"] == 1:
         wsParam.range("D2").value = 1
         wsParam.range("D3").value =job_dict["blockDiagram"]["block1"]
         wsParam.range("D4").value =job_dict["blockDiagram"]["line1up"]
@@ -310,7 +314,7 @@ def print_gateway(job_dict,panel_dict,inv_dict):
     wsParam.range("B30").value = job_dict["jobVrise"]["lenMsb"]
     wsParam.range("B31").value = job_dict["jobVrise"]["cableSize"]
     wsParam.range("B32").value = job_dict["jobVrise"]["maxCurrent"]
-    wsParam.range("B33").value = job_dict["jobSetup"]["phases"]
+    #wsParam.range("B33").value = job_dict["jobSetup"]["phases"]
     wsParam.range("B34").value = job_dict["jobVrise"]["notes"]
 
     #For the string inverters

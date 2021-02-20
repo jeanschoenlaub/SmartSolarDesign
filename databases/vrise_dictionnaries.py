@@ -64,6 +64,54 @@ ccc_1p_xlpe_cu_complete_thermal_insulation_dict={
 "35":"72"
 }
 
+ccc_3p_thermo_cu_touching_dict={
+"1":"12",
+"1.5":"15",
+"2.5":"22",
+"4":"29",
+"6":"37",
+"10":"51",
+"16":"68",
+"25":"91",
+"35":"112"
+}
+
+ccc_3p_thermo_cu_wiring_enclosure_in_air={
+"1":"11",
+"1.5":"14",
+"2.5":"19",
+"4":"24",
+"6":"32",
+"10":"43",
+"16":"57",
+"25":"73",
+"35":"92"
+}
+
+ccc_3p_thermo_cu_partial_thermal_insulation_dict={
+"1":"9",
+"1.5":"11",
+"2.5":"16",
+"4":"20",
+"6":"26",
+"10":"35",
+"16":"47",
+"25":"60",
+"35":"75"
+}
+
+ccc_3p_thermo_cu_complete_thermal_insulation_dict={
+"1":"5",
+"1.5":"7",
+"2.5":"10",
+"4":"13",
+"6":"16",
+"10":"22",
+"16":"29",
+"25":"38",
+"35":"47"
+}
+
 ccc_1p_xlpe_cu_dict= {
 "Touching":ccc_1p_xlpe_cu_touching_dict,
 "ExposedToSun":ccc_1p_xlpe_cu_exposed_sun_dict,
@@ -71,17 +119,31 @@ ccc_1p_xlpe_cu_dict= {
 "CompleteThermalInsulation":ccc_1p_xlpe_cu_complete_thermal_insulation_dict
 }
 
-ccc_1p_xlpe_al_dict={
-"":""
+
+ccc_3p_thermo_cu_dict= {
+"Touching":ccc_3p_thermo_cu_touching_dict,
+"ExposedToSun":ccc_3p_thermo_cu_wiring_enclosure_in_air,
+"PartialThermalInsulation":ccc_3p_thermo_cu_partial_thermal_insulation_dict,
+"CompleteThermalInsulation":ccc_3p_thermo_cu_complete_thermal_insulation_dict
+}
+
+ccc_1p_xlpe_dict={
+"Cu":ccc_1p_xlpe_cu_dict,
+"Al":""
+}
+
+ccc_3p_thermo_dict={
+"Cu":ccc_3p_thermo_cu_dict,
+"Al":"",
+"Ref":"Table 13"
 }
 
 ccc_1p_dict ={
-"XlpeCu":ccc_1p_xlpe_cu_dict,
-"XlpeAL":ccc_1p_xlpe_al_dict
+"Xlpe":ccc_1p_xlpe_dict,
 }
 
 ccc_3p_dict={
-"":""
+"Thermoplastic":ccc_3p_thermo_dict,
 }
 
 ccc_dict= {

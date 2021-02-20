@@ -1,48 +1,37 @@
-
-
-Urgent:
-
-- Upgrade the job dict
-
 Bugs:
 
 - Dst loc bugs on first use
 
-In progress:
 
-- Upgrade the inverter selection bar:
-  -> Make a 1P - 3P button (stays blue when pressed) that helps shortens the inverter list
-
-
-Easy/Medium:
-
-    -Improve the show limits function + !!! Voc & Vmp options
-
-    -Vrise upgrade:
-        -> Add conductor choice option
-
-    - Upgrade the menuBar
-
-    - Voc to be adjusted for temperature (Idea include table 4.1 of 5033)
-
-    - Overcurrent protection devices sizing
+Before Beta:
+    - Vrise Finish:
+        -> Make CCC work
 
     - Center the layout pages
 
-    - Tickbox for Logo
+    - Add the panel serial to Excel sheets and find panel serials
 
-    - 4th string for string inverters
+    - Terms and conditions
 
+    - DATETIME SAVE
+    - Account Settings:
+      -Accreditation
+      -Username
+      -Password
+
+    - Drawn check Design in account
+
+After Beta:
+    - Design Type : Preliminary Design/As-Built
+    - Upgrade the menuBar
+    - Voc to be adjusted for temperature (Idea include table 4.1 of 5033)
     - Connect the inv phases to Vrise calculations
-
-    - Need to rework the panel dict to include full model name as key
-
     - Think about couloring in red the critical info as well as warning message to make more user friendly
-
-    - Add the panel serial to Excel sheets and find panel serials 
-
-Hard:
-
+    - Vrise page to show 4777 regulations
+    - Overcurrent protection devices sizing
+    - Improve the show limits function + !!! Voc & Vmp options
+    - Upgrade the inverter selection bar:
+      -> Make a 1P - 3P button (stays blue when pressed) that helps shortens the inverter list
     - Add another page after layout where you choose what you want
     - Page Redo:
       -Separate page 1-2 and page 3 so that each excel template as his own layout page (i.e template specific folder)
@@ -50,28 +39,23 @@ Hard:
         -> down the road they will be the downloadable extension
         -> Maybe the gateway should go into each Template
         -> Same for the excel print function it should be included in the template specific folder
-
       - Have an first menu (after the login):
         -> Option 1 calculate a Vrise
         -> Option 2 make an sld
         -> Option 3 calculate the output
-
     -Change the way the Job dict works to add sections depending on job_Type
-
     -Mixing different Panels
-
     -Problem when saving an error (For example solar edge mppt b1 a2)
-
     -Option to add on to existing inverters
-
     -Battery option -> make a battery_dict
-
     -Current carrying capacity to be improved for all wire type/temp ....
-
-    - Update the job_dict for Vrise to work separately for each phases
+    -Update the job_dict for Vrise to work separately for each phases
 
 
 WOW dure:
+
+ Tickbox for Logo
+
 - Change the way the templates work by separating borders and drawing
 -> give the opportuinity to modify just the drawing if neccesarry
 
