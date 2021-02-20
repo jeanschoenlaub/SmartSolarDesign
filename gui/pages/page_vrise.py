@@ -40,8 +40,8 @@ class PageVrise(Page):
        self.combobox_serv_wire_type = ttk.Combobox(self, values="",justify='center',state='readonly',width=10)
        self.ent_notes =  ttk.Entry(self, width= 50,style="my.TEntry")
 
-       self.locked_image =  tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/button_images/Lock.png")
-       self.unlocked_image = tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/button_images/Unlock.png")
+       self.locked_image =  tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/Buttons/Lock.png")
+       self.unlocked_image = tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/Buttons/Unlock.png")
        self.butt_lock_names = ttk.Button(self, image=self.locked_image, command=self.lock_names,style='my.TButton',width=1)
        self.var_lock_name = 0
        self.butt_lock_inv_phase = ttk.Button(self, image=self.locked_image, command=self.lock_inv_phases,style='my.TButton',width=1)
@@ -167,9 +167,9 @@ class PageVrise(Page):
        lbl_l9_mid.grid(row=constants.ROW_TOTAL_PRC_ENT_PGVRISE, column=2)
 
        try:
-           ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_serv_wire_size.get()]
-           ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_cons_wire_size.get()]
-           ccc_msb = vrise_dictionnaries.ccc_dict[self.new_phase_inv_3]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_msb_wire_size.get()]
+           ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_serv_wire_size.get()]
+           ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_cons_wire_size.get()]
+           ccc_msb = vrise_dictionnaries.ccc_dict[self.new_phase_inv_3]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_msb_wire_size.get()]
            lbl_ccc2 = ttk.Label(self, text=ccc_serv).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=1,pady=2)
            lbl_ccc3 = ttk.Label(self, text=ccc_cons).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2)
            lbl_ccc4 = ttk.Label(self, text=ccc_msb).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=3)
@@ -297,7 +297,7 @@ class PageVrise(Page):
 
        elif self.var_lock_imax_phase == 1:
             self.var_lock_imax_phase=2
-            self.butt_lock_inv_phase.configure(image=self.unlocked_image)
+            self.butt_lock_imax_phase.configure(image=self.unlocked_image)
             self.lbl_new_imax_phase1.grid_forget()
             self.lbl_new_imax_phase2.grid_forget()
             self.lbl_new_imax_phase3.grid_forget()
@@ -312,7 +312,7 @@ class PageVrise(Page):
             self.ent_new_imax_phase3.grid(row=constants.ROW_IMAX_ENT_PGVRISE, column=3)
        elif self.var_lock_imax_phase == 2:
             self.var_lock_imax_phase=1
-            self.butt_lock_inv_phase.configure(image=self.locked_image)
+            self.butt_lock_imax_phase.configure(image=self.locked_image)
             self.new_imax_phase1 = self.ent_new_imax_phase1.get()
             self.new_imax_phase2 = self.ent_new_imax_phase2.get()
             self.new_imax_phase3 = self.ent_new_imax_phase3.get()
@@ -409,18 +409,18 @@ class PageVrise(Page):
 
 
    def link_serv_wire_ccc(self,job_dict):
-       ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_serv_wire_size.get()]
+       ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_serv_wire_size.get()]
        lbl_ccc2 = ttk.Label(self, text=ccc_serv).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=1,pady=2)
        self.combobox_serv_wire_size.selection_clear()
        self.calculate_Vrise()
 
    def link_cons_wire_ccc(self,job_dict):
-       ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_cons_wire_size.get()]
+       ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_cons_wire_size.get()]
        lbl_ccc3 = ttk.Label(self, text=ccc_cons).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2,pady=2)
        self.combobox_cons_wire_size.selection_clear()
        self.calculate_Vrise()
 
    def link_msb_wire_ccc(self,job_dict):
-       ccc_msb = vrise_dictionnaries.ccc_dict[self.new_phase_inv_3]["XlpeCu"]["CompleteThermalInsulation"][self.combobox_msb_wire_size.get()]
+       ccc_msb = vrise_dictionnaries.ccc_dict[self.new_phase_inv_3]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_msb_wire_size.get()]
        lbl_ccc4 = ttk.Label(self, text=ccc_msb).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=3)
        self.calculate_Vrise()

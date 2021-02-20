@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 import tkinter.ttk as ttk
 import math
+import datetime
 
 import databases.constants as constants
-
 
 
 class Page(tk.Frame):
@@ -170,6 +170,10 @@ class PageString(Page):
         webbrowser.open(url)
 
    def submit_inv_setup(self,job_dict): #Called when next paged is pressed
+
+       #if job_dict["jobInfo"]["creationTimestamp"] == "":
+           #job_dict["jobInfo"]["creationTimestamp"] = datetime.datetime.now()
+
        error_parra_string = True
        if self.ent_mppt_a_2.get() != "" and self.ent_mppt_a_1.get()=="":
            error_parra_string=tk.messagebox.askyesno(parent=self,title="Layout Error",message="You have inputed a parrallel string, but the main string is empty, are you sure you want to continue ?",icon="warning")
@@ -346,11 +350,8 @@ class PageSolarEdge(Page):
    def submit_inv_setup(self,job_dict,inv_dict):
        inv_model= job_dict["jobComponents"]["invModel"]
        job_dict["jobSetup"]["mpptA1"] = self.ent_string_1.get()
-
-       if inv_dict["String"]["SolarEdge"][inv_model]["Phases"] == "1":  # Condition so that 3P SE inverters use both mppt
-           job_dict["jobSetup"]["mpptA2"] = self.ent_string_2.get()
-       else:
-           job_dict["jobSetup"]["mpptB1"] = self.ent_string_2.get()
+       job_dict["jobSetup"]["mpptA2"] = self.ent_string_2.get()
+       job_dict["jobSetup"]["mpptA3"] = self.ent_string_3.get()
 
    def show_limits(self,job_dict,inv_dict,panel_dict):#shows the min and max number of panels in a String
         #list of parameters used to calculate the max and min number of panels
@@ -381,20 +382,12 @@ class PageSolarEdge(Page):
         self.ent_string_1.insert(0,job_dict["jobSetup"]["mpptA1"])
         if job_dict["jobSetup"]["mpptA2"] != "":
             self.ent_string_2.delete(0, 'end')
-            if inv_dict["String"]["SolarEdge"][inv_model]["Phases"] == "1":  # Condition so that 3P SE inverters use both mppt
-                self.ent_string_2.insert(0,job_dict["jobSetup"]["mpptA2"])
-                job_dict["jobSetup"]["mpptB1"] = "" #Prevents a bug, should be useless with new dict
-            else:
-                self.ent_string_2.insert(0,job_dict["jobSetup"]["mpptB1"])
-                job_dict["jobSetup"]["mpptA2"] = "" #Prevents a bug, should be useless with new dict
-            self.number_string_mpptA=1
+            self.ent_string_2.insert(0,job_dict["jobSetup"]["mpptA2"])
             self.add_string_mpptA()
-            if job_dict["jobSetup"]["mpptB1"] != "":
+            if job_dict["jobSetup"]["mpptA3"] != "":
                 self.ent_string_3.delete(0, 'end')
-                self.ent_string_3.insert(0,job_dict["jobSetup"]["mpptA2"])
+                self.ent_string_3.insert(0,job_dict["jobSetup"]["mpptA3"])
                 self.add_string_mpptA()
-
-
 
 
 class PageSonnen(Page):

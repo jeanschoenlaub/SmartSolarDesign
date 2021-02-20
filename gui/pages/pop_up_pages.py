@@ -15,13 +15,13 @@ class ConfigBlockDiag(tk.Toplevel):
         self.schema= tk.Canvas(self, width=1000, height=400, highlightthickness=0, bg=constants.set_baground_for_theme())
 
         #List of Entries
-        self.ent_b1 = ttk.Entry(self.schema,width=9,style="my.TEntry")
-        self.ent_l1a = ttk.Entry(self.schema,width=15,style="my.TEntry")
-        self.ent_l1b = ttk.Entry(self.schema,width=15,style="my.TEntry")
-        self.ent_b2 = ttk.Entry(self.schema,width=9,style="my.TEntry")
-        self.ent_l2a = ttk.Entry(self.schema,width=15,style="my.TEntry")
-        self.ent_l2b = ttk.Entry(self.schema,width=15,style="my.TEntry")
-        self.ent_b3 = ttk.Entry(self.schema,width=9,style="my.TEntry")
+        self.ent_b1 = ttk.Entry(self.schema,width=9,style="my.TEntry",justify = "center")
+        self.ent_l1a = ttk.Entry(self.schema,width=15,style="my.TEntry",justify = "center")
+        self.ent_l1b = ttk.Entry(self.schema,width=15,style="my.TEntry",justify = "center")
+        self.ent_b2 = ttk.Entry(self.schema,width=9,style="my.TEntry",justify = "center")
+        self.ent_l2a = ttk.Entry(self.schema,width=15,style="my.TEntry",justify = "center")
+        self.ent_l2b = ttk.Entry(self.schema,width=15,style="my.TEntry",justify = "center")
+        self.ent_b3 = ttk.Entry(self.schema,width=9,style="my.TEntry",justify = "center")
 
         self.var_include = tk.IntVar()
         self.var_usr_pref = tk.IntVar()
@@ -64,11 +64,12 @@ class ConfigBlockDiag(tk.Toplevel):
 
         self.lbl_note = ttk.Label(self.schema, text="Add a note:",font='Helvetica 14 bold')
         self.schema.create_window(100,240,window=self.lbl_note)
-        self.ent_note = ttk.Entry(self.schema,width=50)
+        self.ent_note = ttk.Entry(self.schema,style="my.TEntry",width=50)
         self.schema.create_window(400,240,window=self.ent_note)
 
-        self.check_block_diag= ttk.Checkbutton(self.schema, text="Include in the design",variable=self.var_include)
-        self.schema.create_window(370,280,window= self.check_block_diag)
+        if job_dict["jobInfo"]["numMsbPhases"] != "":
+            self.check_block_diag= ttk.Checkbutton(self.schema, text="Include in the design",variable=self.var_include)
+            self.schema.create_window(370,280,window= self.check_block_diag)
         self.check_save_pref= ttk.Checkbutton(self.schema, text="Save entries as Template",variable=self.var_usr_pref)
         self.schema.create_window(570,280,window= self.check_save_pref)
 
@@ -93,15 +94,15 @@ class ConfigBlockDiag(tk.Toplevel):
 
     def submit_bd(self,job_dict,user_pref):
         if self.var_include.get() ==1:
-            job_dict["blockDiagram"]={}
-            job_dict["blockDiagram"]["block1"]=self.ent_b1.get()
-            job_dict["blockDiagram"]["line1up"]=self.ent_l1a.get()
-            job_dict["blockDiagram"]["line1down"]=self.ent_l1b.get()
-            job_dict["blockDiagram"]["block2"]=self.ent_b2.get()
-            job_dict["blockDiagram"]["line2up"]=self.ent_l2a.get()
-            job_dict["blockDiagram"]["line2down"]=self.ent_l2b.get()
-            job_dict["blockDiagram"]["block3"]=self.ent_b3.get()
-            job_dict["blockDiagram"]["note"]=self.ent_note.get()
+            job_dict["jobExtra"]["blockDiagram"]={}
+            job_dict["jobExtra"]["blockDiagram"]["block1"]=self.ent_b1.get()
+            job_dict["jobExtra"]["blockDiagram"]["line1up"]=self.ent_l1a.get()
+            job_dict["jobExtra"]["blockDiagram"]["line1down"]=self.ent_l1b.get()
+            job_dict["jobExtra"]["blockDiagram"]["block2"]=self.ent_b2.get()
+            job_dict["jobExtra"]["blockDiagram"]["line2up"]=self.ent_l2a.get()
+            job_dict["jobExtra"]["blockDiagram"]["line2down"]=self.ent_l2b.get()
+            job_dict["jobExtra"]["blockDiagram"]["block3"]=self.ent_b3.get()
+            job_dict["jobExtra"]["blockDiagram"]["note"]=self.ent_note.get()
 
         if self.var_usr_pref.get()==1:
             user_pref["blockDiagram"]={}
@@ -120,7 +121,7 @@ class ConfigBlockDiag(tk.Toplevel):
         self.destroy()
 
     def clear_bd(self,job_dict):
-        del job_dict["blockDiagram"]
+        del job_dict["jobExtra"]["blockDiagram"]
         self.destroy()
 
 class ConfigVrise(tk.Toplevel):
@@ -138,28 +139,31 @@ class ConfigVrise(tk.Toplevel):
 
     def show_layout(self,user_pref):
 
-        print(user_pref)
-
-        lbl_title1 = ttk.Label(self, text="                 Configuring Automatic Entries",font='Helvetica 14 bold').grid(row = 0,columnspan=4,pady=5)
+        lbl_title1 = ttk.Label(self, text="                 Configuring Automatic Entries",font='Helvetica 14 bold').grid(row = 1,columnspan=6,pady=5)
 
         #3 first rows for configuring the automatic fills for Vrise
-        lbl_col1 = ttk.Label(self, text="Column 1 Auto-entry:").grid(row = 1,column=0)
-        self.ent_col1_auto.grid(row=1,column=1, sticky="e")
-        lbl_col2= ttk.Label(self, text="Column 2 Auto-entry:").grid(row = 2,column=0)
-        self.ent_col2_auto.grid(row=2,column=1, sticky="e")
-        lbl_col3 = ttk.Label(self, text="Column 3 Auto-entry:").grid(row = 3,column=0)
-        self.ent_col3_auto.grid(row=3,column=1, sticky="e")
+        lbl_col1 = ttk.Label(self, text="Column 1 Auto-entry:").grid(row = 2,column=1)
+        self.ent_col1_auto.grid(row=2,column=2, sticky="e")
+        lbl_col2= ttk.Label(self, text="Column 2 Auto-entry:").grid(row = 3,column=1)
+        self.ent_col2_auto.grid(row=3,column=2, sticky="e")
+        lbl_col3 = ttk.Label(self, text="Column 3 Auto-entry:").grid(row = 4,column=1)
+        self.ent_col3_auto.grid(row=4,column=2, sticky="e")
 
-        lbl_title1 = ttk.Label(self, text="                 Configuring Automatic Entries",font='Helvetica 14 bold').grid(row = 4,columnspan=4,pady=5)
+        lbl_title1 = ttk.Label(self, text="                 Configuring Automatic Entries",font='Helvetica 14 bold').grid(row = 5,columnspan=6,pady=5)
 
         #Then this will be where you can select the wire type (ANSZ )
 
-        lbl_note = ttk.Label(self, text="Note: To apply the changes, you will need to reload the page (use Previous/Next)",font='Helvetica 12 italic').grid(row = 9,columnspan=4,pady=5)
+        lbl_note = ttk.Label(self, text="Note: To apply the changes, you will need to reload the page (use Previous/Next)",font='Helvetica 12 italic').grid(row = 10,columnspan=6,pady=5)
         #Creating the buttons
         self.butt_finish = ttk.Button(self, text="   Finish   ", command=lambda: self.submit_vr(user_pref))
-        self.butt_finish.grid(row=10,column=4,sticky="e",padx=10,pady=5)
+        self.butt_finish.grid(row=11,column=4,sticky="e",padx=10,pady=5)
         self.butt_cancel = ttk.Button(self, text="   Cancel   ", command=self.cancel_vr)
-        self.butt_cancel.grid(row=10,column=0,sticky="w",padx=10,pady=5)
+        self.butt_cancel.grid(row=11,column=1,sticky="w",padx=10,pady=5)
+
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(8, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(5, weight=1)
 
         self.fill_vr(user_pref)#Fills the entries created with the stored values in user_pref dict
 
