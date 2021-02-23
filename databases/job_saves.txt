@@ -60,29 +60,92 @@
                 "clientName": "Bob",
                 "jobNumber": "26309",
                 "siteName": "71 Imaginary Road, Sydney",
-                "numMsbPhases": "3",
+                "numMsbPhases": "1",
                 "creationTimestamp": ""
             },
             "jobComponents": {
-                "invType": "Micro",
-                "invManufacturer": "Enphase",
-                "invModel": "IQ7A",
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "SB6.0",
                 "panelManufacturer": "LG Electronics",
-                "panelModel": "LG370M",
+                "panelModel": "LG365M",
                 "panelNumber": "24 "
             },
             "jobVrise": {
                 "col1Name": "Service Main",
                 "col2Name": "Consumer Main",
-                "col3Name": "MSB to Inverter(s)",
-                "phasesService": "3",
-                "phasesConsumer": "3",
-                "phasesMsb": "3",
-                "lenService": "10",
+                "col3Name": "MSB to Inverter",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "12",
                 "lenConsumer": "4",
-                "lenMsb": "12",
+                "lenMsb": "10",
                 "maxCurrent": "26.1",
                 "cableSize": "6",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "monitoring": "1",
+                "backup": 0,
+                "notes": "This is a fictive example"
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "12",
+                "string1L2": "0",
+                "string1L3": "12",
+                "string2L1": "10",
+                "string2L2": "0",
+                "string2L3": "10"
+            },
+            "jobSetup": {
+                "mpptA1": "7",
+                "mpptA2": "7",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "10",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "": {
+            "jobInfo": {
+                "clientName": "",
+                "jobNumber": "",
+                "siteName": "",
+                "numMsbPhases": "3",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "SB3.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG330NB",
+                "panelNumber": ""
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "16",
+                "cableSize": "4",
                 "notes": ""
             },
             "jobExtra": {
@@ -98,19 +161,19 @@
             "setupEnphase": {
                 "qrelay": 0,
                 "micro_phases": "3",
-                "string1L1": "12",
-                "string1L2": "12",
-                "string1L3": "12",
-                "string2L1": "10",
-                "string2L2": "10",
-                "string2L3": "10"
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
             },
             "jobSetup": {
-                "mpptA1": "7",
-                "mpptA2": "7",
+                "mpptA1": "3",
+                "mpptA2": "",
                 "mpptA3": "",
                 "mpptA4": "",
-                "mpptB1": "10",
+                "mpptB1": "3",
                 "mpptB2": "",
                 "mpptB3": "",
                 "mpptB4": ""

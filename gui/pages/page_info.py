@@ -124,6 +124,7 @@ class PageInfo(Page):
        lbl_panel_model = ttk.Label(self, text="Panel Model:").grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=1, sticky="e")
        self.combobox_panel_model['values']=list(panel_dict["LG Electronics"].keys())
        self.combobox_panel_model.current(0)
+       self.combobox_panel_model.bind("<<ComboboxSelected>>", self.panel_model_dehighlight)
        self.combobox_panel_model.grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=2, sticky="w")
        lbl_panel_number = ttk.Label(self, text="Number:").grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=1, sticky="e")
        self.ent_panel_number.grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=2,pady=2,sticky="w")
@@ -144,6 +145,7 @@ class PageInfo(Page):
        lbl_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=3, sticky="e")
        self.combobox_inv_model['values']=list(inv_dict["String"]["SMA"].keys())
        self.combobox_inv_model.current(0)
+       self.combobox_inv_model.bind("<<ComboboxSelected>>", self.inv_model_dehighlight)
        self.combobox_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=4, sticky="w")
        #Setup datasheet buttons
        self.butt_datasheet_panel.grid(row=constants.ROW_BUTT_DATASHEET_PGINFO, column=1,columnspan=3)
@@ -166,6 +168,12 @@ class PageInfo(Page):
        self.grid_rowconfigure(constants.ROW_NOTES_PGINFO+1, weight=1)
        self.grid_columnconfigure(0, weight=1)
        self.grid_columnconfigure(4, weight=1)
+
+   def inv_model_dehighlight(self,*args):
+        self.combobox_inv_model.selection_clear()
+
+   def panel_model_dehighlight(self,*args):
+        self.combobox_panel_model.selection_clear()
 
    def link_panel_manufacturer_to_model(self,*args): #Function called upon choosing an inverter type from the combobox
         self.combobox_panel_model['values']=list(self.panel_dict[self.combobox_panel_manufacturer.get()].keys())
