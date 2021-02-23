@@ -15,7 +15,13 @@ class Page(tk.Frame):
 class PageString(Page):
    def __init__(self, *args, **kwargs,):
        Page.__init__(self, *args, **kwargs)
-       self.inv= tk.Canvas(self, width=constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT, height=600, highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
+
+       self.title_layout = tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/Titles/LayoutTitle.png")
+
+       lbl_title1 = ttk.Label(self, image = self.title_layout)
+       lbl_title1.grid(row = 1 ,column=1)
+
+       self.inv= tk.Canvas(self, width=constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT, height=400, highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
 
 
 
@@ -30,7 +36,7 @@ class PageString(Page):
            centered_canvas_y = (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_STRING_PGLAYOUT)/2
        else:
            centered_canvas_y = 0
-       self.inv.grid(row=0,columnspan=4,sticky="nsew", padx=centered_canvas_x,pady=centered_canvas_y)
+       self.inv.grid(row=2,column=1,sticky="nsew", padx=centered_canvas_x,pady=centered_canvas_y)
 
        self.number_string_mpptA = 1
        self.number_string_mpptB = 1
@@ -59,10 +65,6 @@ class PageString(Page):
        #mpptB3
        self.ent_mppt_b_3 = ttk.Entry(self.inv,width =4,style="my.TEntry")
 
-       #Adding the title
-       lbl_title = ttk.Label(self.inv, text="Layout",font='Helvetica 16 bold',)
-       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2,constants.Y_POS_CANV_TITLE_PGLAYOUT,window=lbl_title)
-
        #Functions that dinamically add and remove strings
        self.butt_add_string_mpptA = ttk.Button(self, text="+", command=self.add_string_mpptA,style='my.TButton',width=1)
        self.inv.create_window(self.delta_x+550, constants.HEIGHT_STRING_MPPTA_STRING_PGLAYOUT,window=self.butt_add_string_mpptA)
@@ -78,6 +80,11 @@ class PageString(Page):
        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 -150,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+50,window=self.butt_datasheet_inv)
        self.butt_datasheet_panel = ttk.Button(self, text="Panel Datasheet Link", command=self.datasheet_panel,style='my.TButton')
        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 +150,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+50,window=self.butt_datasheet_panel)
+
+       self.grid_rowconfigure(0, weight=1)
+       self.grid_rowconfigure(3, weight=1)
+       self.grid_columnconfigure(0, weight=1)
+       self.grid_columnconfigure(3, weight=1)
 
    def add_string_mpptA(self,*args):
         if self.number_string_mpptA == 1:
