@@ -143,7 +143,7 @@ ccc_1p_dict ={
 }
 
 ccc_3p_dict={
-"Thermoplastic":ccc_3p_thermo_dict,
+"Thermo":ccc_3p_thermo_dict,
 }
 
 ccc_dict= {

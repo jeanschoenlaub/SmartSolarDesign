@@ -164,6 +164,7 @@ class MainViewSld(tk.Frame):
             self.page_v_rise = PageVrise(self)
             self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
             self.page_v_rise.show_entries(self.job_dict,self.user_pref,inv_dict)
+            self.page_v_rise.fill_Vrise(self.job_dict,inv_dict,self.user_pref)
             self.page_v_rise.lift()
             self.current_page = 2
 

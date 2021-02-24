@@ -67,9 +67,8 @@ class ConfigBlockDiag(tk.Toplevel):
         self.ent_note = ttk.Entry(self.schema,style="my.TEntry",width=50)
         self.schema.create_window(400,240,window=self.ent_note)
 
-        if job_dict["jobInfo"]["numMsbPhases"] != "":
-            self.check_block_diag= ttk.Checkbutton(self.schema, text="Include in the design",variable=self.var_include)
-            self.schema.create_window(370,280,window= self.check_block_diag)
+        self.check_block_diag= ttk.Checkbutton(self.schema, text="Include in the design",variable=self.var_include)
+        self.schema.create_window(370,280,window= self.check_block_diag)
         self.check_save_pref= ttk.Checkbutton(self.schema, text="Save entries as Template",variable=self.var_usr_pref)
         self.schema.create_window(570,280,window= self.check_save_pref)
 
