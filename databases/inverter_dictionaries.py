@@ -238,6 +238,38 @@ fronius_p8_2_dict = {
 "Url":"https://www.fronius.com/en-au/australia/solar-energy/installers-partners/technical-data/all-products/inverters/fronius-primo/fronius-primo-8-2-1"
 }
 
+fronius_s5_3M_dict = {
+"Model":"Symo 5.0-3-M",
+"P":"5",
+"IOutMax":"7.2",
+"Phases":"3",
+"Manufacturer" :"Fronius",
+"Mppt_a_input":"2",
+"Mppt_a_i_max":"16",
+"Mppt_b_input":"2",
+"Mppt_b_i_max":"16",
+"Vmin":"150",
+"Vmax":"600",
+"Pdcmax":"10000",
+"Url":"https://www.fronius.com/en-au/australia/solar-energy/installers-partners/technical-data/all-products/inverters/fronius-symo/fronius-symo-6-0-3-m"
+}
+
+fronius_s6_3M_dict = {
+"Model":"Symo 6.0-3-M",
+"P":"6",
+"IOutMax":"8.7",
+"Phases":"3",
+"Manufacturer" :"Fronius",
+"Mppt_a_input":"2",
+"Mppt_a_i_max":"16",
+"Mppt_b_input":"2",
+"Mppt_b_i_max":"16",
+"Vmin":"150",
+"Vmax":"600",
+"Pdcmax":"12000",
+"Url":"https://www.fronius.com/en-au/australia/solar-energy/installers-partners/technical-data/all-products/inverters/fronius-symo/fronius-symo-6-0-3-m"
+}
+
 solar_edge_2500_dict = {
 "Model":"SE2500H",
 "P":"2.5",
@@ -502,7 +534,9 @@ Fronius_dict = {
 "P4.6":fronius_p4_6_dict,
 "P5.0":fronius_p5_dict,
 "P6.0":fronius_p6_dict,
-"P8.2":fronius_p8_2_dict
+"P8.2":fronius_p8_2_dict,
+"S5.0":fronius_s5_3M_dict,
+"S6.0":fronius_s6_3M_dict,
 }
 
 Solar_edge_dict = {

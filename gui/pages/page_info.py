@@ -50,14 +50,12 @@ class PageInfo(Page):
        self.var_relay = tk.IntVar() # used for the enphhase qrelay tickbox
        self.var_existing_array = tk.IntVar()  # used for the existing array tickbox
        self.var_battery = tk.IntVar()  # used for the battery tickbox
-       self.var_block_diagram = tk.IntVar()  # used for the block diagram tickbox
        self.var_gateway = tk.IntVar()  # used for the block diagram tickbox
 
        #list of tickoxes used
        self.check_monitoring = ttk.Checkbutton(self, text="Monitoring:",variable=self.var_monitoring,command=self.monitoring_param)
        self.check_existing_array = ttk.Checkbutton(self, text="Existing array",variable=self.var_existing_array,command = self.existing_array_param)
        self.check_battery=ttk.Checkbutton(self, text="Battery:",variable=self.var_battery,command=self.battery_param)
-       self.check_block_diag = ttk.Checkbutton(self, text="Block Diagram",variable=self.var_block_diagram)
        self.check_gateway = ttk.Checkbutton(self, text="Gateway:",variable=self.var_gateway)
        self.check_back_up = ttk.Checkbutton(self, text="Back-up", variable=self.var_backup)
        self.check_relay = ttk.Checkbutton(self, text="1P relay", variable=self.var_relay)
@@ -159,7 +157,6 @@ class PageInfo(Page):
        self.check_monitoring.grid(row=constants.ROW_MONITORING_PGINFO, column = constants.COL_MONITORING_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
        self.check_existing_array.grid(row=constants.ROW_EXISTING_ARRAY_PGINFO, column = constants.COL_EXISTING_ARRAY_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
        self.check_battery.grid(row=constants.ROW_BATTERY_PGINFO, column = constants.COL_BATTERY_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
-       self.check_block_diag.grid(row=constants.ROW_BLOCK_DIAGRAM_PGINFO, column = constants.COL_BLOCK_DIAGRAM_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
        self.check_gateway.grid(row=constants.ROW_GATEWAY_PGINFO, column = constants.COL_GATEWAY_CHK_PGINFO, sticky="w",pady=2,padx=constants.PADX_CHK_PGINFO)
        lbl_notes = ttk.Label(self, text="SLD Notes :").grid(row= constants.ROW_NOTES_PGINFO, column= constants.COL_NOTES_PGINFO, sticky="e",padx=5)
        self.ent_notes.grid(row=constants.ROW_NOTES_PGINFO,column = constants.COL_NOTES_PGINFO+1,columnspan=3,pady=10,sticky ="w")
@@ -283,7 +280,6 @@ class PageInfo(Page):
        self.job_dict["setupEnphase"]["qrelay"] = self.var_relay.get()
        self.job_dict["jobExtra"]["battery"] = self.combobox_battery.get()
        self.job_dict["jobExtra"]["batteryNumber"] = self.ent_num_battery.get()
-       self.job_dict["jobExtra"]["blockDiagram"] = self.var_block_diagram.get()
        self.job_dict["jobExtra"]["gateway"] = self.var_gateway.get()
        self.job_dict["jobExtra"]["notes"] = self.ent_notes.get()
 
@@ -323,7 +319,6 @@ class PageInfo(Page):
         self.combobox_inv_model.current(0)
         self.combobox_inv_manufacturer.current(0)
 
-        self.var_block_diagram.set(0)
         self.var_gateway.set(0)
         self.var_backup.set(0)
         self.var_relay.set(0)
@@ -363,5 +358,10 @@ class PageInfo(Page):
            except:
                print("Using Gdrive Values")
        except:
-           tk.messagebox.showinfo(title="Error - Job not found",message = "The job number specified was not found", icon="warning")
+           try:
+               self.job_dict=load_job(job_number)
+               print("Using Saved Values")
+           except:
+              tk.messagebox.showinfo(title="Error - Job not found",message = "The job number specified was not found", icon="warning")
+
        self.insert_values()

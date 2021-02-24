@@ -1,7 +1,7 @@
 #Location constants
 DATABASE_LOC = "/Users/jean/Documents/Dev/SmartSolarDesign/databases/"
 GDRIVE = "/Volumes/GoogleDrive/.shortcut-targets-by-id/0B48f_ri5yfeAcVBIT3M3bTZBTW8/Shared Docs/PROJECTS/Customers - Domestic Jobs"
-EXCEL_LOC = "/Users/jean/Documents/Dev/SmartSolarDesign/excel/ExcelTemplates"
+EXCEL_LOC = "/Users/jean/Documents/Dev/SmartSolarDesign/excel/ExcelTemplatesHCB"
 DESKTOP_LOC = "/Users/jean/Desktop"
 
 #Constants for main.py:

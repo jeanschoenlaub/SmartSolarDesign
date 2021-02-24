@@ -123,7 +123,7 @@
                 "clientName": "",
                 "jobNumber": "",
                 "siteName": "",
-                "numMsbPhases": "3",
+                "numMsbPhases": "1",
                 "creationTimestamp": ""
             },
             "jobComponents": {
@@ -152,6 +152,141 @@
                 "existingArray": "",
                 "battery": "",
                 "batteryNumber": "",
+                "blockDiagram": {
+                    "block1": "MSB",
+                    "line1up": "16 mm^2",
+                    "line1down": "12 m",
+                    "block2": "House DB",
+                    "line2up": "4 mm^2",
+                    "line2down": "10m ",
+                    "block3": " Inv",
+                    "note": ""
+                },
+                "gateway": 0,
+                "monitoring": "",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "",
+                "mpptA2": "",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26523": {
+            "jobInfo": {
+                "clientName": "Nigel Burgess  \nJob: 26523 \nSite: 6 Ringtail Close Belmont \n  \nNigel  Burgess \n  \nDomestic Solar PV  \n\n  \n1 x SE8K-ER-01-AUS - 8.0 kW SolarEdge Inverter (12 Year Warranty) 3 Phase \n22 x LG365N1C-N5.AW1 - LG Electronic - 365W NeON 2 (25 Year Warranty) \n2 x  - BOS - DC Cable Run > Single 4mm 170617 \n22 x  - BOS - DC Per Panel - Optimiser (P401) 170308 \n22 x  - BOS - DC Per Panel 150115 \n1 x  - BOS - AC Three Phase - 4mm 4C+E \n110 x  - STC @$34 per unit \n1 x  - Framing - Tile, 10 Panel \n1 x  - Framing - Tile, 12 Panel \n1 x  - SolarEdge Consumption Monitoring Three Phase 250A \n1 x  - Net Meter Exchange (Retailer) \n \n",
+                "jobNumber": "26523",
+                "siteName": "6 Ringtail Close Belmont ",
+                "numMsbPhases": "3",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "SE8.25K-AUB",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG365N",
+                "panelNumber": "22"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "3",
+                "phasesConsumer": "3",
+                "phasesMsb": "3",
+                "lenService": "12",
+                "lenConsumer": "0",
+                "lenMsb": "14",
+                "maxCurrent": "13.5",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "monitoring": "3",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "10",
+                "mpptA2": "12",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26531": {
+            "jobInfo": {
+                "clientName": "David Smith",
+                "jobNumber": "26531",
+                "siteName": "10 Child Street Mulbring ",
+                "numMsbPhases": "3",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "STP8.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "25"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "3",
+                "phasesConsumer": "3",
+                "phasesMsb": "3",
+                "lenService": "6",
+                "lenConsumer": "60",
+                "lenMsb": "4",
+                "maxCurrent": "12.1",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
                 "blockDiagram": 0,
                 "gateway": 0,
                 "monitoring": "",
@@ -169,11 +304,335 @@
                 "string2L3": ""
             },
             "jobSetup": {
-                "mpptA1": "3",
+                "mpptA1": "12",
                 "mpptA2": "",
                 "mpptA3": "",
                 "mpptA4": "",
-                "mpptB1": "3",
+                "mpptB1": "13",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26519": {
+            "jobInfo": {
+                "clientName": "Linda O'Shea",
+                "jobNumber": "26519",
+                "siteName": "123 Navala Avenue Nelson Bay",
+                "numMsbPhases": "1",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "SB6.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "21"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "7",
+                "lenConsumer": "60",
+                "lenMsb": "4",
+                "maxCurrent": "26.1",
+                "cableSize": "10",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "monitoring": "",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "11",
+                "mpptA2": "",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "10",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26475": {
+            "jobInfo": {
+                "clientName": "Stephen Hopkins",
+                "jobNumber": "26475",
+                "siteName": "80 Essington Way Anna Bay NSW 2316",
+                "numMsbPhases": "1",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "Micro",
+                "invManufacturer": "Enphase",
+                "invModel": "IQ7A",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG370M",
+                "panelNumber": "7"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "0",
+                "lenConsumer": "12",
+                "lenMsb": "10",
+                "maxCurrent": "18.1",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "1.72",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": 0,
+                "gateway": 0,
+                "monitoring": "1",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 1,
+                "micro_phases": 1,
+                "string1L1": "",
+                "string1L2": "7",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "8",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "",
+                "mpptA2": "",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "22222": {
+            "jobInfo": {
+                "clientName": "",
+                "jobNumber": "22222",
+                "siteName": "",
+                "numMsbPhases": "1",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SMA",
+                "invModel": "SB3.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG330NB",
+                "panelNumber": ""
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "16",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": {
+                    "block1": "MSB",
+                    "line1up": "16 mm^2",
+                    "line1down": "12 m",
+                    "block2": "House DB",
+                    "line2up": "4 mm^2",
+                    "line2down": "10m ",
+                    "block3": " Inv",
+                    "note": ""
+                },
+                "gateway": 0,
+                "monitoring": "",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "",
+                "mpptA2": "",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26499": {
+            "jobInfo": {
+                "clientName": "Graham McLaren",
+                "jobNumber": "26499",
+                "siteName": "2 Azapa Lane Pokolbin",
+                "numMsbPhases": "3",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "SE8.25K-AUB",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG365N",
+                "panelNumber": "22"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "3",
+                "phasesConsumer": "3",
+                "phasesMsb": "3",
+                "lenService": "0",
+                "lenConsumer": "24",
+                "lenMsb": "4",
+                "maxCurrent": "13.5",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": "",
+                "gateway": 0,
+                "monitoring": "",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "11",
+                "mpptA2": "11",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26502": {
+            "jobInfo": {
+                "clientName": "Terry Haddow",
+                "jobNumber": "26502",
+                "siteName": "20 Poklobin Street Broadmeadow ",
+                "numMsbPhases": "1",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "Micro",
+                "invManufacturer": "Enphase",
+                "invModel": "IQ7A",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG365N",
+                "panelNumber": "4 "
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "3",
+                "phasesConsumer": "3",
+                "phasesMsb": "3",
+                "lenService": "5",
+                "lenConsumer": "8",
+                "lenMsb": "6",
+                "maxCurrent": "18.3",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "3",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": "",
+                "gateway": 0,
+                "monitoring": "1",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "12",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "4",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "",
+                "mpptA2": "",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
                 "mpptB2": "",
                 "mpptB3": "",
                 "mpptB4": ""

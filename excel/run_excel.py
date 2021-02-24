@@ -91,16 +91,16 @@ def print_string_inverter(job_dict,panel_dict,inv_dict):
     wsParam.range("B44").value = job_dict["jobExtra"]["notes"]
 
     #Optional writes
-    if job_dict["jobExtra"]["blockDiagram"] == 1:
+    if job_dict["jobExtra"]["blockDiagram"] != "":
         wsParam.range("D2").value = 1
-        wsParam.range("D3").value =job_dict["blockDiagram"]["block1"]
-        wsParam.range("D4").value =job_dict["blockDiagram"]["line1up"]
-        wsParam.range("D5").value =job_dict["blockDiagram"]["line1down"]
-        wsParam.range("D6").value =job_dict["blockDiagram"]["block2"]
-        wsParam.range("D7").value =job_dict["blockDiagram"]["line2up"]
-        wsParam.range("D8").value =job_dict["blockDiagram"]["line2down"]
-        wsParam.range("D9").value =job_dict["blockDiagram"]["block3"]
-        wsParam.range("D10").value =job_dict["blockDiagram"]["note"]
+        wsParam.range("D3").value =job_dict["jobExtra"]["blockDiagram"]["block1"]
+        wsParam.range("D4").value =job_dict["jobExtra"]["blockDiagram"]["line1up"]
+        wsParam.range("D5").value =job_dict["jobExtra"]["blockDiagram"]["line1down"]
+        wsParam.range("D6").value =job_dict["jobExtra"]["blockDiagram"]["block2"]
+        wsParam.range("D7").value =job_dict["jobExtra"]["blockDiagram"]["line2up"]
+        wsParam.range("D8").value =job_dict["jobExtra"]["blockDiagram"]["line2down"]
+        wsParam.range("D9").value =job_dict["jobExtra"]["blockDiagram"]["block3"]
+        wsParam.range("D10").value =job_dict["jobExtra"]["blockDiagram"]["note"]
 
 
     #Run Macro Setup
