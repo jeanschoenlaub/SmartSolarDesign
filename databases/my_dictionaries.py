@@ -1,6 +1,6 @@
 job_dict = {
 "jobInfo": {"clientName":"","jobNumber":"", "siteName":"","numMsbPhases":"","creationTimestamp":""},
-"jobComponents": {"invType":"","invManufacturer":"","invModel":"","panelManufacturer":"","panelModel":"","panelNumber":""},
+"jobComponents": {"invType":"","invManufacturer":"","invModel":"","invSerial":"","panelManufacturer":"","panelModel":"","panelNumber":"","panelSerial":""},
 "jobVrise": {"col1Name":"","col2Name":"","col3Name":"","phasesService":"","phasesConsumer":"","phasesMsb":"","lenService":"0","lenConsumer":"0","lenMsb":"0","maxCurrent":"","cableSize":"","notes":""},
 "jobExtra": {"existingArray":"", "battery":"", "batteryNumber":"","blockDiagram":"","gateway":"","monitoring":"","backup":"0","notes":""},
 "setupEnphase" : {"qrelay":"0","micro_phases":"","string1L1":"","string1L2":"","string1L3":"","string2L1":"","string2L2":"","string2L3":""},

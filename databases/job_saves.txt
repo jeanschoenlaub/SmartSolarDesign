@@ -638,5 +638,330 @@
                 "mpptB4": ""
             }
         }
+    },
+    {
+        "26458": {
+            "jobInfo": {
+                "clientName": "Kerry Jones",
+                "jobNumber": "26458",
+                "siteName": "1 Watergum Street East Maitland",
+                "numMsbPhases": "3",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "Tri phase inverter",
+                "invSerial": "SE8.25K-AUB",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "NeON",
+                "panelNumber": "22",
+                "panelSerial": "LG NeON 2 365W"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "3",
+                "phasesConsumer": "3",
+                "phasesMsb": "3",
+                "lenService": "20",
+                "lenConsumer": "6",
+                "lenMsb": "6",
+                "maxCurrent": "20",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "5",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": "",
+                "gateway": 0,
+                "monitoring": "3",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "12",
+                "mpptA2": "10",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "22212": {
+            "jobInfo": {
+                "clientName": "",
+                "jobNumber": "22212",
+                "siteName": "",
+                "numMsbPhases": "1",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "HD wave",
+                "invSerial": "SE2500H",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "NeON",
+                "panelNumber": "22",
+                "panelSerial": "LG NeON 2 355W"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "11.5",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": "",
+                "gateway": 0,
+                "monitoring": "",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "12",
+                "mpptA2": "10",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26533": {
+            "jobInfo": {
+                "clientName": "Neil Ross",
+                "jobNumber": "26533",
+                "siteName": "13 Willow Close Thornton",
+                "numMsbPhases": "3",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "Tri phase inverter",
+                "invSerial": "SE8.25K-AUB",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "MonoX",
+                "panelNumber": "22",
+                "panelSerial": "LG MonoX 370W"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "3",
+                "phasesConsumer": "3",
+                "phasesMsb": "3",
+                "lenService": "0",
+                "lenConsumer": "20",
+                "lenMsb": "4",
+                "maxCurrent": "13.5",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": "",
+                "gateway": 0,
+                "monitoring": "3",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "3",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "12",
+                "mpptA2": "10",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "26444": {
+            "jobInfo": {
+                "clientName": "David Wood",
+                "jobNumber": "26444",
+                "siteName": "42 Homebush Drive Woodberry NSW 2322",
+                "numMsbPhases": "1",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "SolarEdge",
+                "invModel": "HD wave",
+                "invSerial": "SE5000H",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG NeON",
+                "panelNumber": "16",
+                "panelSerial": "LG365N"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "21.9",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": "",
+                "gateway": 0,
+                "monitoring": "",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "8",
+                "mpptA2": "8",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
+    },
+    {
+        "233": {
+            "jobInfo": {
+                "clientName": "Random",
+                "jobNumber": "233",
+                "siteName": "13",
+                "numMsbPhases": "1",
+                "creationTimestamp": ""
+            },
+            "jobComponents": {
+                "invType": "String",
+                "invManufacturer": "Fronius",
+                "invModel": "Primo",
+                "invSerial": "P3.0",
+                "panelManufacturer": "LG Electronics",
+                "panelModel": "LG MonoX",
+                "panelNumber": "12",
+                "panelSerial": "LG370M"
+            },
+            "jobVrise": {
+                "col1Name": "Service Main",
+                "col2Name": "Consumer Main",
+                "col3Name": "MSB to Inverter(s)",
+                "phasesService": "1",
+                "phasesConsumer": "1",
+                "phasesMsb": "1",
+                "lenService": "0",
+                "lenConsumer": "0",
+                "lenMsb": "0",
+                "maxCurrent": "13",
+                "cableSize": "4",
+                "notes": ""
+            },
+            "jobExtra": {
+                "existingArray": "",
+                "battery": "",
+                "batteryNumber": "",
+                "blockDiagram": "",
+                "gateway": 0,
+                "monitoring": "1",
+                "backup": 0,
+                "notes": ""
+            },
+            "setupEnphase": {
+                "qrelay": 0,
+                "micro_phases": "1",
+                "string1L1": "",
+                "string1L2": "",
+                "string1L3": "",
+                "string2L1": "",
+                "string2L2": "",
+                "string2L3": ""
+            },
+            "jobSetup": {
+                "mpptA1": "12",
+                "mpptA2": "",
+                "mpptA3": "",
+                "mpptA4": "",
+                "mpptB1": "12",
+                "mpptB2": "",
+                "mpptB3": "",
+                "mpptB4": ""
+            }
+        }
     }
 ]

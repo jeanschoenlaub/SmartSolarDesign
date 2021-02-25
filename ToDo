@@ -4,30 +4,29 @@ Bugs:
 
 
 Before Beta:
+
     - Vrise Finish:
         -> Make CCC work
 
-    - Center the layout pages
-
-    - Add the panel serial to Excel sheets and find panel serials
-
     - Terms and conditions
 
-    - DATETIME SAVE
     - Account Settings:
-      -Accreditation
+      -Accreditation / Drawn By / Checked By / Approved by
       -Username
       -Password
 
-    - Drawn check Design in account
-
-    - Saving mppt B
+    - Save rework:
+        saving the serials
+        erasing Mppts if changing inverter_dictionaries -> this might just need a dict rework where the job dict is incremented
+        saving the max current for each phase
+        DATETIME SAVE
 
 After Beta:
     - Design Type : Preliminary Design/As-Built
     - Upgrade the menuBar
     - Voc to be adjusted for temperature (Idea include table 4.1 of 5033)
     - Connect the inv phases to Vrise calculations
+    - Saving fav components
     - Think about couloring in red the critical info as well as warning message to make more user friendly
     - Vrise page to show 4777 regulations
     - Overcurrent protection devices sizing

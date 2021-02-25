@@ -29,6 +29,7 @@ class MainViewSld(tk.Frame):
 
         #Variables
         self.current_page = 1 # for navigating between pages
+        self.var_save = 0 #for making sure user saves before going bacvk to menu
 
         #Initilising the 2 frames ( 1 for pages 1 for buttons)
         self.buttonframe = tk.Frame(self,bg=constants.set_baground_for_theme())
@@ -63,7 +64,7 @@ class MainViewSld(tk.Frame):
         b2.pack(side="left", expand=True)
         b3 = tk.Button(self.buttonframe,image=self.settings_image, command=self.settings_page,borderwidth=0)
         b3.pack(side="left", expand=True)
-        b4 = tk.Button(self.buttonframe,image=self.menu_image, command=self.exit_app,borderwidth=0)
+        b4 = tk.Button(self.buttonframe,image=self.menu_image, command=self.exit_sld,borderwidth=0)
         b4.pack(side="left", expand=True)
         b5 = tk.Button(self.buttonframe,image=self.save_image, command=self.save_job_plus_current_page,borderwidth=0)
         b5.pack(side="right", expand=True)
@@ -140,10 +141,10 @@ class MainViewSld(tk.Frame):
         if self.current_page == 1:
 
             self.current_page = 2
-            if self.page_info.submit_job_info() == "rollback":
+            self.job_dict = self.page_info.submit_job_info()
+            if self.job_dict == "rollback":
                 self.current_page = 1
             else:
-                self.job_dict = self.page_info.submit_job_info()
                 self.page_v_rise = PageVrise(self)
                 self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
                 self.page_v_rise.lift()
@@ -161,10 +162,10 @@ class MainViewSld(tk.Frame):
             self.current_page = 1
 
         if self.current_page == 3:
-            self.page_v_rise = PageVrise(self)
-            self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
-            self.page_v_rise.show_entries(self.job_dict,self.user_pref,inv_dict)
-            self.page_v_rise.fill_Vrise(self.job_dict,inv_dict,self.user_pref)
+            # self.page_v_rise = PageVrise(self)
+            # self.page_v_rise.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
+            # self.page_v_rise.show_entries(self.job_dict,self.user_pref,inv_dict)
+            # self.page_v_rise.fill_Vrise(self.job_dict,inv_dict,self.user_pref)
             self.page_v_rise.lift()
             self.current_page = 2
 
@@ -191,7 +192,7 @@ class MainViewSld(tk.Frame):
         self.menuBar.add_cascade(label='File', menu=self.subMenuFile)
         self.subMenuFile.add_command(label='New',  accelerator="Command-N",command=self.new_job)
         self.subMenuFile.add_command(label='Save', accelerator="Command-S",command=self.save_job_plus_current_page)
-        self.subMenuFile.add_command(label='Quit', command=self.exit_app)
+        self.subMenuFile.add_command(label='Quit', command=self.exit_sld)
         self.subMenuFile.add_command(label='Print', accelerator="Command-P", command=self.fast_print)
 
         #The window menu
@@ -223,6 +224,7 @@ class MainViewSld(tk.Frame):
         settings.passing_arguments(self.user_pref,self.job_dict)
 
     def save_job_plus_current_page(self,*args):
+        self.var_save = 1
         if self.current_page == 1:
             self.job_dict=self.page_info.submit_job_info()
         elif self.current_page == 2:
@@ -259,5 +261,12 @@ class MainViewSld(tk.Frame):
         #setting tkinter window size
         self.geometry("%dx%d+0+0" % (width, height))
 
-    def exit_app(self,*args):
-        self.destroy()
+    def exit_sld(self,*args):
+        if self.var_save == 0:
+            MsgBox = tk.messagebox.askquestion (parent= self,title='Quit SLD',message='The job you are currently editing has not been saved. Are you sure you want to quit without saving?',icon = 'warning')
+            if MsgBox == 'yes':
+               self.destroy()
+            else:
+               pass
+        else:
+            self.destroy()

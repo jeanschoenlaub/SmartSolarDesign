@@ -515,18 +515,25 @@ enphase_iq7a_dict={
 "Url":"https://enphase.com/sites/default/files/downloads/support/IQ7A-DS-EN-AU.pdf"
 }
 
-#Dictionary containing all SMA inverters
-SMA_dict ={
+sonnen_hybrid_dict={
+'H9.53/5.0':sonnen_h5_dict,
+'H9.53/10.0':sonnen_h10_dict
+}
+
+sma_sunnyboy_dict={
 "SB3.0":sma_sb3_dict,
 "SB3.6":sma_sb3_6_dict,
 "SB4.0":sma_sb4_dict,
 "SB5.0":sma_sb5_dict,
 "SB6.0":sma_sb6_dict,
+}
+
+sma_stp_dict={
 "STP8.0":sma_stp8_dict,
 "STP10.0":sma_stp10_dict,
 }
 
-Fronius_dict = {
+fronius_primo_dict = {
 "P3.0":fronius_p3_dict,
 "P3.5":fronius_p3_5_dict,
 "P3.6":fronius_p3_6_dict,
@@ -535,11 +542,9 @@ Fronius_dict = {
 "P5.0":fronius_p5_dict,
 "P6.0":fronius_p6_dict,
 "P8.2":fronius_p8_2_dict,
-"S5.0":fronius_s5_3M_dict,
-"S6.0":fronius_s6_3M_dict,
 }
 
-Solar_edge_dict = {
+solar_edge_hdwave_dict = {
 'SE2500H':solar_edge_2500_dict,
 'SE3000H':solar_edge_3000_dict,
 'SE3500H':solar_edge_3500_dict,
@@ -548,6 +553,9 @@ Solar_edge_dict = {
 'SE6000H':solar_edge_6000_dict,
 'SE8000H':solar_edge_8000_dict,
 'SE10000H':solar_edge_10000_dict,
+}
+
+solar_edge_tri_phase_inverter={
 'SE5K':solar_edge_5K_dict,
 'SE5K-AUB':solar_edge_5KAUB_dict,
 'SE7K':solar_edge_7K_dict,
@@ -557,14 +565,38 @@ Solar_edge_dict = {
 'SE10K-AUB':solar_edge_10KAUB_dict
 }
 
+fronius_symo_dict= {
+"S5.0":fronius_s5_3M_dict,
+"S6.0":fronius_s6_3M_dict,
+}
+
+enphase_iq_dict={
+'IQ7+':enphase_iq7plus_dict,
+'IQ7A':enphase_iq7a_dict
+}
+
+#Dictionary containing all SMA inverters
+SMA_dict ={
+"Sunny Boy":sma_sunnyboy_dict,
+"Sunny Tri Power": sma_stp_dict,
+}
+
+Fronius_dict = {
+"Primo":fronius_primo_dict,
+"Symo":fronius_symo_dict,
+}
+
+Solar_edge_dict = {
+"HD wave":solar_edge_hdwave_dict,
+"Tri phase inverter":solar_edge_tri_phase_inverter,
+}
+
 Sonnen_dict = {
-'H9.53/5.0':sonnen_h5_dict,
-'H9.53/10.0':sonnen_h10_dict
+"Hybrid":sonnen_hybrid_dict
 }
 
 Enphase_dict = {
-'IQ7+':enphase_iq7plus_dict,
-'IQ7A':enphase_iq7a_dict
+"IQ":enphase_iq_dict
 }
 
 stringinv_dict={
