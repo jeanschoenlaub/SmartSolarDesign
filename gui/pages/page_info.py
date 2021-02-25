@@ -27,22 +27,27 @@ class PageInfo(Page):
        self.lbl_existing_array = ttk.Label(self, text="Size (kWac):")
        self.lbl_monitoring = ttk.Label(self, text="Monitoring P:")
 
-       #List of all the entries (text entries + comboboxes)
+       #List of all the entries
        self.ent_client_name = ttk.Entry(self, width=45,style="my.TEntry")
        self.ent_site = ttk.Entry(self, width=45,style="my.TEntry")
        self.ent_job_number = ttk.Entry(self, width=14,style="my.TEntry")
        self.ent_panel_number = ttk.Entry(self, width=3,style="my.TEntry")
        self.ent_num_msb_phases = ttk.Entry(self, width=3,style="my.TEntry")
-       self.combobox_panel_manufacturer = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
-       self.combobox_panel_model = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
-       self.combobox_inv_type = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
-       self.combobox_inv_manufacturer = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
-       self.combobox_inv_model = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry" )
+       self.ent_nmi = ttk.Entry(self, width=8,style="my.TEntry")
        self.ent_existing_array = ttk.Entry(self, width=5,style="my.TEntry") #only called if existing array checkbox (i.e dynamic)
        self.combobox_battery = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
        self.ent_num_battery = ttk.Entry(self, width=3,style="my.TEntry") #only called if battery checkbox (i.e dynamic)
        self.ent_monitoring = ttk.Entry(self, width=3,style="my.TEntry") #only called if monitoring checkbox  (i.e dynamic)
        self.ent_notes =  ttk.Entry(self, width= 45,style="my.TEntry")
+
+       #List of Comboboxes
+       self.combobox_panel_serial = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
+       self.combobox_panel_manufacturer = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
+       self.combobox_panel_model = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
+       self.combobox_inv_type = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
+       self.combobox_inv_manufacturer = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry")
+       self.combobox_inv_model = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry" )
+       self.combobox_inv_serial = ttk.Combobox(self, values="", state='readonly',width=15,style="my.TEntry" )
 
        #list of the variables used
        self.var_monitoring = tk.IntVar() # used for the monitoring tickbox
@@ -104,47 +109,64 @@ class PageInfo(Page):
        self.butt_import_pdf.grid(row=constants.ROW_JOB_NUMBER_PGINFO, column=4, sticky="w")
 
 
-       # Create the Label and Entry widgets for "MSB Phases""
+       # Create the Label and Entry widgets for "MSB Phases"" and NMI
        lbl_msb_phases = ttk.Label(self, text="MSB phases:").grid(row=constants.ROW_MSB_PHASES_PGINFO, column=1, sticky="e")
        self.ent_num_msb_phases.grid(row=constants.ROW_MSB_PHASES_PGINFO, column=2, sticky="w")
+       lbl_nmi = ttk.Label(self, text="NMI:").grid(row=constants.ROW_MSB_PHASES_PGINFO, column=3, sticky="e")
+       self.ent_nmi.grid(row=constants.ROW_MSB_PHASES_PGINFO, column=4, sticky="w")
 
 
        #Job Components Section
        lbl_empty_space1 = ttk.Label(self, text = "").grid(row = constants.ROW_EMPTY1_PGINFO,columnspan=5,pady=constants.EMPTY_PADY_PGINFO)
        lbl_title2 = ttk.Label(self, image = self.title_components)
        lbl_title2.grid(row = constants.ROW_TITLE_2_PGINFO,columnspan=5)
-       # Create the Label and Entry widgets for "Panels"
+       #Setup of the panel Manufacturer dropdown menu
        lbl_panels = ttk.Label(self, text="Panel Manufacturer:").grid(row=constants.ROW_PANEL_MANUFACTURER_PGINFO, column=1, sticky="e")
        self.combobox_panel_manufacturer['values']=list(panel_dict.keys())
        self.combobox_panel_manufacturer.current(0)
-       self.combobox_panel_manufacturer.bind("<<ComboboxSelected>>", self.link_panel_manufacturer_to_model)
+       self.combobox_panel_manufacturer.bind("<<ComboboxSelected>>", self.link_panel_manufacturer_model)
        self.combobox_panel_manufacturer.grid(row=constants.ROW_PANEL_MANUFACTURER_PGINFO, column=2, sticky="w")
+       #Setup of the panel Model dropdown menu
        lbl_panel_model = ttk.Label(self, text="Panel Model:").grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=1, sticky="e")
        self.combobox_panel_model['values']=list(panel_dict["LG Electronics"].keys())
        self.combobox_panel_model.current(0)
-       self.combobox_panel_model.bind("<<ComboboxSelected>>", self.panel_model_dehighlight)
+       self.combobox_panel_model.bind("<<ComboboxSelected>>", self.link_panel_model_serial)
        self.combobox_panel_model.grid(row=constants.ROW_PANEL_MODEL_PGINFO, column=2, sticky="w")
+       #Setup of the panel Serial dropdown menu
+       lbl_panel_serial = ttk.Label(self, text="Panel Serial:").grid(row=constants.ROW_PANEL_SERIAL_PGINFO, column=1, sticky="e")
+       self.combobox_panel_serial['values']=list(panel_dict["LG Electronics"]["LG NeON"].keys())
+       self.combobox_panel_serial.current(0)
+       self.combobox_panel_serial.bind("<<ComboboxSelected>>", self.panel_serial_dehighlight)
+       self.combobox_panel_serial.grid(row=constants.ROW_PANEL_SERIAL_PGINFO, column=2, sticky="w")
+       #Setup of the panel number entry
        lbl_panel_number = ttk.Label(self, text="Number:").grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=1, sticky="e")
        self.ent_panel_number.grid(row=constants.ROW_PANEL_NUMBER_PGINFO, column=2,pady=2,sticky="w")
        #Setup of the inverter type dropdown menu
        lbl_inv_type = ttk.Label(self, text="Inverter type:").grid(row=constants.ROW_INV_TYPE_PGINFO, column=3, sticky="e")
        self.combobox_inv_type['values']=list(inv_dict.keys())
        self.combobox_inv_type.current(0)
-       self.combobox_inv_type.bind("<<ComboboxSelected>>", self.link_invtype_manufacturer)
+       self.combobox_inv_type.bind("<<ComboboxSelected>>", self.link_inv_type_manufacturer)
        self.combobox_inv_type.grid(row=constants.ROW_INV_TYPE_PGINFO, column=4, sticky="w")
        #Setup of the inverter manufacturer dropdown menu
        lbl_inv_manu = ttk.Label(self, text="            Manufacturer:").grid(row=constants.ROW_INV_MANUFACTURER_PGINFO, column=3, sticky="e")#Extra space to have more room in between panels and  inverter selection
        self.combobox_inv_manufacturer['values']=list(inv_dict["String"].keys())
        self.combobox_inv_manufacturer.current(0)
-       self.combobox_inv_manufacturer.bind("<<ComboboxSelected>>", self.link_manufacturer_model)
+       self.combobox_inv_manufacturer.bind("<<ComboboxSelected>>", self.link_inv_manufacturer_model)
        self.combobox_inv_manufacturer.grid(row=constants.ROW_INV_MANUFACTURER_PGINFO, column=4, sticky="w")
        #Setup of the inverter model dropdown menu
        lbl_inv_model = ttk.Label(self, text="Model:")
        lbl_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=3, sticky="e")
        self.combobox_inv_model['values']=list(inv_dict["String"]["SMA"].keys())
        self.combobox_inv_model.current(0)
-       self.combobox_inv_model.bind("<<ComboboxSelected>>", self.inv_model_dehighlight)
+       self.combobox_inv_model.bind("<<ComboboxSelected>>", self.link_inv_model_serial)
        self.combobox_inv_model.grid(row=constants.ROW_INV_MODEL_PGINFO, column=4, sticky="w")
+       #Setup of the inverter serial dropdown menu
+       lbl_inv_serial = ttk.Label(self, text="Serial:")
+       lbl_inv_serial.grid(row=constants.ROW_INV_SERIAL_PGINFO, column=3, sticky="e")
+       self.combobox_inv_serial['values']=list(inv_dict["String"]["SMA"]["Sunny Boy"].keys())
+       self.combobox_inv_serial.current(0)
+       self.combobox_inv_serial.bind("<<ComboboxSelected>>", self.inv_serial_dehighlight)
+       self.combobox_inv_serial.grid(row=constants.ROW_INV_SERIAL_PGINFO, column=4, sticky="w")
        #Setup datasheet buttons
        self.butt_datasheet_panel.grid(row=constants.ROW_BUTT_DATASHEET_PGINFO, column=1,columnspan=3)
        self.butt_datasheet_inv.grid(row=constants.ROW_BUTT_DATASHEET_PGINFO, column=4,sticky="w")
@@ -166,18 +188,25 @@ class PageInfo(Page):
        self.grid_columnconfigure(0, weight=1)
        self.grid_columnconfigure(4, weight=1)
 
-   def inv_model_dehighlight(self,*args):
-        self.combobox_inv_model.selection_clear()
+   def inv_serial_dehighlight(self,*args):
+        self.combobox_inv_serial.selection_clear()
 
-   def panel_model_dehighlight(self,*args):
-        self.combobox_panel_model.selection_clear()
+   def panel_serial_dehighlight(self,*args):
+        self.combobox_panel_serial.selection_clear()
 
-   def link_panel_manufacturer_to_model(self,*args): #Function called upon choosing an inverter type from the combobox
+   def link_panel_manufacturer_model(self,*args): #Function called upon choosing an inverter type from the combobox
         self.combobox_panel_model['values']=list(self.panel_dict[self.combobox_panel_manufacturer.get()].keys())
         self.combobox_panel_model.current(0)
-        self.combobox_panel_manufacturer.selection_clear()
 
-   def link_invtype_manufacturer(self,*args): #Function called upon choosing an inverter type from the combobox
+        self.link_panel_model_serial()
+
+   def link_panel_model_serial(self,*args): #Function called upon choosing an inverter type from the combobox
+        self.combobox_panel_serial['values']=list(self.panel_dict[self.combobox_panel_manufacturer.get()][self.combobox_panel_model.get()].keys())
+        self.combobox_panel_serial.current(0)
+        self.combobox_panel_manufacturer.selection_clear()
+        self.combobox_panel_model.selection_clear()
+
+   def link_inv_type_manufacturer(self,*args): #Function called upon choosing an inverter type from the combobox
         self.combobox_inv_manufacturer['values']=list(self.inv_dict[self.combobox_inv_type.get()].keys())
         self.combobox_inv_manufacturer.current(0)
 
@@ -192,13 +221,20 @@ class PageInfo(Page):
         else:
             self.check_relay.grid_remove()
 
-        self.link_manufacturer_model() # Necessary otherwise manufacturer updates but not model
+        self.link_inv_manufacturer_model() # Necessary otherwise manufacturer updates but not model
 
-   def link_manufacturer_model(self,*args): #Function called upon choosing an inverter manufacturer from the combobox
+   def link_inv_manufacturer_model(self,*args): #Function called upon choosing an inverter manufacturer from the combobox
         self.combobox_inv_model['values']=list(self.inv_dict[self.combobox_inv_type.get()][self.combobox_inv_manufacturer.get()].keys())
         self.combobox_inv_model.current(0) #Updates the inverter model list (for the choosen manufacturer)
+        self.link_inv_model_serial()
+
+
+   def link_inv_model_serial(self,*args): #Function called upon choosing an inverter manufacturer from the combobox
+        self.combobox_inv_serial['values']=list(self.inv_dict[self.combobox_inv_type.get()][self.combobox_inv_manufacturer.get()][self.combobox_inv_model.get()].keys())
+        self.combobox_inv_serial.current(0) #Updates the inverter model list (for the choosen manufacturer)
         self.combobox_inv_type.selection_clear()
         self.combobox_inv_manufacturer.selection_clear()
+        self.combobox_inv_model.selection_clear()
 
    def existing_array_param(self,*args):
        if self.var_existing_array.get() == 1:
@@ -233,15 +269,16 @@ class PageInfo(Page):
         self.ent_panel_number.insert(0,self.job_dict["jobComponents"]["panelNumber"])
 
         #Only for saved projects:
+        self.ent_num_msb_phases.insert(0,self.job_dict["jobInfo"]["numMsbPhases"])
         if self.job_dict["jobComponents"]["panelModel"] != "":
             self.combobox_panel_model.set(self.job_dict["jobComponents"]["panelModel"])
             self.combobox_panel_manufacturer.set(self.job_dict["jobComponents"]["panelManufacturer"])
+            self.combobox_panel_serial.set(self.job_dict["jobComponents"]["panelSerial"])
         if self.job_dict["jobComponents"]["invType"] != "":
             self.combobox_inv_type.set(self.job_dict["jobComponents"]["invType"])
             self.combobox_inv_manufacturer.set(self.job_dict["jobComponents"]["invManufacturer"])
-            self.link_manufacturer_model()
             self.combobox_inv_model.set(self.job_dict["jobComponents"]["invModel"])
-            self.ent_num_msb_phases.insert(0,self.job_dict["jobInfo"]["numMsbPhases"])
+            self.combobox_inv_serial.set(self.job_dict["jobComponents"]["invSerial"])
         if self.job_dict["jobExtra"]["existingArray"] == "On":
             self.var_existing_array.set(1)
             self.existing_array_param()
@@ -263,19 +300,29 @@ class PageInfo(Page):
 
 
    def submit_job_info(self): #Called when leaving the page or on Save click - Updates the job_dictionary associated with the job number
+
+       if self.ent_num_msb_phases.get() != "1" and self.ent_num_msb_phases.get() != "2" and self.ent_num_msb_phases.get() != "3":
+           tk.messagebox.showinfo(parent=self,title="Error - Wrong number for MSB phases",message = "The number of MSB phases should be 1,2 or 3", icon="warning")
+           return "rollback"
+       if len(self.ent_nmi.get()) != 0 and len(self.ent_nmi.get()) != 11:
+           MsgBox = tk.messagebox.askquestion (parent= self,title='Wrong NMI',message='The NMI should be 11 digits, are you sure you want to continue',icon = 'warning')
+           if MsgBox == 'no':
+              return "rollback"
+           else:
+               pass
+
        self.job_dict["jobInfo"]["clientName"] = self.ent_client_name.get()
+       self.job_dict["jobInfo"]["siteName"] = self.ent_site.get()
        self.job_dict["jobInfo"]["jobNumber"] = self.ent_job_number.get()
-       self.job_dict["jobComponents"]["panelNumber"] = self.ent_panel_number.get()
-       self.job_dict["jobComponents"]["invType"] =self.combobox_inv_type.get()
+       self.job_dict["jobInfo"]["numMsbPhases"] = self.ent_num_msb_phases.get()
        self.job_dict["jobComponents"]["panelManufacturer"] = self.combobox_panel_manufacturer.get()
        self.job_dict["jobComponents"]["panelModel"] = self.combobox_panel_model.get()
-       self.job_dict["jobInfo"]["siteName"] = self.ent_site.get()
-       self.job_dict["jobComponents"]["invModel"] = self.combobox_inv_model.get()
+       self.job_dict["jobComponents"]["panelSerial"] = self.combobox_panel_serial.get()
+       self.job_dict["jobComponents"]["panelNumber"] = self.ent_panel_number.get()
+       self.job_dict["jobComponents"]["invType"] =self.combobox_inv_type.get()
        self.job_dict["jobComponents"]["invManufacturer"]= self.combobox_inv_manufacturer.get()
-       self.job_dict["jobInfo"]["numMsbPhases"] = self.ent_num_msb_phases.get()
-       if self.ent_num_msb_phases.get() == "":
-           tk.messagebox.showinfo(parent=self,title="Error - Number of MSB phase required",message = "The number of MSB phases was not specified", icon="warning")
-           return "rollback"
+       self.job_dict["jobComponents"]["invModel"] = self.combobox_inv_model.get()
+       self.job_dict["jobComponents"]["invSerial"] =self.combobox_inv_serial.get()
        self.job_dict["jobExtra"]["backup"] = self.var_backup.get()
        self.job_dict["setupEnphase"]["qrelay"] = self.var_relay.get()
        self.job_dict["jobExtra"]["battery"] = self.combobox_battery.get()
@@ -316,8 +363,10 @@ class PageInfo(Page):
         self.combobox_inv_type.current(0)
         self.combobox_panel_manufacturer.current(0)
         self.combobox_panel_model.current(0)
+        self.combobox_panel_serial.current(0)
         self.combobox_inv_model.current(0)
         self.combobox_inv_manufacturer.current(0)
+        self.combobox_inv_serial.current(0)
 
         self.var_gateway.set(0)
         self.var_backup.set(0)
@@ -329,14 +378,16 @@ class PageInfo(Page):
        inv_type=self.combobox_inv_type.get()
        inv_manufacturer=self.combobox_inv_manufacturer.get()
        inv_model=self.combobox_inv_model.get()
-       url = self.inv_dict[inv_type][inv_manufacturer][inv_model]["Url"]
+       inv_serial = self.combobox_inv_serial.get()
+       url = self.inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Url"]
        webbrowser.open(url)
 
 
    def datasheet_panel(self,*args):
        panel_manufacturer=self.combobox_panel_manufacturer.get()
        panel_model=self.combobox_panel_model.get()
-       url = self.panel_dict[panel_manufacturer][panel_model]["Url"]
+       panel_serial= self.combobox_panel_serial.get()
+       url = self.panel_dict[panel_manufacturer][panel_model][panel_serial]["Url"]
        webbrowser.open(url)
 
    def read_pdf(self,*args):
@@ -363,5 +414,4 @@ class PageInfo(Page):
                print("Using Saved Values")
            except:
               tk.messagebox.showinfo(title="Error - Job not found",message = "The job number specified was not found", icon="warning")
-
        self.insert_values()

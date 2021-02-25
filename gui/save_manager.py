@@ -41,7 +41,7 @@ def save_job(job_dict):
     with open(constants.DATABASE_LOC+'job_saves.txt', 'w') as json_save_file:
         json.dump(data, json_save_file, indent=4)
 
-def load_job(job_number):
+def load_job(job_number,*check):
     with open(constants.DATABASE_LOC+'job_saves.txt') as json_save_file:
         data = json.load(json_save_file)
 
@@ -49,4 +49,7 @@ def load_job(job_number):
         for info in job:
             if job_number == info: # existing job so we return the saved dict
                 job_dict = job[info]
+                if check == "check":
+                    print("Found")
+                    return True
     return job_dict

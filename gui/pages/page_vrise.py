@@ -92,11 +92,11 @@ class PageVrise(Page):
        #4th line
        lbl_size = ttk.Label(self, text="     Size [mm^2]:").grid(row=constants.ROW_SIZE_ENT_PGVRISE, column=1, sticky="e",pady=constants.ROW_SPACING_TABLE_PADY_PGVRISE)
        self.combobox_serv_wire_size['values']=list(vrise_dictionnaries.AmPercent_dict.keys())
-       self.combobox_serv_wire_size.bind("<<ComboboxSelected>>", self.link_serv_wire_ccc)
+       self.combobox_serv_wire_size.bind("<<ComboboxSelected>>")#, self.link_serv_wire_ccc)
        self.combobox_serv_wire_size.current(4)# 16 mm2
        self.combobox_serv_wire_size.grid(row=constants.ROW_SIZE_ENT_PGVRISE, column=2)
        self.combobox_cons_wire_size['values']=list(vrise_dictionnaries.AmPercent_dict.keys())
-       self.combobox_cons_wire_size.bind("<<ComboboxSelected>>", self.link_cons_wire_ccc)
+       self.combobox_cons_wire_size.bind("<<ComboboxSelected>>")#, self.link_cons_wire_ccc)
        self.combobox_cons_wire_size.current(4)# 16 mm2
        self.combobox_cons_wire_size.grid(row=constants.ROW_SIZE_ENT_PGVRISE, column=3)
        self.combobox_msb_wire_size['values']=list(vrise_dictionnaries.AmPercent_dict.keys())
@@ -106,6 +106,8 @@ class PageVrise(Page):
 
        #5th line
        lbl_ccc = ttk.Label(self, text="C.C.C:").grid(row=constants.ROW_CCC_ENT_PGVRISE, column=1, sticky="e",pady=constants.ROW_SPACING_TABLE_PADY_PGVRISE)
+       lbl_ccc = ttk.Label(self, text="X").grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2)
+       lbl_ccc = ttk.Label(self, text="X").grid(row=constants.ROW_CCC_ENT_PGVRISE, column=3)
 
 
 
@@ -172,11 +174,11 @@ class PageVrise(Page):
        lbl_l9_mid.grid(row=constants.ROW_TOTAL_PRC_ENT_PGVRISE, column=3)
 
        try:
-           ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_serv_wire_size.get()]
-           ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_cons_wire_size.get()]
+           #ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_serv_wire_size.get()]
+           #ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_cons_wire_size.get()]
            ccc_msb = vrise_dictionnaries.ccc_dict[self.new_phase_inv_3]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_msb_wire_size.get()]
-           lbl_ccc2 = ttk.Label(self, text=ccc_serv).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2,pady=2)
-           lbl_ccc3 = ttk.Label(self, text=ccc_cons).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=3)
+           #lbl_ccc2 = ttk.Label(self, text=ccc_serv).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2,pady=2)
+           #lbl_ccc3 = ttk.Label(self, text=ccc_cons).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=3)
            lbl_ccc4 = ttk.Label(self, text=ccc_msb).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=4)
        except:
            tk.messagebox.showinfo(parent=self,title="Error - CCC not supported",message = "Sorry the Current Carrying Capacity for the cable selected is not supported yet", icon="warning")
@@ -235,11 +237,12 @@ class PageVrise(Page):
        inv_type = self.job_dict["jobComponents"]["invType"]
        inv_manu = self.job_dict["jobComponents"]["invManufacturer"]
        inv_model = self.job_dict["jobComponents"]["invModel"]
+       inv_serial = self.job_dict["jobComponents"]["invSerial"]
        if self.var_lock_inv_phases == 0:#Only happens once on instance
             self.var_lock_inv_phases=1
-            self.new_phase_inv_1 = self.inv_dict[inv_type][inv_manu][inv_model]["Phases"]
-            self.new_phase_inv_2 = self.inv_dict[inv_type][inv_manu][inv_model]["Phases"]
-            self.new_phase_inv_3 = self.inv_dict[inv_type][inv_manu][inv_model]["Phases"]
+            self.new_phase_inv_1 = self.inv_dict[inv_type][inv_manu][inv_model][inv_serial]["Phases"]
+            self.new_phase_inv_2 = self.inv_dict[inv_type][inv_manu][inv_model][inv_serial]["Phases"]
+            self.new_phase_inv_3 = self.inv_dict[inv_type][inv_manu][inv_model][inv_serial]["Phases"]
             self.lbl_new_phase_inv_1 = ttk.Label(self, text=self.new_phase_inv_1,font='Helvetica 12')
             self.lbl_new_phase_inv_2 = ttk.Label(self, text=self.new_phase_inv_2,font='Helvetica 12')
             self.lbl_new_phase_inv_3 = ttk.Label(self, text=self.new_phase_inv_3,font='Helvetica 12')
@@ -282,17 +285,19 @@ class PageVrise(Page):
        inv_type = self.job_dict["jobComponents"]["invType"]
        inv_manu = self.job_dict["jobComponents"]["invManufacturer"]
        inv_model = self.job_dict["jobComponents"]["invModel"]
+       inv_serial = self.job_dict["jobComponents"]["invSerial"]
 
        if self.var_lock_imax_phase == 0:#Only happens once on instance
             self.var_lock_imax_phase=1
-            if inv_type != "Micro":
-                self.new_imax_phase1 = self.inv_dict[inv_type][inv_manu][inv_model]["IOutMax"]
-                self.new_imax_phase2 = self.inv_dict[inv_type][inv_manu][inv_model]["IOutMax"]
-                self.new_imax_phase3 = self.inv_dict[inv_type][inv_manu][inv_model]["IOutMax"]
-            else:
+            if self.job_dict["jobVrise"]["maxCurrent"] != "":
                 self.new_imax_phase1 = self.job_dict["jobVrise"]["maxCurrent"]
                 self.new_imax_phase2 = self.job_dict["jobVrise"]["maxCurrent"]
                 self.new_imax_phase3 = self.job_dict["jobVrise"]["maxCurrent"]
+            else:
+                self.new_imax_phase1 = self.inv_dict[inv_type][inv_manu][inv_model][inv_serial]["IOutMax"]
+                self.new_imax_phase2 = self.inv_dict[inv_type][inv_manu][inv_model][inv_serial]["IOutMax"]
+                self.new_imax_phase3 = self.inv_dict[inv_type][inv_manu][inv_model][inv_serial]["IOutMax"]
+
             self.lbl_new_imax_phase1 = ttk.Label(self, text=self.new_imax_phase1,font='Helvetica 12')
             self.lbl_new_imax_phase2 = ttk.Label(self, text=self.new_imax_phase2,font='Helvetica 12')
             self.lbl_new_imax_phase3 = ttk.Label(self, text=self.new_imax_phase3,font='Helvetica 12')
@@ -396,11 +401,6 @@ class PageVrise(Page):
            return True
 
    def fill_Vrise(self,job_dict,inv_dict,user_pref):
-       #Maybe can ameliorate this
-       inv_type = job_dict["jobComponents"]["invType"]
-       inv_manu = job_dict["jobComponents"]["invManufacturer"]
-       inv_model = job_dict["jobComponents"]["invModel"]
-
        #Only used if saved job
        self.ent_serv_len.delete(0, 'end')
        self.ent_serv_len.insert(0,job_dict["jobVrise"]["lenService"])
@@ -411,19 +411,21 @@ class PageVrise(Page):
        self.ent_notes.insert(0,job_dict["jobVrise"]["notes"])
        if job_dict["jobVrise"]["cableSize"] != "":
            self.combobox_msb_wire_size.set(job_dict["jobVrise"]["cableSize"])
+       if job_dict["jobVrise"]["maxCurrent"] != "":
+           self.combobox_msb_wire_size.set(job_dict["jobVrise"]["cableSize"])
 
 
-   def link_serv_wire_ccc(self,job_dict):
-       ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_serv_wire_size.get()]
-       lbl_ccc2 = ttk.Label(self, text=ccc_serv).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2,pady=2)
-       self.combobox_serv_wire_size.selection_clear()
-       self.calculate_Vrise()
-
-   def link_cons_wire_ccc(self,job_dict):
-       ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_cons_wire_size.get()]
-       lbl_ccc3 = ttk.Label(self, text=ccc_cons).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=3,pady=2)
-       self.combobox_cons_wire_size.selection_clear()
-       self.calculate_Vrise()
+   # def link_serv_wire_ccc(self,job_dict):
+   #     ccc_serv = vrise_dictionnaries.ccc_dict[self.new_phase_inv_1]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_serv_wire_size.get()]
+   #     lbl_ccc2 = ttk.Label(self, text=ccc_serv).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=2,pady=2)
+   #     self.combobox_serv_wire_size.selection_clear()
+   #     self.calculate_Vrise()
+   #
+   # def link_cons_wire_ccc(self,job_dict):
+   #     ccc_cons = vrise_dictionnaries.ccc_dict[self.new_phase_inv_2]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_cons_wire_size.get()]
+   #     lbl_ccc3 = ttk.Label(self, text=ccc_cons).grid(row=constants.ROW_CCC_ENT_PGVRISE, column=3,pady=2)
+   #     self.combobox_cons_wire_size.selection_clear()
+   #     self.calculate_Vrise()
 
    def link_msb_wire_ccc(self,job_dict):
        ccc_msb = vrise_dictionnaries.ccc_dict[self.new_phase_inv_3]["Xlpe"]["Cu"]["PartialThermalInsulation"][self.combobox_msb_wire_size.get()]

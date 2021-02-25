@@ -166,7 +166,9 @@ class PageString(Page):
         inv_type=self.job_dict["jobComponents"]["invType"]
         inv_manufacturer=self.job_dict["jobComponents"]["invManufacturer"]
         inv_model=self.job_dict["jobComponents"]["invModel"]
-        url = self.inv_dict[inv_type][inv_manufacturer][inv_model]["Url"]
+        inv_serial = self.job_dict["jobComponents"]["invSerial"]
+
+        url = self.inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Url"]
         webbrowser.open(url)
 
 
@@ -203,18 +205,20 @@ class PageString(Page):
         #in a string (improves readability)
         panel_manu = job_dict["jobComponents"]["panelManufacturer"]
         panel_name = job_dict["jobComponents"]["panelModel"]
+        panel_serial = job_dict["jobComponents"]["panelSerial"]
         inv_type = job_dict["jobComponents"]["invType"]
         inv_manufacturer = job_dict["jobComponents"]["invManufacturer"]
         inv_model = job_dict["jobComponents"]["invModel"]
+        inv_serial = job_dict["jobComponents"]["invSerial"]
 
         self.job_dict = job_dict
 
 
         #Calulates the min and max panels (note diff round and floor)
-        self.max_panels_string = math.floor(float(inv_dict[inv_type][inv_manufacturer][inv_model]["Vmax"])/(float(panel_dict[panel_manu][panel_name]["Voc"])*1.1))
-        self.min_panels_string = round(float(inv_dict[inv_type][inv_manufacturer][inv_model]["Vmin"])/float(panel_dict[panel_manu][panel_name]["Voc"]))
-        self.max_total_panels = str(math.floor(int(inv_dict[inv_type][inv_manufacturer][inv_model]["Pdcmax"])/int(panel_dict[panel_manu][panel_name]["P"])))
-        self.max_panels_cec = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model]["P"])*1000)/(float(panel_dict[panel_manu][panel_name]["P"])*constants.STC_AC_DC_LIMIT)))
+        self.max_panels_string = math.floor(float(inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Vmax"])/(float(panel_dict[panel_manu][panel_name][panel_serial]["Voc"])*1.1))
+        self.min_panels_string = round(float(inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Vmin"])/float(panel_dict[panel_manu][panel_name][panel_serial]["Voc"]))
+        self.max_total_panels = str(math.floor(int(inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Pdcmax"])/int(panel_dict[panel_manu][panel_name][panel_serial]["P"])))
+        self.max_panels_cec = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"])*1000)/(float(panel_dict[panel_manu][panel_name][panel_serial]["P"])*constants.STC_AC_DC_LIMIT)))
 
         #Places the result on the Canvas
         lbl_min_stringA = ttk.Label(self.inv, text="Min & Max per string = "+str(self.min_panels_string)+" - "+str(self.max_panels_string))
@@ -224,9 +228,9 @@ class PageString(Page):
 
 
         #Places other inverter specific limits
-        lbl_mppt_a = ttk.Label(self.inv, text="Input: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_a_input"] + " - Imax: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_a_i_max"])
+        lbl_mppt_a = ttk.Label(self.inv, text="Input: "+ inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Mppt_a_input"] + " - Imax: "+ inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Mppt_a_i_max"])
         self.inv.create_window(self.delta_x+130,120,window=lbl_mppt_a)
-        lbl_mppt_b = ttk.Label(self.inv, text="Input: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_b_input"] + " - Imax: "+ inv_dict[inv_type][inv_manufacturer][inv_model]["Mppt_b_i_max"])
+        lbl_mppt_b = ttk.Label(self.inv, text="Input: "+ inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Mppt_b_input"] + " - Imax: "+ inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Mppt_b_i_max"])
         self.inv.create_window(self.delta_x+130,221,window=lbl_mppt_b)
         lbl_max_cec = ttk.Label(self.inv, text="Total max number of panels (" + str(constants.STC_AC_DC_LIMIT*100)+ "% AC/DC min ratio, CEC design guidelines 9.4) = " + self.max_panels_cec)
         self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT,window=lbl_max_cec)
@@ -238,6 +242,7 @@ class PageString(Page):
         self.ent_mppt_a_1.delete(0,'end')
         self.ent_mppt_a_1.insert(0,job_dict["jobSetup"]["mpptA1"])
         self.ent_mppt_b_1.delete(0,'end')
+        self.ent_mppt_b_1.insert(0,job_dict["jobSetup"]["mpptB1"])
         if job_dict["jobSetup"]["mpptA2"] != "":
             self.ent_mppt_a_2.delete(0,'end')
             self.ent_mppt_a_2.insert(0,job_dict["jobSetup"]["mpptA2"])
@@ -248,7 +253,7 @@ class PageString(Page):
                 #self.add_string_mpptA()
         if job_dict["jobSetup"]["mpptB2"] != "":
             self.ent_mppt_b_2.delete(0,'end')
-            self.ent_mppt_b_2.insert(0,job_dict["jobSetup"]["mpptA2"])
+            self.ent_mppt_b_2.insert(0,job_dict["jobSetup"]["mpptB2"])
             self.add_string_mpptB()
             #if job_dict["jobSetup"]["mpptB3"] != "":
                 #self.ent_mppt_b_3.delete(0,'end')
@@ -260,6 +265,11 @@ class PageSolarEdge(Page):
        Page.__init__(self, *args, **kwargs)
        self.inv= tk.Canvas(self, width=constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT, height=600,highlightthickness=0)#highlightthickness set to 0 to eliminate gap, width and height set bigger than window
 
+       self.title_layout = tk.PhotoImage(file="/Users/jean/Documents/Dev/SmartSolarDesign/databases/Images/Titles/LayoutTitle.png")
+
+       lbl_title1 = ttk.Label(self, image = self.title_layout)
+       lbl_title1.grid(row = 1 ,column=1)
+
        #This section centers the canvas
        if (constants.WINDOW_SIZE_X-constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT) > 0:
            self.centered_canvas_x = (constants.WINDOW_SIZE_X-constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT)/2
@@ -268,12 +278,12 @@ class PageSolarEdge(Page):
            slef.centered_canvas_x = 0
            self.delta_x=0
 
-       if (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_STRING_PGLAYOUT) > 0:#530 is the measured size of drawing
-           centered_canvas_y = (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_STRING_PGLAYOUT)/2
+       if (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT) > 0:#530 is the measured size of drawing
+           centered_canvas_y = (constants.WINDOW_SIZE_Y-constants.HEIGHT_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT)/2
        else:
            centered_canvas_y = 0
 
-       self.inv.grid(row=0,columnspan=4,sticky="nsew", padx=self.centered_canvas_x,pady=centered_canvas_y)
+       self.inv.grid(row=2,columnspan=4,sticky="nsew", padx=self.centered_canvas_x,pady=centered_canvas_y)
 
        #Manually drawing the inverter and string schematics
        #Inverter
@@ -288,9 +298,6 @@ class PageSolarEdge(Page):
        self.inv.create_window(self.delta_x+300,constants.HEIGHT_STRING_SOLAREDGE_PGLAYOUT,window=self.ent_string_1)
        self.ent_string_2 = ttk.Entry(self.inv,width =4,style="my.TEntry")
        self.ent_string_3 = ttk.Entry(self.inv,width =4,style="my.TEntry")
-       #Adding the title
-       lbl_title = ttk.Label(self.inv, text="Layout",font='Helvetica 16 bold')
-       self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_SOLAREDGE_PGLAYOUT/2,constants.Y_POS_CANV_TITLE_PGLAYOUT,window=lbl_title)
 
        #Section for dinamicaly adding strings
        self.butt_add_string_mpptA = ttk.Button(self, text="+", command=self.add_string_mpptA,style='my.TButton',width=1)
@@ -345,13 +352,15 @@ class PageSolarEdge(Page):
         inv_type=self.job_dict["jobComponents"]["invType"]
         inv_manufacturer=self.job_dict["jobComponents"]["invManufacturer"]
         inv_model=self.job_dict["jobComponents"]["invModel"]
-        url = self.inv_dict[inv_type][inv_manufacturer][inv_model]["Url"]
+        inv_serial=self.job_dict["jobComponents"]["invSerial"]
+        url = self.inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Url"]
         webbrowser.open(url)
 
    def datasheet_panel(self,*args):
         panel_manufacturer=self.job_dict["jobComponents"]["panelManufacturer"]
         panel_model=self.job_dict["jobComponents"]["panelModel"]
-        url = self.panel_dict[panel_manufacturer][panel_model]["Url"]
+        panel_serial=self.job_dict["jobComponents"]["panelSerial"]
+        url = self.panel_dict[panel_manufacturer][panel_model][panel_serial]["Url"]
         webbrowser.open(url)
 
    def submit_inv_setup(self,job_dict,inv_dict):
@@ -365,14 +374,16 @@ class PageSolarEdge(Page):
         #in a string (improves readability)
         panel_manu = job_dict["jobComponents"]["panelManufacturer"]
         panel_name = job_dict["jobComponents"]["panelModel"]
+        panel_serial = job_dict["jobComponents"]["panelSerial"]
         inv_type = job_dict["jobComponents"]["invType"]
+        inv_serial = job_dict["jobComponents"]["invSerial"]
         inv_manufacturer = job_dict["jobComponents"]["invManufacturer"]
         inv_model = job_dict["jobComponents"]["invModel"]
 
         #Calulates the min and max panels (note diff round and floor)
-        self.max_panels_string = math.floor(float(inv_dict[inv_type][inv_manufacturer][inv_model]["PmaxString"])/(float(panel_dict[panel_manu][panel_name]["P"])))
-        self.max_total_panels = str(math.floor(int(inv_dict[inv_type][inv_manufacturer][inv_model]["Pdcmax"])/int(panel_dict[panel_manu][panel_name]["P"])))
-        self.max_panels_cec = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model]["P"])*1000)/(float(panel_dict[panel_manu][panel_name]["P"])*constants.STC_AC_DC_LIMIT)))
+        self.max_panels_string = math.floor(float(inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["PmaxString"])/(float(panel_dict[panel_manu][panel_name][panel_serial]["P"])))
+        self.max_total_panels = str(math.floor(int(inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Pdcmax"])/int(panel_dict[panel_manu][panel_name][panel_serial]["P"])))
+        self.max_panels_cec = str(math.floor((float(inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"])*1000)/(float(panel_dict[panel_manu][panel_name][panel_serial]["P"])*constants.STC_AC_DC_LIMIT)))
 
         #Places the labels on screen
         lbl_min_string1 = ttk.Label(self.inv, text="Max per string = "+str(self.max_panels_string))

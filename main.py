@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import math
 from ttkthemes import ThemedStyle
 from tkinter import filedialog
+from tkinter import messagebox
 
 
 from gui.pages.master_sld import MainViewSld
@@ -160,11 +161,11 @@ class MainView(tk.Frame):
 
         if on_click_pos_x > constants.START_POSX_BUTT_PGMENU and on_click_pos_x < constants.END_POSX_BUTT_PGMENU:
             if on_click_pos_y > constants.START_POSY_BUTT2_PGMENU and on_click_pos_y < constants.END_POSY_BUTT2_PGMENU:
-                print("Load")
+                tk.messagebox.showinfo(parent=self,title="Error - Not Yet Implemented",message = "The load job interface has not yet been implemented but your jobs are still saved. To access them use the job number and the FIND button", icon="warning")
 
         if on_click_pos_x > constants.START_POSX_BUTT_PGMENU and on_click_pos_x < constants.END_POSX_BUTT_PGMENU:
             if on_click_pos_y > constants.START_POSY_BUTT3_PGMENU and on_click_pos_y < constants.END_POSY_BUTT3_PGMENU:
-                print("Other tools")
+                tk.messagebox.showinfo(parent=self,title="Error - Not Yet Implemented",message = "This will be implemented down the line", icon="warning")
 
         if on_click_pos_x > constants.START_POSX_BUTT_PGMENU and on_click_pos_x < constants.END_POSX_BUTT_PGMENU:
             if on_click_pos_y > constants.START_POSY_BUTT4_PGMENU and on_click_pos_y < constants.END_POSY_BUTT4_PGMENU:
