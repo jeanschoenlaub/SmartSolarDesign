@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 import tkinter.ttk as ttk
 import math
-import datetime
 
 import databases.constants as constants
 
@@ -80,6 +79,14 @@ class PageString(Page):
        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 -150,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+50,window=self.butt_datasheet_inv)
        self.butt_datasheet_panel = ttk.Button(self, text="Panel Datasheet Link", command=self.datasheet_panel,style='my.TButton')
        self.inv.create_window(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/2 +150,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+50,window=self.butt_datasheet_panel)
+
+       self.lbl_designer = ttk.Label(self, text = "Drawn by:")
+       self.inv.create_window(self.delta_x+10 ,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+70,window=self.lbl_designer)
+       self.lbl_checked = ttk.Label(self, text = "Checked by:")
+       self.inv.create_window(self.delta_x+(constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/3)+10,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+70,window=self.lbl_checked)
+       self.lbl_approved = ttk.Label(self, text = "Approved by:")
+       self.inv.create_window(self.delta_x+(2*constants.WIDTH_CANVAS_LAYOUT_STRING_PGLAYOUT/3)+10,constants.HEIGHT_BOTTOM_TEXT_STRING_PGLAYOUT+70,window=self.lbl_approved)
+
 
        self.grid_rowconfigure(0, weight=1)
        self.grid_rowconfigure(3, weight=1)

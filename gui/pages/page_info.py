@@ -2,13 +2,12 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
 import tkinter.ttk as ttk
-import math
 import webbrowser
 import fitz  # this is pymupdf
 
 import databases.constants as constants
 
-from gui.save_manager import save_job,load_job
+from gui.save_manager import load_job
 
 from import_info.read_txt import get_txtfile_info
 from import_info.read_pdf import get_pdf_info
@@ -341,6 +340,9 @@ class PageInfo(Page):
            self.job_dict["jobExtra"]["existingArray"] = "On"
        else:
            self.job_dict["jobExtra"]["existingArray"] = ""
+
+       if self.job_dict["jobComponents"]["invType"] == "Micro":
+           self.job_dict["jobVrise"]["maxCurrent"] = 0
 
        if self.var_monitoring.get() ==1 and self.ent_monitoring.get() != "":
            self.job_dict["jobExtra"]["monitoring"] = self.ent_monitoring.get()

@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 import xlwings as xw
 import shutil
-import os
 
 import databases.constants as constants
 
@@ -240,9 +239,9 @@ def print_enphase_inverter(job_dict,panel_dict,inv_dict):
     inv_model= job_dict["jobComponents"]["invModel"]
     inv_serial= job_dict["jobComponents"]["invSerial"]
 
-    wsParam.range("B19").value = inv_dict[inv_type][inv_manufacturer][inv_model]["Manufacturer"]
-    wsParam.range("B20").value = inv_dict[inv_type][inv_manufacturer][inv_model]["Model"]#full model name
-    wsParam.range("B21").value = inv_dict[inv_type][inv_manufacturer][inv_model]["P"]
+    wsParam.range("B19").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Manufacturer"]
+    wsParam.range("B20").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Model"]#full model name
+    wsParam.range("B21").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"]
     wsParam.range("B22").value = job_dict["setupEnphase"]["string1L1"]
     wsParam.range("B23").value = job_dict["setupEnphase"]["string1L2"]
     wsParam.range("B24").value = job_dict["setupEnphase"]["string1L3"]

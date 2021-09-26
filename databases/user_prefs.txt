@@ -16,5 +16,11 @@
     },
     "Paths": {
         "outputSld": "/Users/jean/Desktop"
+    },
+    "Designers": {
+        "Jean": {
+            "Initials": "L.W",
+            "Accreditation": "A4035434"
+        }
     }
 }

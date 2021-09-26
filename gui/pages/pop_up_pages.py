@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import messagebox
 import tkinter.ttk as ttk
 
 from gui.save_manager import save_user_pref
