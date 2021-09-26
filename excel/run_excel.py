@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 import xlwings as xw
 import shutil
-import os
 
 import databases.constants as constants
 
@@ -53,50 +52,58 @@ def print_string_inverter(job_dict,panel_dict,inv_dict):
     #Panel Information
     panel_model = job_dict["jobComponents"]["panelModel"]
     panel_manufacturer = job_dict["jobComponents"]["panelManufacturer"]
+    panel_serial = job_dict["jobComponents"]["panelSerial"]
+
     wsParam.range("B11").value = panel_model
-    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model]["model"]
+    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["panelSerial"]
     wsParam.range("B13").value = job_dict["jobComponents"]["panelNumber"]
-    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model]["P"]
-    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model]["Voc"]
-    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model]["Isc"]
+    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["P"]
+    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Voc"]
+    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Isc"]
     #Inverter Information
     inv_type = job_dict["jobComponents"]["invType"]
-    invmanufacturer= job_dict["jobComponents"]["invManufacturer"]
-    invmodel= job_dict["jobComponents"]["invModel"]
-    wsParam.range("B19").value = inv_dict[inv_type][invmanufacturer][invmodel]["Manufacturer"]
-    wsParam.range("B20").value = inv_dict[inv_type][invmanufacturer][invmodel]["Model"]#full model name
-    wsParam.range("B21").value = inv_dict[inv_type][invmanufacturer][invmodel]["Phases"]
-    wsParam.range("B22").value = inv_dict[inv_type][invmanufacturer][invmodel]["IOutMax"]
-    wsParam.range("B23").value = inv_dict[inv_type][invmanufacturer][invmodel]["P"]
+    inv_manufacturer= job_dict["jobComponents"]["invManufacturer"]
+    inv_model= job_dict["jobComponents"]["invModel"]
+    inv_serial= job_dict["jobComponents"]["invSerial"]
+
+    wsParam.range("B19").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Manufacturer"]
+    wsParam.range("B20").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Model"]#full model name
+    wsParam.range("B21").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Phases"]
+    wsParam.range("B22").value = job_dict["jobVrise"]["maxCurrent"]
+    wsParam.range("B23").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"]
     wsParam.range("B24").value = job_dict["jobSetup"]["mpptA1"]
     wsParam.range("B25").value = job_dict["jobSetup"]["mpptA2"]
     wsParam.range("B26").value = job_dict["jobSetup"]["mpptB1"]
     wsParam.range("B27").value = job_dict["jobSetup"]["mpptB2"]
-    wsParam.range("B28").value = job_dict["jobExtra"]["monitoring"]
+    wsParam.range("B28").value = job_dict["jobSetup"]["mpptA3"]
+    wsParam.range("B29").value = job_dict["jobSetup"]["mpptA4"]
+    wsParam.range("B30").value = job_dict["jobSetup"]["mpptB3"]
+    wsParam.range("B31").value = job_dict["jobSetup"]["mpptB4"]
+    wsParam.range("B32").value = job_dict["jobExtra"]["monitoring"]
     #Vrise information
-    wsParam.range("B30").value = job_dict["jobVrise"]["lenService"]
-    wsParam.range("B31").value = job_dict["jobVrise"]["lenConsumer"]
-    wsParam.range("B32").value = job_dict["jobVrise"]["lenMsb"]
-    wsParam.range("B33").value = job_dict["jobVrise"]["cableSize"]
-    wsParam.range("B34").value = job_dict["jobVrise"]["notes"]
-    wsParam.range("B35").value = job_dict["jobVrise"]["col1Name"]
-    wsParam.range("B36").value = job_dict["jobVrise"]["col2Name"]
-    wsParam.range("B37").value = job_dict["jobVrise"]["col3Name"]
+    wsParam.range("B34").value = job_dict["jobVrise"]["lenService"]
+    wsParam.range("B35").value = job_dict["jobVrise"]["lenConsumer"]
+    wsParam.range("B36").value = job_dict["jobVrise"]["lenMsb"]
+    wsParam.range("B37").value = job_dict["jobVrise"]["cableSize"]
+    wsParam.range("B38").value = job_dict["jobVrise"]["notes"]
+    wsParam.range("B39").value = job_dict["jobVrise"]["col1Name"]
+    wsParam.range("B40").value = job_dict["jobVrise"]["col2Name"]
+    wsParam.range("B41").value = job_dict["jobVrise"]["col3Name"]
     #Extra Information
-    wsParam.range("B39").value = job_dict["jobExtra"]["existingArray"]
-    wsParam.range("B40").value = job_dict["jobExtra"]["notes"]
+    wsParam.range("B43").value = job_dict["jobExtra"]["existingArray"]
+    wsParam.range("B44").value = job_dict["jobExtra"]["notes"]
 
     #Optional writes
-    if "blockDiagram" in job_dict:
+    if job_dict["jobExtra"]["blockDiagram"] != "":
         wsParam.range("D2").value = 1
-        wsParam.range("D3").value =job_dict["blockDiagram"]["block1"]
-        wsParam.range("D4").value =job_dict["blockDiagram"]["line1up"]
-        wsParam.range("D5").value =job_dict["blockDiagram"]["line1down"]
-        wsParam.range("D6").value =job_dict["blockDiagram"]["block2"]
-        wsParam.range("D7").value =job_dict["blockDiagram"]["line2up"]
-        wsParam.range("D8").value =job_dict["blockDiagram"]["line2down"]
-        wsParam.range("D9").value =job_dict["blockDiagram"]["block3"]
-        wsParam.range("D10").value =job_dict["blockDiagram"]["note"]
+        wsParam.range("D3").value =job_dict["jobExtra"]["blockDiagram"]["block1"]
+        wsParam.range("D4").value =job_dict["jobExtra"]["blockDiagram"]["line1up"]
+        wsParam.range("D5").value =job_dict["jobExtra"]["blockDiagram"]["line1down"]
+        wsParam.range("D6").value =job_dict["jobExtra"]["blockDiagram"]["block2"]
+        wsParam.range("D7").value =job_dict["jobExtra"]["blockDiagram"]["line2up"]
+        wsParam.range("D8").value =job_dict["jobExtra"]["blockDiagram"]["line2down"]
+        wsParam.range("D9").value =job_dict["jobExtra"]["blockDiagram"]["block3"]
+        wsParam.range("D10").value =job_dict["jobExtra"]["blockDiagram"]["note"]
 
 
     #Run Macro Setup
@@ -146,25 +153,28 @@ def print_hybrid_inverter(job_dict,panel_dict,inv_dict):
     #Panel Information
     panel_model = job_dict["jobComponents"]["panelModel"]
     panel_manufacturer = job_dict["jobComponents"]["panelManufacturer"]
+    panel_serial = job_dict["jobComponents"]["panelSerial"]
     wsParam.range("B11").value = panel_model
-    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model]["model"]
+    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["model"]
     wsParam.range("B13").value = job_dict["jobComponents"]["panelNumber"]
-    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model]["P"]
-    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model]["Voc"]
-    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model]["Isc"]
+    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["P"]
+    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Voc"]
+    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Isc"]
     #Inverter Information
     inv_type = job_dict["jobComponents"]["invType"]
-    invmanufacturer= job_dict["jobComponents"]["invManufacturer"]
-    invmodel= job_dict["jobComponents"]["invModel"]
-    wsParam.range("B19").value = inv_dict[inv_type][invmanufacturer][invmodel]["Manufacturer"]
-    wsParam.range("B20").value = inv_dict[inv_type][invmanufacturer][invmodel]["Model"]#full model name
-    wsParam.range("B21").value = inv_dict[inv_type][invmanufacturer][invmodel]["Phases"]
-    wsParam.range("B22").value = inv_dict[inv_type][invmanufacturer][invmodel]["IOutMax"]
-    wsParam.range("B23").value = inv_dict[inv_type][invmanufacturer][invmodel]["P"]
-    wsParam.range("B24").value = inv_dict[inv_type][invmanufacturer][invmodel]["RatedOutputPower"]
-    wsParam.range("B25").value = inv_dict[inv_type][invmanufacturer][invmodel]["NominalCapacity"]
-    wsParam.range("B26").value = inv_dict[inv_type][invmanufacturer][invmodel]["IscBatt"]
-    wsParam.range("B27").value = inv_dict[inv_type][invmanufacturer][invmodel]["VocBatt"]
+    inv_manufacturer= job_dict["jobComponents"]["invManufacturer"]
+    inv_model= job_dict["jobComponents"]["invModel"]
+    inv_serial= job_dict["jobComponents"]["invSerial"]
+
+    wsParam.range("B19").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Manufacturer"]
+    wsParam.range("B20").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Model"]#full model name
+    wsParam.range("B21").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Phases"]
+    wsParam.range("B22").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["IOutMax"]
+    wsParam.range("B23").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"]
+    wsParam.range("B24").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["RatedOutputPower"]
+    wsParam.range("B25").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["NominalCapacity"]
+    wsParam.range("B26").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["IscBatt"]
+    wsParam.range("B27").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["VocBatt"]
     wsParam.range("B28").value = job_dict["jobSetup"]["mpptA1"]
     wsParam.range("B29").value = job_dict["jobSetup"]["mpptB1"]
     wsParam.range("B30").value = job_dict["jobExtra"]["monitoring"]
@@ -215,19 +225,23 @@ def print_enphase_inverter(job_dict,panel_dict,inv_dict):
     #Panel Information
     panel_model = job_dict["jobComponents"]["panelModel"]
     panel_manufacturer = job_dict["jobComponents"]["panelManufacturer"]
+    panel_serial = job_dict["jobComponents"]["panelSerial"]
+
     wsParam.range("B11").value = panel_model
-    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model]["model"]
+    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["model"]
     wsParam.range("B13").value = job_dict["jobComponents"]["panelNumber"]
-    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model]["P"]
-    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model]["Voc"]
-    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model]["Isc"]
+    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["P"]
+    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Voc"]
+    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Isc"]
     #Inverter Information
     inv_type = job_dict["jobComponents"]["invType"]
-    invmanufacturer= job_dict["jobComponents"]["invManufacturer"]
-    invmodel= job_dict["jobComponents"]["invModel"]
-    wsParam.range("B19").value = inv_dict[inv_type][invmanufacturer][invmodel]["Manufacturer"]
-    wsParam.range("B20").value = inv_dict[inv_type][invmanufacturer][invmodel]["Model"]#full model name
-    wsParam.range("B21").value = inv_dict[inv_type][invmanufacturer][invmodel]["P"]
+    inv_manufacturer= job_dict["jobComponents"]["invManufacturer"]
+    inv_model= job_dict["jobComponents"]["invModel"]
+    inv_serial= job_dict["jobComponents"]["invSerial"]
+
+    wsParam.range("B19").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Manufacturer"]
+    wsParam.range("B20").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Model"]#full model name
+    wsParam.range("B21").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"]
     wsParam.range("B22").value = job_dict["setupEnphase"]["string1L1"]
     wsParam.range("B23").value = job_dict["setupEnphase"]["string1L2"]
     wsParam.range("B24").value = job_dict["setupEnphase"]["string1L3"]
@@ -287,19 +301,22 @@ def print_gateway(job_dict,panel_dict,inv_dict):
     #Panel Information
     panel_model = job_dict["jobComponents"]["panelModel"]
     panel_manufacturer = job_dict["jobComponents"]["panelManufacturer"]
+    panel_serial = job_dict["jobComponents"]["panelSerial"]
     wsParam.range("B11").value = panel_model
-    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model]["model"]
+    wsParam.range("B12").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["model"]
     wsParam.range("B13").value = job_dict["jobComponents"]["panelNumber"]
-    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model]["P"]
-    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model]["Voc"]
-    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model]["Isc"]
+    wsParam.range("B14").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["P"]
+    wsParam.range("B15").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Voc"]
+    wsParam.range("B16").value = panel_dict[panel_manufacturer][panel_model][panel_serial]["Isc"]
     #Inverter Information
     inv_type = job_dict["jobComponents"]["invType"]
-    invmanufacturer= job_dict["jobComponents"]["invManufacturer"]
-    invmodel= job_dict["jobComponents"]["invModel"]
-    wsParam.range("B19").value = inv_dict[inv_type][invmanufacturer][invmodel]["Manufacturer"]
-    wsParam.range("B20").value = inv_dict[inv_type][invmanufacturer][invmodel]["Model"]#full model name
-    wsParam.range("B21").value = inv_dict[inv_type][invmanufacturer][invmodel]["P"]
+    inv_manufacturer= job_dict["jobComponents"]["invManufacturer"]
+    inv_model= job_dict["jobComponents"]["invModel"]
+    inv_serial= job_dict["jobComponents"]["invSerial"]
+
+    wsParam.range("B19").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Manufacturer"]
+    wsParam.range("B20").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Model"]#full model name
+    wsParam.range("B21").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"]
     wsParam.range("B22").value = job_dict["setupEnphase"]["string1L1"]
     wsParam.range("B23").value = job_dict["setupEnphase"]["string1L2"]
     wsParam.range("B24").value = job_dict["setupEnphase"]["string1L3"]
@@ -310,16 +327,16 @@ def print_gateway(job_dict,panel_dict,inv_dict):
     wsParam.range("B30").value = job_dict["jobVrise"]["lenMsb"]
     wsParam.range("B31").value = job_dict["jobVrise"]["cableSize"]
     wsParam.range("B32").value = job_dict["jobVrise"]["maxCurrent"]
-    wsParam.range("B33").value = job_dict["jobSetup"]["phases"]
+    #wsParam.range("B33").value = job_dict["jobSetup"]["phases"]
     wsParam.range("B34").value = job_dict["jobVrise"]["notes"]
 
     #For the string inverters
     if job_dict["jobComponents"]["invType"] == "String":
-        wsParam.range("E16").value = inv_dict[inv_type][invmanufacturer][invmodel]["Manufacturer"]
-        wsParam.range("E17").value = inv_dict[inv_type][invmanufacturer][invmodel]["Model"]#full model name
-        wsParam.range("E18").value = inv_dict[inv_type][invmanufacturer][invmodel]["Phases"]
-        wsParam.range("E19").value = inv_dict[inv_type][invmanufacturer][invmodel]["IOutMax"]
-        wsParam.range("E20").value = inv_dict[inv_type][invmanufacturer][invmodel]["P"]
+        wsParam.range("E16").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Manufacturer"]
+        wsParam.range("E17").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Model"]#full model name
+        wsParam.range("E18").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["Phases"]
+        wsParam.range("E19").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["IOutMax"]
+        wsParam.range("E20").value = inv_dict[inv_type][inv_manufacturer][inv_model][inv_serial]["P"]
         wsParam.range("E21").value = job_dict["jobSetup"]["mpptA1"]
         wsParam.range("E22").value = job_dict["jobSetup"]["mpptA2"]
         wsParam.range("E23").value = job_dict["jobSetup"]["mpptB1"]

@@ -1,4 +1,4 @@
-def get_pdf_info(txt_string,job_dict):#gets information from the quote file
+def get_pdf_info(txt_string,job_dict,panel_dict,inv_dict):#gets information from the quote file
 
     #find the client name
     client_name=txt_string.find("Contact:")#finds the position in bytes from beginning of text file
@@ -10,18 +10,41 @@ def get_pdf_info(txt_string,job_dict):#gets information from the quote file
     job_dict["jobInfo"]["siteName"]=txt_string[site_name+9:end_of_line_address]
 
     #finding all other job info
-    system_summary=txt_string.find("System summary:")#finds the position in bytes from beginning of text file
+    system_summary =  txt_string.find("System summary:")#finds the position in bytes from beginning of text file
     end_of_line1 = txt_string.find("\n",system_summary)
-    system_part_1 = txt_string[system_summary+16:end_of_line1]
-    #finding panel number
-    end_panel_number=system_part_1.find("x")
-    job_dict["jobComponents"]["panelNumber"]=system_part_1[0:end_panel_number]
+    end_of_line2 = txt_string.find("\n",end_of_line1+1)
+    system_summary_string = txt_string[system_summary+16:end_of_line2]
 
-    #after_panel_number= system_part_1[end_panel_number:end_of_line1]
+    #finding panel number
+    end_panel_number= system_summary_string.find("x")
+    job_dict["jobComponents"]["panelNumber"]=system_summary_string[0:end_panel_number]
     #find the panels used
-    #after_panel_name=txt_string.find(" Watt")#finds the position in bytes from beginning of text file
-    #job_dict["jobInfo"]["siteName"]=system_part_1[0:end_panel_number]
-    #after_panel_number= system_part_1[end_panel_number:end_of_line1]
+    end_panel_name= system_summary_string.find(" ",end_panel_number+2)#finds the position in bytes from beginning of text file
+    pdf_panel_model = system_summary_string[end_panel_number+2:end_panel_name]
+    for panel_manu_keys in panel_dict.keys():
+        for panel_model_keys in panel_dict[panel_manu_keys].keys():
+            for panel_model_watt_keys in panel_dict[panel_manu_keys][panel_model_keys].keys():
+                if pdf_panel_model == panel_dict[panel_manu_keys][panel_model_keys][panel_model_watt_keys]["panelSerial"]:
+                    job_dict["jobComponents"]["panelManufacturer"]= panel_manu_keys
+                    job_dict["jobComponents"]["panelModel"]= panel_model_keys
+                    job_dict["jobComponents"]["panelSerial"]= panel_model_watt_keys
+    #Ffinding the inverter used
+    end_panel_part=system_summary_string.find("x",end_panel_name)
+    end_of_inverter_serial = system_summary_string.find(" ",end_panel_part+2)
+    pdf_inv_model = system_summary_string[end_panel_part+2:end_of_inverter_serial]
+    for inv_type_keys in inv_dict.keys():
+        for inv_manu_keys in inv_dict[inv_type_keys].keys():
+            for inv_model_keys in inv_dict[inv_type_keys][inv_manu_keys].keys():
+                for inv_model_size_keys in inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys].keys():
+                    length_of_inv_model_in_dict = len(inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys][inv_model_size_keys]["Model"])
+                    adjusted_pdf_inv_model = pdf_inv_model[0:length_of_inv_model_in_dict]
+                    if adjusted_pdf_inv_model == inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys][inv_model_size_keys]["Model"]:
+                        job_dict["jobComponents"]["invType"]= inv_type_keys
+                        job_dict["jobComponents"]["invManufacturer"]= inv_manu_keys
+                        job_dict["jobComponents"]["invModel"]= inv_model_keys
+                        job_dict["jobComponents"]["invSerial"]= inv_model_size_keys
+
+
     # end_of_previous_line = txt_string.find("\n",panel_name-6)
     # txt_file.seek(end_of_previous_line+1) #seek points the text file reader to postion
     # job_dict["jobComponents"]["panelNumber"]= txt_file.read(2)#panel number will be 1 or 2 digits

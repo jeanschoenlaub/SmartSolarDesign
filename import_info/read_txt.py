@@ -1,4 +1,3 @@
-import sys
 import databases.constants as constants
 import os
 
@@ -33,7 +32,7 @@ def get_txtfile_info(job_number,job_dict):#gets information from the quote file
     client_name=txt_string.find("Client:")#finds the position in bytes from beginning of text file
     end_of_line = txt_string.find("\n",client_name)
     txt_file.seek(client_name+8) #seek points the text file reader to postion,9 is the lenght of string "Client: "
-    job_dict["jobInfo"]["clientName"]=txt_file.read(end_of_line-client_name-7)
+    #job_dict["jobInfo"]["clientName"]=txt_file.read(end_of_line-client_name-7)
 
     #find the panels used
     panel_name=txt_string.find("LG")#finds the position in bytes from beginning of text file
