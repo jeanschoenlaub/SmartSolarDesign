@@ -1,4 +1,3 @@
-import sys
 import databases.constants as constants
 import os
 

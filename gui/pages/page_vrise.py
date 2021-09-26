@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 import tkinter.ttk as ttk
-import math
 
 import databases.vrise_dictionnaries as vrise_dictionnaries
 import databases.constants as constants

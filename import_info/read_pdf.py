@@ -23,9 +23,11 @@ def get_pdf_info(txt_string,job_dict,panel_dict,inv_dict):#gets information from
     pdf_panel_model = system_summary_string[end_panel_number+2:end_panel_name]
     for panel_manu_keys in panel_dict.keys():
         for panel_model_keys in panel_dict[panel_manu_keys].keys():
-            if pdf_panel_model == panel_dict[panel_manu_keys][panel_model_keys]["panelSerial"]:
-                job_dict["jobComponents"]["panelModel"]= panel_model_keys
-                job_dict["jobComponents"]["panelManufacturer"]= panel_manu_keys
+            for panel_model_watt_keys in panel_dict[panel_manu_keys][panel_model_keys].keys():
+                if pdf_panel_model == panel_dict[panel_manu_keys][panel_model_keys][panel_model_watt_keys]["panelSerial"]:
+                    job_dict["jobComponents"]["panelManufacturer"]= panel_manu_keys
+                    job_dict["jobComponents"]["panelModel"]= panel_model_keys
+                    job_dict["jobComponents"]["panelSerial"]= panel_model_watt_keys
     #Ffinding the inverter used
     end_panel_part=system_summary_string.find("x",end_panel_name)
     end_of_inverter_serial = system_summary_string.find(" ",end_panel_part+2)
@@ -33,12 +35,14 @@ def get_pdf_info(txt_string,job_dict,panel_dict,inv_dict):#gets information from
     for inv_type_keys in inv_dict.keys():
         for inv_manu_keys in inv_dict[inv_type_keys].keys():
             for inv_model_keys in inv_dict[inv_type_keys][inv_manu_keys].keys():
-                length_of_inv_model_in_dict = len(inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys]["Model"])
-                adjusted_pdf_inv_model = pdf_inv_model[0:length_of_inv_model_in_dict]
-                if adjusted_pdf_inv_model == inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys]["Model"]:
-                    job_dict["jobComponents"]["invType"]= inv_type_keys
-                    job_dict["jobComponents"]["invManufacturer"]= inv_manu_keys
-                    job_dict["jobComponents"]["invModel"]= inv_model_keys
+                for inv_model_size_keys in inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys].keys():
+                    length_of_inv_model_in_dict = len(inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys][inv_model_size_keys]["Model"])
+                    adjusted_pdf_inv_model = pdf_inv_model[0:length_of_inv_model_in_dict]
+                    if adjusted_pdf_inv_model == inv_dict[inv_type_keys][inv_manu_keys][inv_model_keys][inv_model_size_keys]["Model"]:
+                        job_dict["jobComponents"]["invType"]= inv_type_keys
+                        job_dict["jobComponents"]["invManufacturer"]= inv_manu_keys
+                        job_dict["jobComponents"]["invModel"]= inv_model_keys
+                        job_dict["jobComponents"]["invSerial"]= inv_model_size_keys
 
 
     # end_of_previous_line = txt_string.find("\n",panel_name-6)

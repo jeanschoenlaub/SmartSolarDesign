@@ -1,9 +1,7 @@
 import sys
 import tkinter as tk
 import tkinter.ttk as ttk
-import math
 from ttkthemes import ThemedStyle
-from tkinter import filedialog
 from tkinter import messagebox
 
 

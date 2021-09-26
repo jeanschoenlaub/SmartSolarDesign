@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 
 import databases.constants as constants
 from gui.pages.pop_up_pages import ConfigBlockDiag, ConfigVrise
